@@ -1,26 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace project_TextRPG
+﻿namespace project_TextRPG
 {
-    public class DataDefinition
+    public enum EClass : int
     {
-        public class Item
-        {
-            public string Name { get; set; }
-            public float Spec { get; set; }
+        /// <summary>
+        /// 노조 위원장 : 전사
+        /// </summary>
+        ChairmanOfUnion = 0,
+        /// <summary>
+        /// 사무 국장(총장) : 마법사
+        /// </summary>
+        SecretaryGeneral,
+        /// <summary>
+        /// 조직 국장 : 도적
+        /// </summary>
+        DirectorOfUnion
+    }
 
-            public Item(string n, float spec)
-            {
-                Name = n;
-                Spec = spec;
-            }
-        }
 
-        
+    public partial class DataDefinition
+    {
+
         static DataDefinition _instance;
 
         public Item[] Items { get; set; }
