@@ -13,7 +13,7 @@
 
             features = [
                 new Feature("상태보기", this),
-                new Feature("인벤토리", this),
+                new FeatureInventory("인벤토리", this),
                 new Feature("상점", this),
                 new Feature("전투 시작", this),
                 new Feature("휴식하기", this),
@@ -58,6 +58,7 @@
 
             Console.WriteLine();
             int select = Utility.GetSelection(1, 7);
+
             Select(select);
         }
 

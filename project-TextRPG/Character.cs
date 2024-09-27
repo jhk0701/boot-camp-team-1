@@ -2,11 +2,15 @@
 {
     class Character : Unit
     {
-        public EClass CharClass { get; set; }
+        public EClass CharClass { get; protected set; }
         public int Gold { get; set; }
-        public Skill[] Skills { get; set; }
+        public Skill[] Skills { get; protected set; }
+        public Inventory Inventory { get; protected set; }
 
-        public Character(string name) : base(name) { }
+        public Character(string name) : base(name) 
+        { 
+            Inventory = new Inventory();
+        }
     }
 
     /// <summary>
@@ -16,6 +20,8 @@
     {
         public ChairmanOfUnion(string name) : base(name)
         {
+            CharClass = EClass.ChairmanOfUnion;
+
             Skills = [
                 new Skill("파업", [120f, 150f], 5, 10f),
                 new Skill("단식 투쟁", [250f, 250f], 10, 30f),
@@ -32,6 +38,8 @@
     {
         public SecretaryGeneral(string name) : base(name)
         {
+            CharClass = EClass.SecretaryGeneral;
+
             Skills = [
                 new Skill("언론 고발", [120f, 150f], 5, 10f),
                 new Skill("보이콧", [200f, 200f], 10, 30f),
@@ -48,6 +56,8 @@
     {
         public DirectorOfUnion(string name) : base(name)
         {
+            CharClass = EClass.DirectorOfUnion;
+
             Skills = [
                 new Skill("죽창", [120f, 120f], 5, 10f),
                 new Skill("화염병", [200f, 200f], 10, 30f),
