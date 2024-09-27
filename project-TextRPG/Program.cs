@@ -6,11 +6,7 @@
 
         static void Main(string[] args)
         {
-            Character player;
-
-            // 임시로 전사 생성
-            player = new ChairmanOfUnion("Player");
-
+            Character player = null;
             IScene startScene = new StartScene(COMMON_NAME);
             startScene.Start(player);
 

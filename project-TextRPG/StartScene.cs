@@ -5,6 +5,7 @@
         public string SceneName { get; set; }
         public Character Player { get; set; }
 
+
         public StartScene(string sceneName)
         {
             SceneName = sceneName;
@@ -15,10 +16,24 @@
             Player = visitor;
             ShowIntro();
 
+            bool isLoaded = false; // 데이터 로드
+
             // 캐릭터 생성부분
-            // 1. 데이터 있으면 로드
-            // 2. 데이터 없으면 생성
+            if (isLoaded) 
+            {
+                // 1. 데이터 있으면 로드
+            }
+            else
+            {
+                // 2. 데이터 없으면 생성
+                Player = CreateCharacter();
+            }
         }
+        public Character End()
+        {
+            return Player;
+        }
+
 
         void ShowIntro()
         {
@@ -72,24 +87,45 @@
             Thread.Sleep(500);
         }
 
-        public Character End()
-        {
-            return Player;
-        }
-
         public void Return()
         {
 
         }
         
-        void LoadCharacter()
+        Character LoadCharacter()
         {
-
+            return new Character("name");
         }
 
         Character CreateCharacter()
         {
-            return new Character("name");
+            string name = "";
+            int select = 0;
+
+            // 이름 설정
+            do
+            {
+                Console.Clear();
+                Utility.ShowScript(
+                    $"{SceneName}에 오신 여러분 환영합니다.\n",
+                    "원하시는 이름을 설정해주세요.\n"
+                );
+                name = Console.ReadLine();
+
+                Utility.ShowScript(
+                    $"{name}님 이시군요.\n",
+                    "저장하시겠습니까?\n\n",
+
+                    "1. 저장\n0. 취소\n"
+                );
+
+                select = Utility.GetSelection(0, 1);
+            }
+            while (select.Equals(0));
+
+
+
+            return new Character(name);
         }
     
     }

@@ -51,5 +51,14 @@ namespace project_TextRPG
             Console.ResetColor();
         }
 
+        public static void ShowScript(params string[] scripts)
+        {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < scripts.Length; i++)
+                sb.Append(scripts[i]);
+
+            Console.WriteLine(sb.ToString());
+        }
+
     }
 }

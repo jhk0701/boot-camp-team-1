@@ -47,8 +47,8 @@
         void ShowMenu()
         {
             Console.Clear();
-            Console.WriteLine(
-                $"{SceneName}에 오신 여러분 환영합니다.\n" + 
+            Utility.ShowScript(
+                $"{SceneName}에 오신 여러분 환영합니다.\n",
                 "이제 전투를 시작할 수 있습니다.\n"
             );
 
