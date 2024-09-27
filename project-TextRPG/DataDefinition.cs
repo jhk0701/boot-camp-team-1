@@ -1,5 +1,8 @@
 ﻿namespace project_TextRPG
 {
+    /// <summary>
+    /// 플레이어 캐릭터 직업 타입
+    /// </summary>
     public enum EClass : int
     {
         /// <summary>
@@ -16,8 +19,28 @@
         DirectorOfUnion
     }
 
+    /// <summary>
+    /// 착용 장비의 종류
+    /// </summary>
+    public enum EEquipType : int
+    {
+        Weapon = 0,
+        Armor
+    }
 
-    public partial class DataDefinition
+    /// <summary>
+    /// 등급 체계
+    /// </summary>
+    public enum ERank : int 
+    {
+        Normal = 0,
+        Rare,
+        Heroic,
+        Legendary,
+        Mythic
+    }
+
+    public class DataDefinition
     {
 
         static DataDefinition _instance;

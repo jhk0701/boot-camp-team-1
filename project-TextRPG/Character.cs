@@ -2,18 +2,26 @@
 {
     class Character : Unit
     {
-        public EClass CharClass { get; set; }
+        public EClass CharClass { get; protected set; }
         public int Gold { get; set; }
-        public Skill[] Skills { get; set; }
+        public Skill[] Skills { get; protected set; }
+        public Inventory Inventory { get; protected set; }
 
-
-        public Character(string name) : base(name) { }
+        public Character(string name) : base(name) 
+        { 
+            Inventory = new Inventory();
+        }
     }
 
+    /// <summary>
+    /// 노조 위원장 : 전사 포지션
+    /// </summary>
     class ChairmanOfUnion : Character
     {
         public ChairmanOfUnion(string name) : base(name)
         {
+            CharClass = EClass.ChairmanOfUnion;
+
             Skills = [
                 new Skill("파업", [120f, 150f], 5, 10f),
                 new Skill("단식 투쟁", [250f, 250f], 10, 30f),
@@ -23,10 +31,15 @@
         }
     }
 
+    /// <summary>
+    /// 사무국장 : 마법사 포지션
+    /// </summary>
     class SecretaryGeneral : Character
     {
         public SecretaryGeneral(string name) : base(name)
         {
+            CharClass = EClass.SecretaryGeneral;
+
             Skills = [
                 new Skill("언론 고발", [120f, 150f], 5, 10f),
                 new Skill("보이콧", [200f, 200f], 10, 30f),
@@ -36,10 +49,15 @@
         }
     }
 
+    /// <summary>
+    /// 조직위원장 : 도적 포지션
+    /// </summary>
     class DirectorOfUnion : Character
     {
         public DirectorOfUnion(string name) : base(name)
         {
+            CharClass = EClass.DirectorOfUnion;
+
             Skills = [
                 new Skill("죽창", [120f, 120f], 5, 10f),
                 new Skill("화염병", [200f, 200f], 10, 30f),
