@@ -8,10 +8,46 @@ namespace project_TextRPG
         Character Player;
         List<Monster> Monsters;
 
-        Battle (Character player)
+        Battle (Character player, int dungeonid)
         {
             Player = player;
+
             Monsters = new List<Monster> ();
+
+            List<Monster> CreateMonsters(int dungeonId)
+            {
+                switch (dungeonId)
+                {
+                    case 1:
+                        for (int i = 0; i < 3; i++)
+                        {
+                            Monsters.Add(new Goblin("고블린"));
+                        }
+                        for (int i = 0; i < 1; i++)
+                        {
+                            Monsters.Add(new Orc("오크"));
+                        }
+                        break;
+
+                    case 2:
+                        for (int i = 0; i < 10; i++)
+                        {
+                            Monsters.Add(new Orc("오크"));
+                        }
+                        break;
+
+                    case 3:
+                        for (int i = 0; i < 10; i++)
+                        {
+                            Monsters.Add(new Slime("슬라임"));
+                        }
+                        break;
+                    default:
+                        Console.WriteLine($"유효하지 않은 던전 ID: {dungeonId}");
+                        break;
+                }
+                return Monsters;
+            }
         }
 
         void DeadWriteLine(string value)

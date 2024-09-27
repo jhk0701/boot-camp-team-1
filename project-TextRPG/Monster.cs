@@ -27,13 +27,22 @@ namespace project_TextRPG
             Health = MaxHealth;
             MaxMana = 10f;
             Mana = MaxMana;
+            isDead = false;
         }
     }
     class Orc : Monster
     {
         public Orc(string name) : base(name)
         {
-
+            Name = name;
+            Exp = 5;
+            BasicAttack = 3f;
+            BasicDefense = 3f;
+            MaxHealth = 10f;
+            Health = MaxHealth;
+            MaxMana = 10f;
+            Mana = MaxMana;
+            isDead = false;
         }
 
     }
@@ -41,7 +50,15 @@ namespace project_TextRPG
     {
         public Troll(string name) : base(name)
         {
-
+            Name = name;
+            Exp = 5;
+            BasicAttack = 3f;
+            BasicDefense = 3f;
+            MaxHealth = 10f;
+            Health = MaxHealth;
+            MaxMana = 10f;
+            Mana = MaxMana;
+            isDead = false;
         }
 
     }
@@ -50,7 +67,15 @@ namespace project_TextRPG
     {
         public Slime(string name) : base(name)
         {
-
+            Name = name;
+            Exp = 5;
+            BasicAttack = 3f;
+            BasicDefense = 3f;
+            MaxHealth = 10f;
+            Health = MaxHealth;
+            MaxMana = 10f;
+            Mana = MaxMana;
+            isDead = false;
         }
 
     }

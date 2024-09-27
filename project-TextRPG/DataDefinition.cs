@@ -24,6 +24,7 @@
 
         public Item[] Items { get; set; }
 
+
         private DataDefinition()
         {
             Items = new Item[] {
