@@ -6,10 +6,12 @@
         public int Gold { get; set; }
         public Skill[] Skills { get; set; }
 
-
         public Character(string name) : base(name) { }
     }
 
+    /// <summary>
+    /// 노조 위원장 : 전사 포지션
+    /// </summary>
     class ChairmanOfUnion : Character
     {
         public ChairmanOfUnion(string name) : base(name)
@@ -23,6 +25,9 @@
         }
     }
 
+    /// <summary>
+    /// 사무국장 : 마법사 포지션
+    /// </summary>
     class SecretaryGeneral : Character
     {
         public SecretaryGeneral(string name) : base(name)
@@ -36,6 +41,9 @@
         }
     }
 
+    /// <summary>
+    /// 조직위원장 : 도적 포지션
+    /// </summary>
     class DirectorOfUnion : Character
     {
         public DirectorOfUnion(string name) : base(name)
