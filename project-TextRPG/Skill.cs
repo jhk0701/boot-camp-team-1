@@ -2,10 +2,10 @@
 {
     class Skill
     {
-        public string Name { get; set; }
-        public float[] PowerRange { get; set; }
-        public int RequiredLevel { get; set; }
-        public float RequiredMana { get; set; }
+        public string Name { get; protected set; }
+        public float[] PowerRange { get; protected set; }
+        public int RequiredLevel { get; protected set; }
+        public float RequiredMana { get; protected set; }
         
 
         public Skill(string name, float[] power, int requiredLv, float requiredMp)

@@ -2,10 +2,10 @@
 {
     class Unit
     {
-        public String Name { get; set; }
+        public String Name { get; protected set; }
 
-        public float BasicAttack { get; set; }
-        public float EquipAttack { get; set; }
+        public float BasicAttack { get; protected set; }
+        public float EquipAttack { get; protected set; }
         public float Attack 
         { 
             get 
@@ -14,8 +14,8 @@
             } 
         }
 
-        public float BasicDefense { get; set; }
-        public float EquipDefense { get; set; }
+        public float BasicDefense { get; protected set; }
+        public float EquipDefense { get; protected set; }
         public float Defense 
         { 
             get 
@@ -24,11 +24,11 @@
             } 
         }
 
-        public float MaxHealth { get; set; }
-        public float Health { get; set; }
+        public float MaxHealth { get; protected set; }
+        public float Health { get; protected set; }
 
-        public float MaxMana { get; set; }
-        public float Mana { get; set; }
+        public float MaxMana { get; protected set; }
+        public float Mana { get; protected set; }
 
         int _lv;
         public int Level 
