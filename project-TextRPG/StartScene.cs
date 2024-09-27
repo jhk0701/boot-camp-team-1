@@ -69,7 +69,7 @@
             Thread.Sleep(500);
             Console.ForegroundColor = ConsoleColor.White;
             Console.Write("조]");
-            Thread.Sleep(500);
+            Thread.Sleep(2000);
         }
 
         public Character End()
