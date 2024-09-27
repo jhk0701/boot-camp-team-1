@@ -1,14 +1,20 @@
 ﻿
+using System.Threading;
+
 namespace project_TextRPG
 {
-    public class Battle
+    class Battle
     {
-        public TestPlayer TestPlayer;
-        Battle (TestPlayer player)
+        Character Player;
+        List<Monster> Monsters;
+
+        Battle (Character player)
         {
-            TestPlayer = player;
+            Player = player;
+            Monsters = new List<Monster> ();
         }
-        void DeadMonster(string value)
+
+        void DeadWriteLine(string value)
         {
             Console.ForegroundColor = ConsoleColor.Gray;
             Console.WriteLine(value);
@@ -18,19 +24,22 @@ namespace project_TextRPG
         void ShowAttackresult(Monster selectedMonster)
         {
             Console.WriteLine("Battle!!\n");
-            Console.WriteLine("{0} 의 공격!", TestPlayer.Name);
-            Console.WriteLine("{선택몬스터.레벨} {선택몬스터.이름} 을(를) 맞췄습니다. [데미지 : {선택몬스터.데미지}]\n");
-            Console.WriteLine("{선택몬스터.레벨} {선택몬스터.이름}");
+            Console.WriteLine("{0} 의 공격!", Player.Name);
+            Console.WriteLine("LV.{0} {1} 을(를) 맞췄습니다. [데미지 : {2}]\n",
+                selectedMonster.Level, selectedMonster.Name, Player.Attack);
+            Console.WriteLine("LV.{0} {1}", selectedMonster.Level, selectedMonster.Name);
             if (selectedMonster.Health <= 0)
             {
-                Console.WriteLine("{선택몬스터.체력} -> Dead\n");
+                Console.WriteLine("{0} -> Dead\n", selectedMonster.Health);
             }
             else
             {
-                Console.WriteLine("{선택몬스터.체력} -> {선택몬스터.체력 - 플레이어 데미지}\n");
+                Console.WriteLine("{0} -> {1}\n", selectedMonster.Health, selectedMonster.Health - Player.Attack);
             }
+            selectedMonster.TakeDamage(Player.Attack);
             Console.WriteLine("0. 다음\n");
             Console.Write(">> ");
+
             while (true)
             {
                 if (int.TryParse(Console.ReadLine(), out int choice))
@@ -55,12 +64,20 @@ namespace project_TextRPG
         {
 
             Console.WriteLine("Battle!!\n");
-            Console.WriteLine("1 Lv.2 미니언  HP 15");
-            Console.WriteLine("2 Lv.5 대포미니언 HP 25");
-            Console.WriteLine("3 LV.3 공허충 HP 10\r\n");
+            foreach (var monster in Monsters)
+            {
+                if (!monster.isDead)
+                {
+                    Console.WriteLine("Lv.{0} {1} HP {2}", monster.Level, monster.Name, monster.Health);
+                }
+                else
+                {
+                    DeadWriteLine($"Lv.{monster.Level} {monster.Name} Dead");
+                }
+            }
             Console.WriteLine("[내정보]");
-            Console.WriteLine("Lv.{0}  {1} ({2})", TestPlayer.Level, TestPlayer.Name, TestPlayer.Class);
-            Console.WriteLine("HP {0}/{1}\n", TestPlayer.Health, TestPlayer.Maxhealth);
+            Console.WriteLine("Lv.{0}  {1} ({2})", Player.Level, Player.Name, Player.CharClass);
+            Console.WriteLine("HP {0}/{1}\n", Player.Health, Player.MaxHealth);
             Console.WriteLine("1. 공격\n");
             Console.WriteLine("대상을 선택해주세요.");
             Console.Write(">> ");
@@ -73,19 +90,14 @@ namespace project_TextRPG
                     {
                         return;
                     }
-                    else if (choice > 0 && choice <= Monsters.count)
+                    else if (choice > 0 && choice <= Monsters.Count)
                     {
-                        var selectedMonster = Monsters.count[choice - 1];
+                        var selectedMonster = Monsters[choice - 1];
 
                         if (selectedMonster != null && selectedMonster.isDead)
                         {
                             Console.WriteLine("잘못된 입력입니다.");
                         }
-                        else
-                        {
-                            selectedMonster.GetHIT();
-                        }
-
                     }
                     else
                     {
@@ -102,12 +114,20 @@ namespace project_TextRPG
         void StartBattle(int floor)
         {
             Console.WriteLine("Battle!!\n");
-            Console.WriteLine("Lv.2 미니언  HP 15");
-            Console.WriteLine("Lv.5 대포미니언 HP 25");
-            Console.WriteLine("LV.3 공허충 HP 10\r\n");
+            foreach (var monster in Monsters)
+            {
+                if (!monster.isDead)
+                {
+                    Console.WriteLine("Lv.{0} {1} HP {2}", monster.Level, monster.Name, monster.Health);
+                }
+                else
+                {
+                    DeadWriteLine($"Lv.{monster.Level} {monster.Name} Dead");
+                }
+            }
             Console.WriteLine("[내정보]");
-            Console.WriteLine("Lv.{0}  {1} ({2})",TestPlayer.Level, TestPlayer.Name, TestPlayer.Class);
-            Console.WriteLine("HP {0}/{1}\n",TestPlayer.Health,TestPlayer.Maxhealth);
+            Console.WriteLine("Lv.{0}  {1} ({2})", Player.Level, Player.Name, Player.CharClass);
+            Console.WriteLine("HP {0}/{1}\n", Player.Health, Player.MaxHealth);
             Console.WriteLine("1. 공격\n");
             Console.WriteLine("원하시는 행동을 입력해주세요.");
             Console.Write(">> ");
