@@ -1,12 +1,15 @@
 ﻿namespace project_TextRPG
 {
     public class Item
-    {
-        public string Name { get; set; } //아이템 이름
+    {        
+        public string Name { get; set; }
+        
         string Description { get; set; } //아이템 설명
         public int Price { get; set; } // 아이템 가격
         public bool IsPossessed { get; set; } = false; //아이템 소지여부
 
+        public ERank eRank { get; set; }
+        
         public Item(string itemName, string description, int itemPrice, bool isPossessed)
         {
             Name = itemName;
