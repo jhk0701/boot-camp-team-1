@@ -1,5 +1,8 @@
 ﻿namespace project_TextRPG
 {
+    /// <summary>
+    /// 플레이어 캐릭터 직업 타입
+    /// </summary>
     public enum EClass : int
     {
         /// <summary>
@@ -16,22 +19,53 @@
         DirectorOfUnion
     }
 
+    /// <summary>
+    /// 착용 장비의 종류
+    /// </summary>
+    public enum EEquipType : int
+    {
+        Weapon = 0,
+        Armor,
+        Helmet,
+        Accessary
+    }
 
-    public partial class DataDefinition
+    /// <summary>
+    /// 등급 체계
+    /// </summary>
+    public enum ERank : int 
+    {
+        Normal = 0,
+        Rare,
+        Epic,
+        Legendary,
+        Mythic
+    }
+
+    public enum BattleItemType : int
+    {
+        Potion = 0,
+        DamageItem = 1
+    }
+
+
+
+    public class DataDefinition
     {
 
         static DataDefinition _instance;
 
         public Item[] Items { get; set; }
 
+
         private DataDefinition()
         {
             Items = new Item[] {
-                new Item("Item 1", 10f),
-                new Item("Item 2", 10f),
-                new Item("Item 3", 10f),
-                new Item("Item 4", 10f),
-                new Item("Item 5", 10f),
+                //new Item("Item 1", 10f),
+                //new Item("Item 2", 10f),
+                //new Item("Item 3", 10f),
+                //new Item("Item 4", 10f),
+                //new Item("Item 5", 10f),
             };
         }
 
