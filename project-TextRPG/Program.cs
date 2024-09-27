@@ -9,6 +9,7 @@
             Character player = null;
             IScene startScene = new StartScene(COMMON_NAME);
             startScene.Start(player);
+            player = startScene.End();
 
             // 게임 시작
             IScene gameScene = new GameScene(COMMON_NAME);

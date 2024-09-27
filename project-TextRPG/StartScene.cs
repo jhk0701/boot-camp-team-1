@@ -26,13 +26,14 @@
             else
             {
                 // 2. 데이터 없으면 생성
-                Player = CreateCharacter();
+                CreateCharacter();
             }
         }
         public Character End()
         {
             return Player;
         }
+
 
 
         void ShowIntro()
@@ -97,7 +98,7 @@
             return new Character("name");
         }
 
-        Character CreateCharacter()
+        void CreateCharacter()
         {
             string name = "";
             int select = 0;
@@ -113,7 +114,7 @@
                 name = Console.ReadLine();
 
                 Utility.ShowScript(
-                    $"{name}님 이시군요.\n",
+                    $"\n입력하신 이름은 {name}입니다.\n",
                     "저장하시겠습니까?\n\n",
 
                     "1. 저장\n0. 취소\n"
@@ -123,9 +124,31 @@
             }
             while (select.Equals(0));
 
+            // 직업 선택
+            Console.Clear();
+            Utility.ShowScript(
+                $"{SceneName}에 오신 여러분 환영합니다.\n",
+                "원하시는 직업을 선택해주세요.\n\n",
 
+                "1. 노조 위원장\n",
+                "2. 사무총장\n",
+                "3. 조직 국장\n",
+                "\n"
+            );
 
-            return new Character(name);
+            select = Utility.GetSelection(1, 3);
+            switch((EClass)(select - 1))
+            {
+                case EClass.ChairmanOfUnion:
+                    Player = new ChairmanOfUnion(name);
+                    break;
+                case EClass.SecretaryGeneral:
+                    Player = new SecretaryGeneral(name);
+                    break;
+                case EClass.DirectorOfUnion:
+                    Player = new DirectorOfUnion(name);
+                    break;
+            }
         }
     
     }
