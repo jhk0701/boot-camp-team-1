@@ -13,7 +13,7 @@
 
             features = [
                 new Feature("상태보기", this),
-                new Feature("인벤토리", this),
+                new FeatureInventory("인벤토리", this),
                 new Feature("상점", this),
                 new Feature("전투 시작", this),
                 new Feature("휴식하기", this),
@@ -47,8 +47,8 @@
         void ShowMenu()
         {
             Console.Clear();
-            Console.WriteLine(
-                $"{SceneName}에 오신 여러분 환영합니다.\n" + 
+            Utility.ShowScript(
+                $"{SceneName}에 오신 여러분 환영합니다.\n",
                 "이제 전투를 시작할 수 있습니다.\n"
             );
 
@@ -58,6 +58,7 @@
 
             Console.WriteLine();
             int select = Utility.GetSelection(1, 7);
+
             Select(select);
         }
 
