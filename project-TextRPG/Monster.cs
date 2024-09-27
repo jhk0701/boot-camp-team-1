@@ -20,14 +20,19 @@ namespace project_TextRPG
         public Goblin(string name) : base(name)
         {
             Name = name;
-            Exp = 5;
             BasicAttack = 3f;
             BasicDefense = 3f;
             MaxHealth = 10f;
             Health = MaxHealth;
             MaxMana = 10f;
             Mana = MaxMana;
+            
             isDead = false;
+            Skills = [
+                new Skill()
+                ]
+            
+            
         }
     }
     class Orc : Monster
@@ -36,13 +41,16 @@ namespace project_TextRPG
         {
             Name = name;
             Exp = 5;
-            BasicAttack = 3f;
-            BasicDefense = 3f;
-            MaxHealth = 10f;
+            BasicAttack = 5f;
+            BasicDefense = 5f;
+            MaxHealth = 12f;
             Health = MaxHealth;
-            MaxMana = 10f;
-            Mana = MaxMana;
+            MaxMana = 12f;
+            Mana = MaxMana;   
             isDead = false;
+            Skills = [
+                new Skill()
+                ]
         }
 
     }
@@ -52,13 +60,16 @@ namespace project_TextRPG
         {
             Name = name;
             Exp = 5;
-            BasicAttack = 3f;
-            BasicDefense = 3f;
-            MaxHealth = 10f;
+            BasicAttack = 7f;
+            BasicDefense = 7f;
+            MaxHealth = 14f;
             Health = MaxHealth;
-            MaxMana = 10f;
+            MaxMana = 14f;
             Mana = MaxMana;
             isDead = false;
+            Skills = [
+                new Skill()
+            ];
         }
 
     }
@@ -69,6 +80,25 @@ namespace project_TextRPG
         {
             Name = name;
             Exp = 5;
+            BasicAttack = 9f;
+            BasicDefense = 9f;
+            MaxHealth = 16f;
+            Health = MaxHealth;
+            MaxMana = 16f;
+            Mana = MaxMana;
+            isDead = false;
+            Skills = [
+                new Skill()
+            ];
+        }
+
+    }
+
+    class Dragon: Monster
+    {
+        public Dragon(string name) : base(name)
+        {
+            Name = name;
             BasicAttack = 3f;
             BasicDefense = 3f;
             MaxHealth = 10f;
@@ -76,9 +106,11 @@ namespace project_TextRPG
             MaxMana = 10f;
             Mana = MaxMana;
             isDead = false;
+            Skills = [
+                new Skill()
+            ];
+
         }
 
     }
-
-
 }
