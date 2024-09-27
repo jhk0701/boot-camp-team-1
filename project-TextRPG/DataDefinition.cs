@@ -25,7 +25,9 @@
     public enum EEquipType : int
     {
         Weapon = 0,
-        Armor
+        Armor,
+        Helmet,
+        Accessary
     }
 
     /// <summary>
@@ -35,10 +37,18 @@
     {
         Normal = 0,
         Rare,
-        Heroic,
+        Epic,
         Legendary,
         Mythic
     }
+
+    public enum BattleItemType : int
+    {
+        Potion = 0,
+        DamageItem = 1
+    }
+
+
 
     public class DataDefinition
     {
@@ -51,11 +61,11 @@
         private DataDefinition()
         {
             Items = new Item[] {
-                new Item("Item 1", 10f),
-                new Item("Item 2", 10f),
-                new Item("Item 3", 10f),
-                new Item("Item 4", 10f),
-                new Item("Item 5", 10f),
+                //new Item("Item 1", 10f),
+                //new Item("Item 2", 10f),
+                //new Item("Item 3", 10f),
+                //new Item("Item 4", 10f),
+                //new Item("Item 5", 10f),
             };
         }
 

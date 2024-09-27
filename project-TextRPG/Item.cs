@@ -22,14 +22,14 @@
     public class Equipment : Item
     {
         public bool IsEquipped { get; set; } = false;    //장착 여부
-        public EqType eqType { get; set; }   //장비 유형
-        public EqRank eqRank { get; set; }   //아이템 등급
+        public EEquipType eqType { get; set; }   //장비 유형
+        public ERank eqRank { get; set; }   //아이템 등급
         public float AtkBonus { get; set; }  //공격력 보너스
         public float DefBonus { get; set; }  //방어력 보너스
         public float MaxHpBonus { get; set; }   //최대 HP보너스
         public float MaxMpBonus { get; set; }   //최대 MP보너스
 
-        public Equipment(string itemName, string description, int itemPrice, bool isPossessed, EqType eqType, EqRank eqRank, float atkBonus, float defBonus, float maxHpBonus, float maxMpBonus) : base(itemName, description, itemPrice, isPossessed)
+        public Equipment(string itemName, string description, int itemPrice, bool isPossessed, EEquipType eqType, ERank eqRank, float atkBonus, float defBonus, float maxHpBonus, float maxMpBonus) : base(itemName, description, itemPrice, isPossessed)
         {
             IsEquipped = false;
             this.eqType = eqType;
@@ -53,29 +53,5 @@
             this.battleItemType = battleItemType;
         }
     }
-
-
-    //아이템 랭크
-    public enum EqRank : int
-    {
-        Normal = 0,
-        Rare = 1,
-        Epic = 2,
-        Legendary = 3
-    }
-    public enum EqType : int
-    {
-        Weapon = 0,
-        Armor = 1,
-        Helmet = 2,
-        Accessary = 3,
-    }
-    public enum BattleItemType : int
-    {
-        Potion = 0,
-        DamageItem = 1
-    }
-
-
 
 }
