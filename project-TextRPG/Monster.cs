@@ -20,20 +20,31 @@ namespace project_TextRPG
         public Goblin(string name) : base(name)
         {
             Name = name;
-            Exp = 5;
             BasicAttack = 3f;
             BasicDefense = 3f;
             MaxHealth = 10f;
             Health = MaxHealth;
             MaxMana = 10f;
             Mana = MaxMana;
+            Skills = [
+                new Skill()
+                ]
         }
     }
     class Orc : Monster
     {
         public Orc(string name) : base(name)
         {
-
+            Name = name;
+            BasicAttack = 5f;
+            BasicDefense = 5f;
+            MaxHealth = 12f;
+            Health = MaxHealth;
+            MaxMana = 12f;
+            Mana = MaxMana;
+            Skills = [
+                new Skill()
+                ]
         }
 
     }
@@ -41,7 +52,16 @@ namespace project_TextRPG
     {
         public Troll(string name) : base(name)
         {
-
+            Name = name;
+            BasicAttack = 7f;
+            BasicDefense = 7f;
+            MaxHealth = 14f;
+            Health = MaxHealth;
+            MaxMana = 14f;
+            Mana = MaxMana;
+            Skills = [
+                new Skill()
+                ]
         }
 
     }
@@ -50,10 +70,36 @@ namespace project_TextRPG
     {
         public Slime(string name) : base(name)
         {
-
+            Name = name;
+            BasicAttack = 9f;
+            BasicDefense = 9f;
+            MaxHealth = 16f;
+            Health = MaxHealth;
+            MaxMana = 16f;
+            Mana = MaxMana;
+            Skills = [
+                new Skill()
+                ]
         }
 
     }
 
+    class Dragon: Monster
+    {
+        public Dragon(string name) : base(name)
+        {
+            Name = name;
+            BasicAttack = 3f;
+            BasicDefense = 3f;
+            MaxHealth = 10f;
+            Health = MaxHealth;
+            MaxMana = 10f;
+            Mana = MaxMana;
+            Skills = [
+                new Skill()
+                ]
 
+        }
+
+    }
 }
