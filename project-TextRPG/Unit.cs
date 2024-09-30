@@ -1,6 +1,6 @@
 ﻿namespace project_TextRPG
 {
-    class Unit
+    public class Unit
     {
         public String Name { get; protected set; }
 
