@@ -23,11 +23,9 @@ namespace project_TextRPG
 
             while (!int.TryParse(i, out result) || result < min || result > max)
             {
-                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine();
-                Console.WriteLine("잘못된 입력입니다.\n");
+                WriteColorScript("잘못된 입력입니다.\n", ConsoleColor.Red);
 
-                Console.ResetColor();
                 Console.WriteLine(msg);
                 i = Console.ReadLine();
             }

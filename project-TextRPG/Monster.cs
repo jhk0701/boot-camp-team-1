@@ -8,18 +8,28 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace project_TextRPG
 {
-    class Monster : Unit
+    public class Monster : Unit
     {
+        public int Id { get; set; }
         public int Gold { get; set; }
         public Skill[] Skills { get; set; }
 
         public Monster(string name) : base(name) { }
+        
+        public Monster(string name, int id, float atk, float def, float hp = 10f, float mp = 10f) : base(name) 
+        { 
+            Id = id;
 
-        public override float TakeDamage(float damage)
-        {
-            Health -= damage;
-            return Health;
+            BasicAttack = atk;
+            BasicDefense = def;
+            MaxHealth = hp;
+            Health = MaxHealth;
+            MaxMana = mp;
+            Mana = MaxMana;
+
+            isDead = false;
         }
+
     }
 
     class Goblin : Monster
@@ -34,10 +44,6 @@ namespace project_TextRPG
             MaxMana = 10f;
             Mana = MaxMana;
             isDead = false;
-            //Skills = [
-            //    new Skill()
-            //    ]
-            
             
         }
     }
@@ -79,7 +85,6 @@ namespace project_TextRPG
         }
 
     }
-
     class Slime : Monster
     {
         public Slime(string name) : base(name)
@@ -99,7 +104,6 @@ namespace project_TextRPG
         }
 
     }
-
     class Dragon: Monster
     {
         public Dragon(string name) : base(name)

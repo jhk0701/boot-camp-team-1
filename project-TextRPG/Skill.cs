@@ -1,6 +1,6 @@
 ﻿namespace project_TextRPG
 {
-    class Skill
+    public class Skill
     {
         public string Name { get; protected set; }
         public float[] PowerRange { get; protected set; }
