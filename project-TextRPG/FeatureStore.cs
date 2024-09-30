@@ -3,8 +3,6 @@
     class FeatureStore : Feature
     {
         Feature[] _subFeatures;
-        // 상인의 아이템 목록 : 기본템 : 상시 판매
-        // 재구입 목록 - 보관 : 20개까지만
 
         public FeatureStore(string featureName, IScene scene)
         {

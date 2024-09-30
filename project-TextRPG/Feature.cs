@@ -23,6 +23,7 @@
         /// </summary>
         public abstract void Act();
 
+
         /// <summary>
         /// 기능(Feature) 시작함수
         /// </summary>
