@@ -5,16 +5,19 @@
         public string SceneName { get; set; }
         public Character Player { get; set; }
 
+        bool _isSkip;
 
-        public StartScene(string sceneName)
+        public StartScene(string sceneName, bool isSkip = false)
         {
             SceneName = sceneName;
+            _isSkip = isSkip;
         }
 
         public void Start(Character visitor)
         {
             Player = visitor;
-            ShowIntro();
+            if(!_isSkip)
+                ShowIntro();
 
             bool isLoaded = false; // 데이터 로드
 

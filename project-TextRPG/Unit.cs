@@ -1,11 +1,11 @@
 ﻿namespace project_TextRPG
 {
-    class Unit
+    public class Unit
     {
         public String Name { get; protected set; }
 
         public float BasicAttack { get; protected set; }
-        public float EquipAttack { get; protected set; }
+        public float EquipAttack { get; set; }
         public float Attack 
         { 
             get 
@@ -15,7 +15,7 @@
         }
 
         public float BasicDefense { get; protected set; }
-        public float EquipDefense { get; protected set; }
+        public float EquipDefense { get; set; }
         public float Defense 
         { 
             get 
@@ -25,11 +25,13 @@
         }
 
         public float MaxHealth { get; protected set; }
+        public float EquipHealth { get; set; }
         public float Health { get; protected set; }
 
         public float MaxMana { get; protected set; }
+        public float EquipMana { get; set; }
         public float Mana { get; protected set; }
-        public bool isDead { get; protected set; }
+        public bool isDead { get; set; }
 
         int _lv;
         public int Level 
@@ -78,6 +80,12 @@
         public virtual float TakeDamage(float damage) 
         { 
             Health -= damage;
+            return Health;
+        }
+
+        public virtual float Cure(float val)
+        {
+            Health += val;
             return Health;
         }
     }
