@@ -17,6 +17,11 @@
             Price = itemPrice;
             IsPossessed = isPossessed;
         }
+
+        public string GetName() //
+        {
+            return Name;
+        }
     }
 
     public class Equipment : Item
@@ -43,7 +48,9 @@
 
     public class BattleItem : Item
     {
+
         public int ItemCount { get; set; } //아이템 개수
+
 
         public BattleItemType battleItemType { get; set; } // 0: 포션, 1: 데미지아이템
 
@@ -51,6 +58,22 @@
         {
             this.ItemCount = itemCount;
             this.battleItemType = battleItemType;
+        }
+        public void Use()
+        {
+            ItemCount--;
+            Console.WriteLine($"플레이어는 {Name}을(를) 사용했다!");
+            Console.WriteLine($"{Name}은 {ItemCount}개 남았습니다.");
+        }
+    }
+
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            BattleItem potion = new BattleItem("Healing Potion", "회복 포션", 50, true, 3, 0);
+
+            potion.Use();
         }
     }
 
