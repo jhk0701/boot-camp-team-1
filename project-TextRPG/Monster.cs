@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace project_TextRPG
 {
@@ -13,6 +14,12 @@ namespace project_TextRPG
         public Skill[] Skills { get; set; }
 
         public Monster(string name) : base(name) { }
+
+        public override float TakeDamage(float damage)
+        {
+            Health -= damage;
+            return Health;
+        }
     }
 
     class Goblin : Monster
@@ -26,11 +33,10 @@ namespace project_TextRPG
             Health = MaxHealth;
             MaxMana = 10f;
             Mana = MaxMana;
-            
             isDead = false;
-            Skills = [
-                new Skill()
-                ]
+            //Skills = [
+            //    new Skill()
+            //    ]
             
             
         }
@@ -48,9 +54,9 @@ namespace project_TextRPG
             MaxMana = 12f;
             Mana = MaxMana;   
             isDead = false;
-            Skills = [
-                new Skill()
-                ]
+            //Skills = [
+            //    new Skill()
+            //    ]
         }
 
     }
@@ -67,9 +73,9 @@ namespace project_TextRPG
             MaxMana = 14f;
             Mana = MaxMana;
             isDead = false;
-            Skills = [
-                new Skill()
-            ];
+            //Skills = [
+            //    new Skill()
+            //];
         }
 
     }
@@ -87,9 +93,9 @@ namespace project_TextRPG
             MaxMana = 16f;
             Mana = MaxMana;
             isDead = false;
-            Skills = [
-                new Skill()
-            ];
+            //Skills = [
+            //    new Skill()
+            //];
         }
 
     }
@@ -106,9 +112,9 @@ namespace project_TextRPG
             MaxMana = 10f;
             Mana = MaxMana;
             isDead = false;
-            Skills = [
-                new Skill()
-            ];
+            //Skills = [
+            //    new Skill()
+            //];
 
         }
 

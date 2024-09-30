@@ -29,7 +29,7 @@
 
         public float MaxMana { get; protected set; }
         public float Mana { get; protected set; }
-        public bool isDead { get; protected set; }
+        public bool isDead { get; set; }
 
         int _lv;
         public int Level 

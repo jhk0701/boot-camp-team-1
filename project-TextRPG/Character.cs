@@ -21,6 +21,16 @@
         public ChairmanOfUnion(string name) : base(name)
         {
             CharClass = EClass.ChairmanOfUnion;
+            Name = name;
+            Level = 5;
+            BasicAttack = 10f;
+            BasicDefense = 1f;
+            MaxHealth = 50f;
+            Health = MaxHealth;
+            MaxMana = 50f;
+            Mana = MaxMana;
+            isDead = false;
+
 
             Skills = [
                 new Skill("파업", [120f, 150f], 5, 10f),
