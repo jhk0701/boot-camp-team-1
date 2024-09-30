@@ -1,20 +1,37 @@
 ﻿namespace project_TextRPG
 {
-    class Feature
+    abstract class Feature
     {
-        IScene _scene;
+        protected IScene _scene;
+        protected Character _player;
 
-        string _name;
-        public virtual string Name { get; set;}
-
-        public Feature(string featureName, IScene scene)
+        protected string _name;
+        public virtual string Name 
         {
-            Name = featureName;
-            _scene = scene;
+            get { return _name; } 
+            set { _name = value; }
         }
 
-        public virtual void Start()
+
+        /// <summary>
+        /// 기능 표시
+        /// </summary>
+        public abstract void ShowMenu();
+
+        /// <summary>
+        /// 플레이어 선택 실행
+        /// </summary>
+        public abstract void Act();
+
+
+        /// <summary>
+        /// 기능(Feature) 시작함수
+        /// </summary>
+        /// <param name="player"></param>
+        public virtual void Start(Character player)
         {
+            _player = player;
+
             Console.Clear();
             // 기능 실행
             // 1. 표시
@@ -24,26 +41,13 @@
         }
 
         /// <summary>
-        /// 기능 관련 사항 표시
+        /// 기능 종료 함수
         /// </summary>
-        public virtual void ShowMenu()
-        {
-
-        }
-
-        public virtual void Act()
-        {
-            // 관련 기능
-
-            // 관련 기능 완료 후, 복귀
-            // End();
-        }
-
         public virtual void End()
         {
-            // 기능 종료 시 호출
             // 공통적으로 원래 씬으로 돌아감.
             _scene.Return();
         }
+
     }
 }

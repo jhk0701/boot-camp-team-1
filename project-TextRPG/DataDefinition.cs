@@ -33,6 +33,14 @@ namespace project_TextRPG
         Accessary
     }
 
+    public enum EEquipBonus : int
+    {
+        ATK = 0,    // Attack
+        DEF,    // Defense
+        HP,     // Hp
+        MP      // MP
+    }
+
     /// <summary>
     /// 등급 체계
     /// </summary>
@@ -52,24 +60,27 @@ namespace project_TextRPG
     }
 
 
-
     public class DataDefinition
     {
-
+        long _instanceId = 1;
         static DataDefinition _instance;
 
         public Item[] Items { get; set; }
         public Monster[] Monsters { get; set; }
         public Skill[] Skills { get; set; }
+        
+        public Equipment[] Equipments { get; set; }
+        public BattleItem[] BattleItems { get; set; }
+
 
         private DataDefinition()
         {
-            Items = new Item[] {
-                //new Item("Item 1", 10f),
-                //new Item("Item 2", 10f),
-                //new Item("Item 3", 10f),
-                //new Item("Item 4", 10f),
-                //new Item("Item 5", 10f),
+            Equipments = new Equipment[] {
+                new Equipment("정장", "Manners, Maketh, Man.", 1000, EEquipType.Armor, ERank.Normal, 0f, 10f, 10f, 0f),
+                new Equipment("서류 가방", "사실은 총이 들어갑니다.", 2000, EEquipType.Weapon, ERank.Normal, 10f, 0f, 0f, 10f),
+            };
+
+            BattleItems = new BattleItem[] {
             };
             //string name, float basicattack, float basicdefence, float maxhealth, float maxmana, int gold, Skill[] skills) : base(name)
             Monsters = new Monster[]
@@ -120,5 +131,9 @@ namespace project_TextRPG
             return _instance;
         }
 
+        public long GetInstanceId()
+        {
+            return _instanceId++;
+        }
     }
 }
