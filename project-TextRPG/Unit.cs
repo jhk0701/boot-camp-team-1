@@ -82,5 +82,11 @@
             Health -= damage;
             return Health;
         }
+
+        public virtual float Cure(float val)
+        {
+            Health += val;
+            return Health;
+        }
     }
 }
