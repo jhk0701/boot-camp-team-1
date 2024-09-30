@@ -16,7 +16,7 @@
                 new FeatureInventory("인벤토리", this),
                 new FeatureStore("상점", this),
                 new FeatureInventory("전투 시작", this),
-                new FeatureInventory("휴식하기", this),
+                new FeatureRest("휴식하기", this),
                 new FeatureInventory("마을 게시판", this),
                 new FeatureInventory("가챠 뽑기", this)
             ];

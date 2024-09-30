@@ -11,8 +11,6 @@
             startScene.Start(player);
             player = startScene.End();
 
-            player.Gold = 10000;
-
             // 게임 시작
             IScene gameScene = new GameScene(COMMON_NAME);
             gameScene.Start(player);
