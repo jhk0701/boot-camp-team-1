@@ -9,7 +9,7 @@
 
         public Character(string name) : base(name) 
         { 
-            Inventory = new Inventory();
+            Inventory = new Inventory(this);
         }
     }
 

@@ -12,13 +12,13 @@
             SceneName = name;
 
             features = [
-                new Feature("상태보기", this),
+                new FeatureInventory("상태보기", this),
                 new FeatureInventory("인벤토리", this),
-                new Feature("상점", this),
-                new Feature("전투 시작", this),
-                new Feature("휴식하기", this),
-                new Feature("마을 게시판", this),
-                new Feature("가챠 뽑기", this)
+                new FeatureStore("상점", this),
+                new FeatureInventory("전투 시작", this),
+                new FeatureInventory("휴식하기", this),
+                new FeatureInventory("마을 게시판", this),
+                new FeatureInventory("가챠 뽑기", this)
             ];
         }
 
@@ -69,7 +69,7 @@
         void Select(int select)
         {
             // 여기부터 플레이어가 선택한 기능 실행
-            features[select].Start();
+            features[select - 1].Start(Player);
         }
 
         /// <summary>
