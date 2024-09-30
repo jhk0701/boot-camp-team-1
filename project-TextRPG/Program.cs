@@ -21,9 +21,9 @@ namespace project_TextRPG
         }
         static void SaveGame()
         {
-            string jsonString = JsonSerializer.Serialize(playerCharacter);
-            File.WriteAllText(saveFilePath, jsonString);
-            Console.WriteLine("게임이 저장되었습니다.");
+           // string jsonString = JsonSerializer.Serialize(playerCharacter);
+           // File.WriteAllText(saveFilePath, jsonString);
+           // Console.WriteLine("게임이 저장되었습니다.");
         }
 
     }
