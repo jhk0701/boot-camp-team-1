@@ -60,7 +60,7 @@
             // 골드 지불
             _player.Gold -= e[select - 1].Price;
             // 아이템 지급
-            _player.Inventory.Add(e[select - 1].Copy());
+            _player.Inventory.Add(e[select - 1]/*.Copy()*/);
 
             Console.Clear();
             ShowMenu();

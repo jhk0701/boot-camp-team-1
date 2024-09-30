@@ -5,6 +5,8 @@ namespace project_TextRPG
 {
     class Battle
     {
+        IScene _scene;
+
         Character Player;
         List<Monster> Monsters;
 
@@ -13,7 +15,7 @@ namespace project_TextRPG
         int Floar;
 
         Random ran;
-        public Battle(Character player, int dungeonid)
+        public Battle(Character player, int dungeonid, IScene scene)
         {
             Player = player;
 
@@ -23,7 +25,7 @@ namespace project_TextRPG
 
             Monsters = CreateMonsters(dungeonid);
             Monsters = ShuffleMonsters(Monsters);
-
+            _scene = scene;
         }
 
         float GetTrueDamage(float damage)
@@ -163,6 +165,7 @@ namespace project_TextRPG
                 {
                     if (choice == 0)
                     {
+                        _scene.Return();
                         return;
                     }
                     else
@@ -175,6 +178,7 @@ namespace project_TextRPG
                     Console.WriteLine("잘못된 입력입니다. 다시 시도하세요.");
                 }
             }
+
         }
 
         void ShowLose()
@@ -192,6 +196,7 @@ namespace project_TextRPG
                 {
                     if (choice == 0)
                     {
+                        _scene.Return();
                         return;
                     }
                     else

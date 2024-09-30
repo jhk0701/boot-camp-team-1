@@ -29,7 +29,7 @@ namespace project_TextRPG
         }
   }
 
-    public class Equipment : Item, ICopyable<Equipment>
+    public class Equipment : Item/*, ICopyable<Equipment>*/
     {
         // 장착 여부
         // 소지 여부 때와 마찬가지로
@@ -94,17 +94,17 @@ namespace project_TextRPG
             return sb.ToString();
         }
 
-        public Equipment Copy()
-        {
-            Equipment copy = new Equipment(
-                Name, Description, Price, type, Rank, 
-                Bonus[EEquipBonus.ATK],
-                Bonus[EEquipBonus.DEF],
-                Bonus[EEquipBonus.HP],
-                Bonus[EEquipBonus.MP]
-            );
-            return copy;
-        }
+        //public Equipment Copy()
+        //{
+        //    Equipment copy = new Equipment(
+        //        Name, Description, Price, type, Rank, 
+        //        Bonus[EEquipBonus.ATK],
+        //        Bonus[EEquipBonus.DEF],
+        //        Bonus[EEquipBonus.HP],
+        //        Bonus[EEquipBonus.MP]
+        //    );
+        //    return copy;
+        //}
     }
 
     public class BattleItem : Item
@@ -127,15 +127,4 @@ namespace project_TextRPG
             Console.WriteLine($"{Name}은 {ItemCount}개 남았습니다.");
         }
     }
-
-    class Program
-    {
-        public static void Main(string[] args)
-        {
-            BattleItem potion = new BattleItem("Healing Potion", "회복 포션", 50, true, 3, 0);
-
-            potion.Use();
-        }
-    }
-
 }
