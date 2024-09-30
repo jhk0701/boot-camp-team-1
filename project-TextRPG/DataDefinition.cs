@@ -61,6 +61,9 @@
     {
         static DataDefinition _instance;
 
+        long _instanceId = 1;
+
+
         public Equipment[] Equipments { get; set; }
         public BattleItem[] BattleItems { get; set; }
 
@@ -84,5 +87,9 @@
             return _instance;
         }
 
+        public long GetInstanceId()
+        {
+            return _instanceId++;
+        }
     }
 }

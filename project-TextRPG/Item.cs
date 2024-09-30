@@ -4,6 +4,8 @@ namespace project_TextRPG
 {
     public class Item
     {
+        long _id;
+
         public string Name { get; protected set; }
         public string Description { get; protected set; } //아이템 설명
         public int Price { get; protected set; } // 아이템 가격
@@ -22,11 +24,13 @@ namespace project_TextRPG
             Price = itemPrice;
             Rank = rank;
             //IsPossessed = isPossessed;
+
+            //_id = DataDefinition.GetInstance().GetInstanceId();
         }
 
     }
 
-    public class Equipment : Item
+    public class Equipment : Item, ICopyable<Equipment>
     {
         // 장착 여부
         // 소지 여부 때와 마찬가지로
@@ -91,6 +95,17 @@ namespace project_TextRPG
             return sb.ToString();
         }
 
+        public Equipment Copy()
+        {
+            Equipment copy = new Equipment(
+                Name, Description, Price, type, Rank, 
+                Bonus[EEquipBonus.ATK],
+                Bonus[EEquipBonus.DEF],
+                Bonus[EEquipBonus.HP],
+                Bonus[EEquipBonus.MP]
+            );
+            return copy;
+        }
     }
 
     public class BattleItem : Item
