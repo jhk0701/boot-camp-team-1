@@ -28,10 +28,10 @@
             {
                 Equipment item = _player.Inventory.Items[i];
 
+                // _player.Inventory.IsEquipped(item)
                 Utility.ShowScript(
-                    "-",
-                    _player.Inventory.IsEquipped(item) ? "[E]" : "",
-                    $"{item.Name,-15} | {item.GetBonusSpec(),-15} | {item.Description}"
+                    "- ",
+                    item.GetDesc(0, _player.Inventory.IsEquipped(item))
                 );
             }
 

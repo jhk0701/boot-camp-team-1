@@ -1,6 +1,6 @@
 ﻿namespace project_TextRPG
 {
-    class Inventory
+    public class Inventory
     {
         Character _player;
         
@@ -48,7 +48,7 @@
                 if (Equipments[item.type] != null)
                 {
                     Equipment prev = Equipments[item.type];
-                    RemoveBonus(prev.Bonus);
+                    AdjustBonus(prev, -1);
                 }
 
                 Equipments[item.type] = item;
@@ -59,56 +59,38 @@
                 Equipments.Add(item.type, item);
             }
 
-            AdjustBonus(item.Bonus);
+            AdjustBonus(item);
         }
 
         public void Unequip(Equipment item)
         {
             Equipment prev = Equipments[item.type];
-            RemoveBonus(prev.Bonus);
+            AdjustBonus(prev, -1);
 
             Equipments[item.type] = null;
         }
 
-        void RemoveBonus(Dictionary<EEquipBonus, float> bonus)
+        void AdjustBonus(Equipment e, int dir = 1)
         {
-            foreach (KeyValuePair<EEquipBonus, float> i in bonus)
-            {
-                switch (i.Key)
-                {
-                    case EEquipBonus.ATK:
-                        _player.EquipAttack -= i.Value;
-                        break;
-                    case EEquipBonus.DEF:
-                        _player.EquipDefense -= i.Value;
-                        break;
-                    case EEquipBonus.HP:
-                        _player.EquipHealth -= i.Value;
-                        break;
-                    case EEquipBonus.MP:
-                        _player.EquipMana -= i.Value;
-                        break;
-                }
-            }
-        }
+            float enhance = 1f + e.Enhancements.Sum() * 0.01f;
 
-        void AdjustBonus(Dictionary<EEquipBonus, float> bonus)
-        {
-            foreach (KeyValuePair<EEquipBonus, float> i in bonus)
+            foreach (KeyValuePair<EEquipBonus, float> i in e.Bonus)
             {
+                float val = i.Value * enhance * (float)dir;
+
                 switch (i.Key)
                 {
                     case EEquipBonus.ATK:
-                        _player.EquipAttack += i.Value;
+                        _player.EquipAttack += val;
                         break;
                     case EEquipBonus.DEF:
-                        _player.EquipDefense += i.Value;
+                        _player.EquipDefense += val;
                         break;
                     case EEquipBonus.HP:
-                        _player.EquipHealth += i.Value;
+                        _player.EquipHealth += val;
                         break;
                     case EEquipBonus.MP:
-                        _player.EquipMana += i.Value;
+                        _player.EquipMana += val;
                         break;
                 }
             }
@@ -121,7 +103,8 @@
 
         public bool HasItem(Equipment item)
         {
-            return Items.Contains(item);
+            //return Items.Contains(item);
+            return Items.Any(n => n.Name.Equals(item.Name));
         }
     }
 }

@@ -24,9 +24,8 @@
             for (int i = 0; i < e.Length; i++)
             {
                 Utility.ShowScript(
-                    $"-{i + 1}. {e[i].Name,-15} | {e[i].GetBonusSpec(),-15} | {e[i].Price} G ",
-                    _player.Inventory.HasItem(e[i]) ? "(보유중) ":"",
-                    $"| {e[i].Description}"
+                    $"-{i + 1}. ",
+                    e[i].GetDesc(1, _player.Inventory.HasItem(e[i]))
                 );
             }
 

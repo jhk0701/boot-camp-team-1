@@ -7,11 +7,13 @@
         public Skill[] Skills { get; protected set; }
         public Inventory Inventory { get; protected set; }
 
+        public Quest[] Quests { get; protected set; }
         public override bool IsPlayer => true;
 
-        public Character(string name) : base(name) 
-        { 
-
+        public Character(string name) : base(name)
+        {
+            Level = 1;
+            Exp = 0;
             Inventory = new Inventory(this);
         }
 
@@ -67,16 +69,7 @@
         public ChairmanOfUnion(string name) : base(name)
         {
             CharClass = EClass.ChairmanOfUnion;
-            //Name = name;
-            //isDead = false;
-
-            //Level = 5;
-            //BasicAttack = 10f;
-            //BasicDefense = 1f;
-            //MaxHealth = 50f;
-            //Health = MaxHealth;
-            //MaxMana = 50f;
-            //Mana = MaxMana;
+            Level = 50;
             Initialize(DataDefinition.GetInstance().ClassInitDatas[(int)CharClass]);
 
             Skills = [

@@ -1,4 +1,4 @@
-﻿namespace project_TextRPG
+namespace project_TextRPG
 {
     public class Monster : Unit
     {
@@ -8,8 +8,9 @@
         public override bool IsPlayer => false;
 
         public Monster(string name) : base(name) { }
-        public Monster(string name, float basicattack, float basicdefence, float maxhealth, float maxmana, int gold, Skill[] skills) : base(name)
+        public Monster(int id, string name, float basicattack, float basicdefence, float maxhealth, float maxmana, int gold, Skill[] skills) : base(name)
         {
+            Id = id;
             BasicAttack = basicattack;
             BasicDefense = basicdefence;
             MaxHealth = maxhealth;
@@ -18,8 +19,18 @@
             Mana = MaxMana;
         }
 
+        public Monster Copy() // ?��로토????��
+        {
+            Monster copy = new Monster(
+                Id, Name, BasicAttack, BasicDefense, MaxHealth, MaxMana, Gold, Skills
+            );
+            return copy;
+        }
+
     }
     
+
+
     class Goblin : Monster
     {
         public Goblin(string name) : base(name)
@@ -110,4 +121,6 @@
         }
 
     }
+
+
 }

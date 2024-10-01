@@ -1,7 +1,4 @@
-﻿using project_TextRPG;
-using System.Xml.Linq;
-
-namespace project_TextRPG
+﻿namespace project_TextRPG
 {
     /// <summary>
     /// 플레이어 캐릭터 직업 타입
@@ -33,6 +30,9 @@ namespace project_TextRPG
         Accessary
     }
 
+    /// <summary>
+    /// 장비 착용 시 적용 성능
+    /// </summary>
     public enum EEquipBonus : int
     {
         ATK = 0,    // Attack
@@ -86,10 +86,16 @@ namespace project_TextRPG
         public Monster[] Monsters { get; set; }
         public Skill[] Skills { get; set; }
 
-        public Item[] Items { get; set; }
+        public Skill[] UnionSkills { get; set; }  // 유니온 스킬테스트용 변수
+
         public Equipment[] Equipments { get; set; }
+        public HealItem[] HealItems { get; set; }
         public ClassInitData[] ClassInitDatas { get; private set; }
 
+        /// <summary>
+        /// 퀘스트 정의 리스트. 레벨별 퀘스트
+        /// </summary>
+        public Quest[] QuestList { get; private set; }
         private DataDefinition()
         {
 
@@ -103,21 +109,34 @@ namespace project_TextRPG
             {
                 new Equipment("정장", "Manners, Maketh, Man.", 1000, EEquipType.Armor, ERank.Normal, 0f, 10f, 10f, 0f),
                 new Equipment("서류 가방", "사실은 총이 들어갑니다.", 2000, EEquipType.Weapon, ERank.Normal, 10f, 0f, 0f, 10f),
+                //Weapon List
+                new Equipment("회사 화장실 휴지", "[무기] [공격력 +10] 닦을 때 따가운 화장실 휴지, 엉덩이의 처우를 개선해달라.", 100, 0, ERank.Normal, 10f, 0, 0, 0),
+                new Equipment("부러진 법인카드", "[무기] [공격력 +30] 부도 직전 회사의 한도초과 카드, 가려운 곳 긁기에는 쓸만하다.", 500, 0, ERank.Rare, 30f, 0, 0, 0),
+                new Equipment("연대의 확성기", "[무기] [공격력 +70] 우리의 처절한 외침이 들리는가.", 2000, 0, ERank.Epic, 70f, 0, 0, 0),
+                new Equipment("평화의 죽창", "[무기] [공격력 +100] 회사 앞에 심어놓은 대나무를 뽑아서 만들었다.", 5000, 0, ERank.Legendary, 100f, 0, 0, 0),
+                new Equipment("사장님의 신용카드", "[무기] [공격력 +200] 사장님의 비자금이 숨겨진 카드. 돈쭐을 내줄 수 있다.", 10000, 0, ERank.Mythic, 200f, 0, 0, 0),
+
             };
 
+            HealItems = new HealItem[]
+            {
+                //HealItem List
+                new HealItem("믹스 커피", "아침 필수 도핑약 [HP + 50]", 10, 1, 50),
+                new HealItem("야근의 핫식스", "야근을 버티게 하는 마법의  [HP + 100]", 30, 1, 100),
+                new HealItem("박카스", "풀려라 5천만, 풀려라 피로! [HP + 300]", 100, 1, 300),
+            };
             //string name, float basicattack, float basicdefence, float maxhealth, float maxmana, int gold, Skill[] skills) : base(name)
             Monsters = new Monster[]
             {
-                new Monster("부당계약서", 3f, 3f, 10f, 10f, 50, new Skill[]{ new Skill("계약이행", new float[]{10f}, 0, 10f)}),
-                new Monster("연장근무", 3f, 3f, 10f, 10f, 50, new Skill[]{ new Skill("업무의심연", new float[]{15f}, 0, 10f)}),
-                new Monster("환영복지술사", 3f, 3f, 10f, 10f, 50, new Skill[]{ new Skill("덫없는환상", new float[]{12f}, 0, 10f)}),
-                new Monster("월급루팡", 3f, 3f, 10f, 10f, 50, new Skill[]{ new Skill("훔치기", new float[]{5f}, 0, 10f)}),
-                new Monster("인사고과망령", 3f, 3f, 10f, 10f, 50, new Skill[]{ new Skill("불공정평가", new float[]{8f}, 0, 10f)}),
-                new Monster("노동착취자", 3f, 3f, 10f, 10f, 50, new Skill[]{ new Skill("착취", new float[]{20f}, 0, 10f)}),
-                new Monster("과로골렘", 3f, 3f, 10f, 10f, 50, new Skill[]{ new Skill("압박", new float[]{25f}, 0, 10f)}),
-                new Monster("해고의그림자", 3f, 3f, 10f, 10f, 50, new Skill[]{ new Skill("권고사직", new float[]{30f}, 0, 10f)}),
-                new Monster("사장드래곤", 3f, 3f, 10f, 10f, 50, new Skill[]{ new Skill("최상위결정권", new float[]{35f}, 0, 10f)}),
-
+                new Monster(0, "부당계약서", 3f, 3f, 10f, 10f, 50, new Skill[]{ new Skill("계약이행", new float[]{10f}, 0, 10f)}),
+                new Monster(1, "연장근무", 3f, 3f, 10f, 10f, 50, new Skill[]{ new Skill("업무의심연", new float[]{15f}, 0, 10f)}),
+                new Monster(2, "환영복지술사", 3f, 3f, 10f, 10f, 50, new Skill[]{ new Skill("덫없는환상", new float[]{12f}, 0, 10f)}),
+                new Monster(3, "월급루팡", 3f, 3f, 10f, 10f, 50, new Skill[]{ new Skill("훔치기", new float[]{5f}, 0, 10f)}),
+                new Monster(4, "인사고과망령", 3f, 3f, 10f, 10f, 50, new Skill[]{ new Skill("불공정평가", new float[]{8f}, 0, 10f)}),
+                new Monster(5, "노동착취자", 3f, 3f, 10f, 10f, 50, new Skill[]{ new Skill("착취", new float[]{20f}, 0, 10f)}),
+                new Monster(6, "과로골렘", 3f, 3f, 10f, 10f, 50, new Skill[]{ new Skill("압박", new float[]{25f}, 0, 10f)}),
+                new Monster(7, "해고의그림자", 3f, 3f, 10f, 10f, 50, new Skill[]{ new Skill("권고사직", new float[]{30f}, 0, 10f)}),
+                new Monster(8, "사장드래곤", 3f, 3f, 10f, 10f, 50, new Skill[]{ new Skill("최상위결정권", new float[]{35f}, 0, 10f)}),
             };
 
 
@@ -134,51 +153,11 @@ namespace project_TextRPG
                 new Skill("권고사직", new float[]{30f}, 0, 10f),
                 new Skill("최상위결정권", new float[]{35f}, 0, 10f),
             };
-
-
-    //    public enum EEquipType : int
-    //    {
-    //        Weapon = 0,
-    //        Armor,
-    //        Helmet,
-    //        Accessary
-    //    }
-
-    //    public enum EEquipBonus : int
-    //    {
-    //        ATK = 0,    // Attack
-    //        DEF,    // Defense
-    //        HP,     // Hp
-    //        MP      // MP
-    //    }
-
-    //    public enum ERank : int
-    //    {
-    //        Normal = 0,
-    //        Rare,
-    //        Epic,
-    //        Legendary,
-    //        Mythic
-    //    }
-
-        // Equipment(string itemName, string description, int itemPrice, EEquipType eType, ERank rank, float atkBonus, float defBonus, float maxHpBonus, float maxMpBonus)
-        // HealItem(string itemName, string description, int itemPrice, int itemCount, float healAmount)
-        // DamageItem(string itemName, string description, int itemPrice, int itemCount, float itemDamage)
-        Items = new Item[]
-            {
-                //Weapon List
-                new Equipment("회사 화장실 휴지", "[무기] [공격력 +10] 닦을 때 따가운 화장실 휴지, 엉덩이의 처우를 개선해달라.", 100, 0, ERank.Normal, 10f, 0, 0, 0),
-                new Equipment("부러진 법인카드", "[무기] [공격력 +30] 부도 직전 회사의 한도초과 카드, 가려운 곳 긁기에는 쓸만하다.", 500, 0, ERank.Rare, 30f, 0, 0, 0),
-                new Equipment("연대의 확성기", "[무기] [공격력 +70] 우리의 처절한 외침이 들리는가.", 2000, 0, ERank.Epic, 70f, 0, 0, 0),
-                new Equipment("평화의 죽창", "[무기] [공격력 +100] 회사 앞에 심어놓은 대나무를 뽑아서 만들었다.", 5000, 0, ERank.Legendary, 100f, 0, 0, 0),
-                new Equipment("사장님의 신용카드", "[무기] [공격력 +200] 사장님의 비자금이 숨겨진 카드. 돈쭐을 내줄 수 있다.", 10000, 0, ERank.Mythic, 200f, 0, 0, 0),
-
-                //HealItem List
-                new HealItem("믹스 커피", "아침 필수 도핑약 [HP + 50]", 10, 1, 50),
-                new HealItem("야근의 핫식스", "야근을 버티게 하는 마법의  [HP + 100]", 30, 1, 100),
-                new HealItem("박카스", "풀려라 5천만, 풀려라 피로! [HP + 300]", 100, 1, 300),
-            };
-
+            QuestList = [
+                //new Quest("부당 계약 적발", "사내에 완연한 부당계약서들을 적발하고 기강을 바로 세워주세요!"),
+                //new Quest("과로의 원인", "비일비재한 연장근무에서 벗어나고 싶은 직장인들을 구해주세요."),
+                //new Quest("월급루팡", "일하는 손 따로 노는 손 따로.\n양심없는 루팡들을 처지해주세요!")
+            ];
         }
 
         public static DataDefinition GetInstance()

@@ -27,7 +27,7 @@
         }
 
         public float MaxHealth { get; protected set; }
-        public virtual float EquipHealth { get; set; }
+        public float EquipHealth { get; set; }
 
         float _health;
         public float Health 
@@ -50,7 +50,7 @@
         }
 
         public float MaxMana { get; protected set; }
-        public virtual float EquipMana { get; set; }
+        public float EquipMana { get; set; }
 
         float _mana;
         public float Mana 

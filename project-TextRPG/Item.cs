@@ -20,11 +20,12 @@ namespace project_TextRPG
 
         public ERank Rank { get; set; }
 
-        public Item(string itemName, string description, int itemPrice)
+        public Item(string itemName, string description, int itemPrice, ERank rank)
         {
             Name = itemName;
             Description = description;
             Price = itemPrice;
+            Rank = rank;
 
             // 아이템 생성 단계에서 아이디 부여
             Id = InstanceManager.GetInstacne().GetId();
@@ -59,7 +60,7 @@ namespace project_TextRPG
         public Dictionary<EEquipBonus, float> Bonus { get; set; }
 
 
-        public Equipment(string itemName, string description, int itemPrice, EEquipType eType, ERank rank, float atkBonus, float defBonus, float maxHpBonus, float maxMpBonus) : base(itemName, description, itemPrice)
+        public Equipment(string itemName, string description, int itemPrice, EEquipType eType, ERank rank, float atkBonus, float defBonus, float maxHpBonus, float maxMpBonus) : base(itemName, description, itemPrice, rank)
         {
             type = eType;
             Rank = rank;
@@ -137,7 +138,6 @@ namespace project_TextRPG
                 sb.Append("[E] ");
 
             sb.Append($"{Name + (EnhanceLevel > 0 ? $" +{EnhanceLevel}" : ""),-15} | "); // 이름
-
             sb.Append($"{GetBonusDesc(),-15} | "); // 성능
             if (enhanceCost == 0)
                 sb.Append($"강화 불가 | ");
@@ -149,8 +149,8 @@ namespace project_TextRPG
             return sb.ToString();
         }
 
+        #region ### 프로토타입 적용 ###
 
-        #region ### 프로토타입 적용###
         public Equipment Copy() // 프로토타입
         {
             Equipment copy = new Equipment(
@@ -194,10 +194,8 @@ namespace project_TextRPG
 
     public class ConsumableItem : Item
     {
-
         public int ItemCount { get; set; } //아이템 개수
-
-        public ConsumableItem(string itemName, string description, int itemPrice, int itemCount) : base(itemName, description, itemPrice)
+        public ConsumableItem(string itemName, string description, int itemPrice, int itemCount) : base(itemName, description, itemPrice, ERank.Normal)
         {
             this.ItemCount = itemCount;
         }
