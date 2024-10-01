@@ -11,6 +11,40 @@
         { 
             Inventory = new Inventory(this);
         }
+
+        public void LevelCalculator(Character player)
+        {
+            int needexp;
+            if (player.Level == 1)
+            {
+                needexp = 10;
+            }
+            else if (player.Level == 2)
+            {
+                needexp = 25;
+            }
+            else if (player.Level == 3)
+            {
+                needexp = 30;
+            }
+            else if (player.Level == 4)
+            {
+                needexp = 35;
+            }
+            else if (player.Level == 5)
+            {
+                needexp = 40;
+            }
+            else
+            {
+                needexp = 45;
+            }
+            if (player.Exp >= needexp)
+            {
+                player.Level += 1;
+            }
+        }
+
     }
 
     /// <summary>
@@ -22,7 +56,7 @@
         {
             CharClass = EClass.ChairmanOfUnion;
             Name = name;
-            Level = 5;
+            Level = 1;
             BasicAttack = 10f;
             BasicDefense = 1f;
             MaxHealth = 50f;

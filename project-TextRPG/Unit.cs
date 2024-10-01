@@ -44,7 +44,8 @@
 
                 _lv = value;
 
-                Console.WriteLine($"레벨이 상승했습니다.\nLv. {_lv - 1} -> {_lv}\n능력치가 소폭 상승합니다.");
+                //Console.WriteLine($"레벨이 상승했습니다.\nLv. {_lv - 1} -> {_lv}\n능력치가 소폭 상승합니다.");
+                Console.WriteLine("레벨이 상승했습니다.");
 
                 BasicAttack += 0.5f;
                 BasicDefense += 1f;
@@ -59,11 +60,11 @@
                 _exp = value;
                 // 레벨업 데이터 반영 구간
                 // 임시 반영
-                if(_exp >= Level * 5)
-                {
-                    Level++;
-                    _exp = 0;
-                }
+                //if(_exp >= Level * 5)
+                //{
+                //    Level++;
+                //    _exp = 0;
+                //}
             }
         }
 

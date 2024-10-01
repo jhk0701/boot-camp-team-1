@@ -47,6 +47,14 @@ namespace project_TextRPG
         public Goblin(string name) : base(name)
         {
             Name = name;
+            Exp = 3;
+            BasicAttack = 5f;
+            BasicDefense = 5f;
+            MaxHealth = 12f;
+            Health = MaxHealth;
+            MaxMana = 12f;
+            Mana = MaxMana;
+            isDead = false;
             //BasicAttack = basicattack;
             //BasicDefense = basicdefence;
             //MaxHealth = maxhealth;
@@ -54,7 +62,6 @@ namespace project_TextRPG
             //MaxMana = maxmana;
             //Mana = MaxMana;Gold = gold;
             //Skills = skills;
-            isDead = false;
         }
     }
     
@@ -63,7 +70,7 @@ namespace project_TextRPG
         public Orc(string name) : base(name)
         {
             Name = name;
-            Exp = 5;
+            Exp = 4;
             BasicAttack = 5f;
             BasicDefense = 5f;
             MaxHealth = 12f;
@@ -101,7 +108,7 @@ namespace project_TextRPG
         public Slime(string name) : base(name)
         {
             Name = name;
-            Exp = 5;
+            Exp = 6;
             BasicAttack = 9f;
             BasicDefense = 9f;
             MaxHealth = 16f;
@@ -120,6 +127,7 @@ namespace project_TextRPG
         public Dragon(string name) : base(name)
         {
             Name = name;
+            Exp = 7;
             BasicAttack = 3f;
             BasicDefense = 3f;
             MaxHealth = 10f;
