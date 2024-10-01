@@ -7,8 +7,11 @@
         public Skill[] Skills { get; protected set; }
         public Inventory Inventory { get; protected set; }
 
+        public override bool IsPlayer => true;
+
         public Character(string name) : base(name) 
         { 
+
             Inventory = new Inventory(this);
         }
     }

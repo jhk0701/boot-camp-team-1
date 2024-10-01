@@ -53,11 +53,12 @@ namespace project_TextRPG
         Mythic
     }
 
-    public enum BattleItemType : int
-    {
-        Potion = 0,
-        DamageItem = 1
-    }
+    // 아이템 타입 분류할 필요 없이 아이템이 배틀아이템 / 힐아이템으로 나뉘어져서 삭제합니다.
+    //public enum CItemType : int
+    //{
+    //    Potion = 0,
+    //    DamageItem = 1
+    //}
 
 
     public class DataDefinition
@@ -68,20 +69,24 @@ namespace project_TextRPG
         public Item[] Items { get; set; }
         public Monster[] Monsters { get; set; }
         public Skill[] Skills { get; set; }
-        
+
+        public Item[] Items { get; set; }
         public Equipment[] Equipments { get; set; }
+<<<<<<< Updated upstream
         public BattleItem[] BattleItems { get; set; }
 
+=======
+        public ClassInitData[] ClassInitDatas { get; private set; }
+>>>>>>> Stashed changes
 
         private DataDefinition()
         {
-            Equipments = new Equipment[] {
-                new Equipment("정장", "Manners, Maketh, Man.", 1000, EEquipType.Armor, ERank.Normal, 0f, 10f, 10f, 0f),
-                new Equipment("서류 가방", "사실은 총이 들어갑니다.", 2000, EEquipType.Weapon, ERank.Normal, 10f, 0f, 0f, 10f),
-            };
 
+<<<<<<< Updated upstream
             BattleItems = new BattleItem[] {
             };
+=======
+>>>>>>> Stashed changes
             //string name, float basicattack, float basicdefence, float maxhealth, float maxmana, int gold, Skill[] skills) : base(name)
             Monsters = new Monster[]
             {
@@ -114,14 +119,69 @@ namespace project_TextRPG
             };
 
 
+<<<<<<< Updated upstream
 
 
 
+=======
+    //    public enum EEquipType : int
+    //    {
+    //        Weapon = 0,
+    //        Armor,
+    //        Helmet,
+    //        Accessary
+    //    }
+
+    //    public enum EEquipBonus : int
+    //    {
+    //        ATK = 0,    // Attack
+    //        DEF,    // Defense
+    //        HP,     // Hp
+    //        MP      // MP
+    //    }
+
+    //    public enum ERank : int
+    //    {
+    //        Normal = 0,
+    //        Rare,
+    //        Epic,
+    //        Legendary,
+    //        Mythic
+    //    }
+
+        // Equipment(string itemName, string description, int itemPrice, EEquipType eType, ERank rank, float atkBonus, float defBonus, float maxHpBonus, float maxMpBonus)
+        // HealItem(string itemName, string description, int itemPrice, int itemCount, float healAmount)
+        // DamageItem(string itemName, string description, int itemPrice, int itemCount, float itemDamage)
+        Items = new Item[]
+            {
+                //Weapon List
+                new Equipment("회사 화장실 휴지", "| 무기 | 공격력 +10 | 닦을 때 따가운 화장실 휴지, 채찍처럼 휘두룰 수 있다.", 100, 0, ERank.Normal, 10f, 0, 0, 0),
+                new Equipment("부러진 법인카드", "| 무기 | 공격력 +30 | 부도 직전 회사의 한도초과 카드, 가려운 곳 긁기에는 쓸만하다.", 500, 0, ERank.Rare, 30f, 0, 0, 0),
+                new Equipment("연대의 확성기", "| 무기 | 공격력 +70 | 우리의 처절한 외침이 들리는가.", 2000, 0, ERank.Epic, 70f, 0, 0, 0),
+                new Equipment("평화의 죽창", "| 무기 | 공격력 +100 | 회사 앞에 심어놓은 대나무를 뽑아서 만들었다.", 5000, 0, ERank.Legendary, 100f, 0, 0, 0),
+                new Equipment("사장님의 신용카드", "| 무기 | 공격력 +200 | 사장님의 비자금이 숨겨진 카드. 돈쭐을 내줄 수 있다.", 10000, 0, ERank.Mythic, 200f, 0, 0, 0),
+
+                new Equipment("시위용 조끼", "[아머] [공격력 +10] 닦을 때 따가운 화장실 휴지, 채찍처럼 휘두룰 수 있다.", 100, 1, ERank.Normal, 10f, 0, 0, 0),
+                new Equipment("낡은 정장", "[아머] [공격력 +30] 부도 직전 회사의 한도초과 카드, 가려운 곳 긁기에는 쓸만하다.", 500, 0, ERank.Rare, 30f, 0, 0, 0),
+                new Equipment("퇴사자의 넥타이", "[아머] [공격력 +70] 우리의 처절한 외침이 들리는가.", 2000, 0, ERank.Epic, 70f, 0, 0, 0),
+                new Equipment("갑옷", "[아머] [공격력 +100] 회사 앞에 심어놓은 대나무를 뽑아서 만들었다.", 5000, 0, ERank.Legendary, 100f, 0, 0, 0),
+                new Equipment("사장님의 신용카드", "[아머] [공격력 +200] 사장님의 비자금이 숨겨진 카드. 돈쭐을 내줄 수 있다.", 10000, 0, ERank.Mythic, 200f, 0, 0, 0),
+                
+
+                //HealItem List
+                new HealItem("믹스 커피", "| 포션 | 회복량 50 HP | 아침 필수 도핑약", 10, 1, 50),
+                new HealItem("박카스", "| 포션 | 회복량 100 HP | 풀려라 5천만, 풀려라 피로!", 30, 1, 100),
+                new HealItem("정관장 홍삼", "| 포션 | 회복량 300 HP | 한국인의 힘, 홍삼", 100, 1, 300)
+
+
+                
+            };
+>>>>>>> Stashed changes
 
         }
 
 
-        
+
 
         public static DataDefinition GetInstance()
         {

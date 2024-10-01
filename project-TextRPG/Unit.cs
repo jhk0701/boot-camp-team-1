@@ -5,7 +5,13 @@
         public String Name { get; protected set; }
 
         public float BasicAttack { get; protected set; }
+<<<<<<< Updated upstream
         public float EquipAttack { get; set; }
+=======
+        public virtual float EquipAttack { get; set; }
+        public virtual bool IsPlayer { get; set; } //소비아이템 사용시 target이 플레이어인지 몬스터인지 체크용
+
+>>>>>>> Stashed changes
         public float Attack 
         { 
             get 
@@ -29,8 +35,29 @@
         public float Health { get; protected set; }
 
         public float MaxMana { get; protected set; }
+<<<<<<< Updated upstream
         public float EquipMana { get; set; }
         public float Mana { get; protected set; }
+=======
+        public virtual float EquipMana { get; set; }
+
+        float _mana;
+        public float Mana 
+        {
+            get { return _mana; }
+            protected set
+            {
+                _mana = value;
+
+                if (_mana < 0f)
+                    _mana = 0f;
+
+                if (_mana > MaxMana + EquipMana) // 과회복
+                    _mana = MaxMana + EquipMana;
+            }
+        }
+
+>>>>>>> Stashed changes
         public bool isDead { get; set; }
 
         int _lv;
@@ -83,7 +110,17 @@
             return Health;
         }
 
+<<<<<<< Updated upstream
         public virtual float Cure(float val)
+=======
+        public void Heal(float healAmount)
+        {
+            Health += healAmount;
+            Console.WriteLine($"{Name}은(는) {healAmount}의 체력을 회복했습니다. 현재 체력: {Health}");
+        }
+
+        public virtual void Rest()
+>>>>>>> Stashed changes
         {
             Health += val;
             return Health;

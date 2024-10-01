@@ -23,18 +23,21 @@ namespace project_TextRPG
         // public bool IsPossessed { get; set; } = false;
 
         public ERank Rank { get; set; }
-        
-        public Item(string itemName, string description, int itemPrice, ERank rank)
+
+        public Item(string itemName, string description, int itemPrice)
         {
             Name = itemName;
             Description = description;
             Price = itemPrice;
+<<<<<<< Updated upstream
             Rank = rank;
             //IsPossessed = isPossessed;
+=======
+>>>>>>> Stashed changes
 
             //_id = DataDefinition.GetInstance().GetInstanceId();
         }
-  }
+    }
 
 <<<<<<< Updated upstream
     public class Equipment : Item, ICopyable<Equipment>
@@ -72,11 +75,16 @@ namespace project_TextRPG
         // 보너스 대상 : 보너스양
         public Dictionary<EEquipBonus, float> Bonus { get; set; }
 
+<<<<<<< Updated upstream
         public Equipment(string itemName, string description, int itemPrice, EEquipType eType, ERank rank, float atkBonus, float defBonus, float maxHpBonus, float maxMpBonus) : base(itemName, description, itemPrice, rank)
+=======
+
+        public Equipment(string itemName, string description, int itemPrice, EEquipType eType, ERank rank, float atkBonus, float defBonus, float maxHpBonus, float maxMpBonus) : base(itemName, description, itemPrice)
+>>>>>>> Stashed changes
         {
             type = eType;
             Rank = rank;
-            
+
             Bonus = new Dictionary<EEquipBonus, float>();
             if(atkBonus != 0f)
                 Bonus.Add(EEquipBonus.ATK, atkBonus);
@@ -93,7 +101,7 @@ namespace project_TextRPG
             StringBuilder sb = new StringBuilder();
 
             EEquipBonus[] type = Bonus.Keys.ToArray();
-            for(int i = 0; i < type.Length; i++)
+            for (int i = 0; i < type.Length; i++)
             {
                 if (Bonus[type[i]] != 0f)
                     sb.Append($"{type[i].ToString()} {(Bonus[type[i]] > 0 ? $"+{Bonus[type[i]]}" : $"{Bonus[type[i]]}")}");
@@ -106,7 +114,68 @@ namespace project_TextRPG
         }
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         public Equipment Copy()
+=======
+        /// <summary>
+        /// 아이템 설명 받는 함수
+        /// opt 0 = 인벤토리, 1 = 구매, 2 = 판매
+        /// </summary>
+        /// <param name="opt"></param>
+        /// <param name="isOpt"></param>
+        /// <returns></returns>
+        public string GetDesc(int opt = 0, bool isOpt = false)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            if (opt == 0 && isOpt)
+                sb.Append("[E] ");
+
+            sb.Append($"{Name + (EnhanceLevel > 0 ? $" +{EnhanceLevel}" : ""),-15} | "); // 이름
+
+            sb.Append($"{GetBonusDesc(),-15} | "); // 성능
+
+            if (opt == 1)
+            {
+                sb.Append($"{Price} G ");
+
+                if (isOpt)
+                    sb.Append("(보유중) ");
+
+                sb.Append("| ");
+            }
+            else if (opt == 2)
+                sb.Append($"{(int)(Price * 0.85f)} G | ");
+
+            sb.Append(Description); // 설명
+
+            return sb.ToString();
+        }
+
+        public string GetDesc(bool isEquipped, int enhanceCost)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            if (isEquipped)
+                sb.Append("[E] ");
+
+            sb.Append($"{Name + (EnhanceLevel > 0 ? $" +{EnhanceLevel}" : ""),-15} | "); // 이름
+
+            sb.Append($"{GetBonusDesc(),-15} | "); // 성능
+            if (enhanceCost == 0)
+                sb.Append($"강화 불가 | ");
+            else
+                sb.Append($"{enhanceCost} G | "); // 강화 가격
+
+            sb.Append(Description); // 설명
+
+            return sb.ToString();
+        }
+
+
+        #region ### 프로토타입 적용###
+        public Equipment Copy() // 프로토타입
+>>>>>>> Stashed changes
         {
             Equipment copy = new Equipment(
                 Name, Description, Price, type, Rank, 
@@ -117,6 +186,7 @@ namespace project_TextRPG
             );
             return copy;
         }
+<<<<<<< Updated upstream
 =======
         //public Equipment Copy()
         //{
@@ -130,13 +200,44 @@ namespace project_TextRPG
         //    return copy;
         //}
 >>>>>>> Stashed changes
+=======
+
+        #endregion
+
+        #region ### 아이템 강화 ###
+
+        /// <summary>
+        /// 아이템 강화 레벨. 최대 3까지
+        /// </summary>
+        public int EnhanceLevel { get; set; }
+        /// <summary>
+        /// 강화로 증가된 수치들
+        /// </summary>
+        public float[] Enhancements { get; set; }
+
+        /// <summary>
+        /// 아이템 강화 함수 매개변수로 증가될 퍼센테이지를 받음
+        /// </summary>
+        /// <param name="enhancePer"></param>
+        public void Enhance(float enhancePer)
+        {
+            EnhanceLevel++;
+
+            List<float> e = Enhancements.ToList();
+            e.Add(enhancePer);
+            Enhancements = e.ToArray();
+        }
+
+        #endregion
+>>>>>>> Stashed changes
     }
 
-    public class BattleItem : Item
+    public class ConsumableItem : Item
     {
 
         public int ItemCount { get; set; } //아이템 개수
 
+<<<<<<< Updated upstream
         public BattleItemType BattleItemType { get; set; } // 0: 포션, 1: 데미지아이템
 
         public BattleItem(string itemName, string description, int itemPrice, int itemCount, BattleItemType BattleItemType) : base(itemName, description, itemPrice, ERank.Normal)
@@ -147,9 +248,73 @@ namespace project_TextRPG
 
 
         public virtual void Use()
+=======
+        public ConsumableItem(string itemName, string description, int itemPrice, int itemCount) : base(itemName, description, itemPrice)
         {
+            this.ItemCount = itemCount;
+        }
+
+        public virtual void Use(Unit target)
+>>>>>>> Stashed changes
+        {
+            //배틀아이템타입이 0일 경우 배틀어택 / 타입이 1일 경우 타겟을 자신으로 받는다.
+
             ItemCount--;
             Console.WriteLine($"플레이어는 {Name}을(를) 사용했다!");
+<<<<<<< Updated upstream
+=======
+            Console.WriteLine($"{Name}은(는) {ItemCount}개 남았습니다.");
+        }
+    }
+
+    public class HealItem : ConsumableItem
+    {
+
+        private float healAmount;
+
+        public HealItem(string itemName, string description, int itemPrice, int itemCount, float healAmount) : base(itemName, description, itemPrice, itemCount)
+        {
+
+            this.healAmount = healAmount;
+        }
+
+        public override void Use(Unit target)
+        {
+            if (target.IsPlayer == true)
+            {
+                target.Heal(healAmount);
+                Console.WriteLine($"{Name}을(를) 사용하여 {target.Name}에게 {healAmount}만큼 체력을 회복시켰습니다.");
+            }
+            else
+            {
+                Console.WriteLine("몬스터에게는 힐링 아이템을 사용할 수 없습니다.");
+            }
+        }
+    }
+
+    public class BattleItem : ConsumableItem
+    {
+
+        private float itemDamage;
+
+        public BattleItem(string itemName, string description, int itemPrice, int itemCount, float itemDamage) : base(itemName, description, itemPrice, itemCount)
+        {
+
+            this.itemDamage = itemDamage;
+        }
+
+        public override void Use(Unit target)
+        {
+            if (target.IsPlayer == false)
+            {
+                target.TakeDamage(itemDamage);
+                Console.WriteLine($"{Name}을(를) 사용하여 {target.Name}에게 {itemDamage}만큼 데미지를 입혔습니다.");
+            }
+            else
+            {
+                Console.WriteLine("해당 타겟에게는 공격 아이템을 사용할 수 없습니다.");
+            }
+>>>>>>> Stashed changes
         }
     }
 
