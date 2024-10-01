@@ -8,7 +8,6 @@
         public Inventory Inventory { get; protected set; }
 
         public Quest[] Quests { get; protected set; }
-        public override bool IsPlayer => true;
 
         public Character(string name) : base(name)
         {

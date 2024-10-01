@@ -5,7 +5,6 @@ namespace project_TextRPG
         public int Id { get; set; }
         public int Gold { get; set; }
         public Skill[] Skills { get; set; }
-        public override bool IsPlayer => false;
 
         public Monster(string name) : base(name) { }
         public Monster(int id, string name, float basicattack, float basicdefence, float maxhealth, float maxmana, int gold, Skill[] skills) : base(name)

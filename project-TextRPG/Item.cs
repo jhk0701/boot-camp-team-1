@@ -223,15 +223,8 @@ namespace project_TextRPG
 
         public override void Use(Unit target)
         {
-            if (target.IsPlayer == true)
-            {
-                target.Heal(healAmount);
-                Console.WriteLine($"{Name}을(를) 사용하여 {target.Name}에게 {healAmount}만큼 체력을 회복시켰습니다.");
-            }
-            else
-            {
-                Console.WriteLine("몬스터에게는 힐링 아이템을 사용할 수 없습니다.");
-            }
+            target.Heal(healAmount);
+            Console.WriteLine($"{Name}을(를) 사용하여 {target.Name}에게 {healAmount}만큼 체력을 회복시켰습니다.");
         }
     }
 
@@ -248,15 +241,8 @@ namespace project_TextRPG
 
         public override void Use(Unit target)
         {
-            if (target.IsPlayer == false)
-            {
-                target.TakeDamage(itemDamage);
-                Console.WriteLine($"{Name}을(를) 사용하여 {target.Name}에게 {itemDamage}만큼 데미지를 입혔습니다.");
-            }
-            else
-            {
-                Console.WriteLine("해당 타겟에게는 공격 아이템을 사용할 수 없습니다.");
-            }
+            target.TakeDamage(itemDamage);
+            Console.WriteLine($"{Name}을(를) 사용하여 {target.Name}에게 {itemDamage}만큼 데미지를 입혔습니다.");
         }
     }
 }

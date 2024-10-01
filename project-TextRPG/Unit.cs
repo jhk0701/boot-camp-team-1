@@ -6,7 +6,7 @@
 
         public float BasicAttack { get; protected set; }
         public virtual float EquipAttack { get; set; }
-        public virtual bool IsPlayer { get; set; } //소비아이템 사용시 target이 플레이어인지 몬스터인지 체크용
+    
 
         public float Attack 
         { 
