@@ -1,7 +1,14 @@
 ﻿using System.Text;
+using System.Collections.Generic;
 
 namespace project_TextRPG
 {
+
+    //public enum ERank { Normal, Rare, Epic, Legendary }
+    //public enum EEquipType { Weapon, Armor, Accessory }
+    //public enum EEquipBonus { ATK, DEF, HP, MP }
+    //public enum BattleItemType { Potion, Damage }
+
     public class Item
     {
         long _id;
@@ -112,22 +119,23 @@ namespace project_TextRPG
 
         public int ItemCount { get; set; } //아이템 개수
 
+        public BattleItemType BattleItemType { get; set; } // 0: 포션, 1: 데미지아이템
 
-        public BattleItemType battleItemType { get; set; } // 0: 포션, 1: 데미지아이템
-
-        public BattleItem(string itemName, string description, int itemPrice, bool isPossessed, int itemCount, BattleItemType battleItemType) : base(itemName, description, itemPrice, ERank.Normal)
+        public BattleItem(string itemName, string description, int itemPrice, int itemCount, BattleItemType BattleItemType) : base(itemName, description, itemPrice, ERank.Normal)
         {
             ItemCount = itemCount;
-            this.battleItemType = battleItemType;
+            this.BattleItemType = BattleItemType;
         }
-        public void Use()
+
+
+        public virtual void Use()
         {
             ItemCount--;
             Console.WriteLine($"플레이어는 {Name}을(를) 사용했다!");
-            Console.WriteLine($"{Name}은 {ItemCount}개 남았습니다.");
         }
     }
 
+<<<<<<< Updated upstream
     class Program
     {
         public static void Main(string[] args)
@@ -135,6 +143,17 @@ namespace project_TextRPG
             BattleItem potion = new BattleItem("Healing Potion", "회복 포션", 50, true, 3, 0);
 
             potion.Use();
+=======
+    class NewProgram
+    {
+        static void Main(string[] args)
+        {
+            List<BattleItem> battleitems = new List<BattleItem>
+            {
+                new BattleItem("박카스", "박카스는 노조를 응원합니다. 힘내세요! HP + 100", 100, 1, 1),
+                new BattleItem("화염병", "화염병을 투척한다. 데미지 200", 10, 1, 0),
+            };
+>>>>>>> Stashed changes
         }
     }
 
