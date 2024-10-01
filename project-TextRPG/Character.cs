@@ -60,6 +60,7 @@
         public SecretaryGeneral(string name) : base(name)
         {
             CharClass = EClass.SecretaryGeneral;
+            Initialize(DataDefinition.GetInstance().ClassInitDatas[(int)CharClass]);
 
             Skills = [
                 new Skill("언론 고발", [120f, 150f], 5, 10f),
@@ -78,6 +79,7 @@
         public DirectorOfUnion(string name) : base(name)
         {
             CharClass = EClass.DirectorOfUnion;
+            Initialize(DataDefinition.GetInstance().ClassInitDatas[(int)CharClass]);
 
             Skills = [
                 new Skill("죽창", [120f, 120f], 5, 10f),
