@@ -118,10 +118,22 @@
         public virtual float TakeDamage(float damage) 
         {
             if (damage <= 0f)
+            {
+                damage = 1f;
                 return Health;
+            }
 
             Health -= damage;
             return Health;
+        }
+
+        public virtual float SetManaDrop(float usemana)
+        {
+            if (usemana <= 0f)
+                return Mana;
+
+            Mana -= usemana;
+            return Mana;
         }
 
         public virtual void Rest()
