@@ -4,7 +4,7 @@ namespace project_TextRPG
 {
     public class StartScene : IScene
     {
-        public static string saveFilePath = "saveData.json";
+        public static string saveFilePath = "./SaveData.json";
         public string SceneName { get; set; }
         public Character Player { get; set; }
 
@@ -165,6 +165,7 @@ namespace project_TextRPG
 
         public void SaveGame()
         {
+            return;
             string jsonString = JsonSerializer.Serialize(Player);
             File.WriteAllText(saveFilePath, jsonString);
             Console.WriteLine("게임이 저장되었습니다.");

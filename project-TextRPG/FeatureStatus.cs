@@ -23,10 +23,10 @@
 
                 $"Lv. {_player.Level:0#} ({_player.Exp / (float)_player.Level * 100f} %)\n",
                 $"{_player.Name} ( {clName} )\n",
-                $"공격력(ATK) : {_player.BasicAttack} ({(eAtk > 0 ? $"+{eAtk}" : eAtk)})\n",
-                $"방어력(DEF) : {_player.BasicAttack} ({(eDef > 0 ? $"+{eDef}" : eDef)})\n",
-                $"체력(Hp) : {_player.Health} / {_player.MaxHealth + eHp} ({(eHp > 0 ? $"+{eHp}" : eHp)})\n",
-                $"마나(Mp) : {_player.Mana} / {_player.MaxMana + eMp} ({(eMp > 0 ? $"+{eMp}" : eMp)})\n",
+                $"공격력(ATK) : {_player.Attack} ({(eAtk >= 0 ? $"+{eAtk}" : eAtk)})\n",
+                $"방어력(DEF) : {_player.Defense} ({(eDef >= 0 ? $"+{eDef}" : eDef)})\n",
+                $"체력(Hp) : {_player.Health} / {_player.MaxHealth + eHp} ({(eHp >= 0 ? $"+{eHp}" : eHp)})\n",
+                $"마나(Mp) : {_player.Mana} / {_player.MaxMana + eMp} ({(eMp >= 0 ? $"+{eMp}" : eMp)})\n",
                 $"Gold : {_player.Gold} G\n\n",
 
                 "0. 나가기\n"

@@ -6,10 +6,21 @@
         public int Gold { get; set; }
         public Skill[] Skills { get; protected set; }
         public Inventory Inventory { get; protected set; }
+        public Quest[] Quests { get; protected set; }
+        public int StageScore { get; set; }
+        
 
-        public Character(string name) : base(name) 
-        { 
+        public Character(string name) : base(name)
+        {
+            Level = 1;
+            Exp = 0;
+
             Inventory = new Inventory(this);
+            StageScore = 1; 
+        }
+        public void UpdateStageScore()
+        {
+            StageScore ++;
         }
 
         public void LevelCalculator(Character player)

@@ -9,8 +9,9 @@ namespace project_TextRPG
         public Skill[] Skills { get; set; }
 
         public Monster(string name) : base(name) { }
-        public Monster(string name, float basicattack, float basicdefence, float maxhealth, float maxmana, int gold, Skill[] skills) : base(name)
+        public Monster(int id, string name, float basicattack, float basicdefence, float maxhealth, float maxmana, int gold, Skill[] skills) : base(name)
         {
+            Id = id;
             BasicAttack = basicattack;
             BasicDefense = basicdefence;
             MaxHealth = maxhealth;

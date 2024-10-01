@@ -151,7 +151,7 @@ namespace project_TextRPG
         }
 
 
-        #region ### 프로토타입 적용###
+        #region ### 프로토타입 적용 ###
         public Equipment Copy() // 프로토타입
         {
             Equipment copy = new Equipment(
@@ -197,9 +197,7 @@ namespace project_TextRPG
 
     public class BattleItem : Item
     {
-
         public int ItemCount { get; set; } //아이템 개수
-
 
         public BattleItemType battleItemType { get; set; } // 0: 포션, 1: 데미지아이템
 
@@ -214,6 +212,17 @@ namespace project_TextRPG
             ItemCount--;
             Console.WriteLine($"플레이어는 {Name}을(를) 사용했다!");
             Console.WriteLine($"{Name}은 {ItemCount}개 남았습니다.");
+        }
+    }
+
+    public class HealItem : Item
+    {
+        public int ItemCount { get; set; } //아이템 개수
+
+        public HealItem(string itemName, string description, int itemPrice, bool isPossessed, int itemCount) : base(itemName, description, itemPrice, ERank.Normal)
+        {
+            ItemCount = itemCount;
+
         }
     }
 }
