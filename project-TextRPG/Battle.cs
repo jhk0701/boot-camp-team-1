@@ -100,9 +100,11 @@ namespace project_TextRPG
             return shuffled;
         }
 
+        
         // 던전 층수에 따라서 Monsters리스트에 몬스터를 생성해주는 함수
         // 던전 층수에 따라서 Monsters리스트에 몬스터를 생성해주는 함수
         List<Monster> CreateMonsters(int dungeonId)
+
         {
             DataDefinition data = DataDefinition.GetInstance(); // DataDefinition 인스턴스 가져오기
             List<Monster> monsters = new List<Monster>();
@@ -227,6 +229,8 @@ namespace project_TextRPG
             Console.WriteLine("exp {0} -> {1}\n", DefaultExp, Player.Exp);
             Console.WriteLine("0. 다음\n");
             Console.Write(">> ");
+            Player.UpdateStageScore();
+            Floar++;  // 층수 증가
             while (true)
             {
                 if (int.TryParse(Console.ReadLine(), out int choice))
@@ -504,7 +508,8 @@ namespace project_TextRPG
         // 플레이어가 던전진입시 처음 보여지는 화면.
         public void StartBattle(int dungeonid)
         {
-            Floar = dungeonid;
+
+            Floar = Player.StageScore = dungeonid;
 
             Console.Clear();
             Console.WriteLine("Battle!!\n");
