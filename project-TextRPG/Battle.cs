@@ -1,6 +1,7 @@
 ﻿
 using System.Reflection.Emit;
 using System.Threading;
+using System.Linq;
 
 namespace project_TextRPG
 {
@@ -15,6 +16,7 @@ namespace project_TextRPG
         float TrueDamage;    //플레이어 데미지의 10% 오차를 계산한 값
         int Floar;           //던전 층수
         bool CriticalHit;    //치명타 공격 발동여부
+        bool Dodge;          //회피성공 여부
 
         float Defaultlevel;  //플레이어의 던전진입당시의 레벨 (승리화면에서 비교용)
         float DefaultHp;     //플레이어의 던전진입당시의 체력 (승리화면에서 비교용)
@@ -37,7 +39,21 @@ namespace project_TextRPG
             DefaultExp = player.Exp;
 
             _scene = scene;
+
         }
+
+        // 10% 확률로 발생하는 회피 계산기
+        void dodgecalcalculator()
+        {
+            int rolldice = ran.Next(1, 101);
+            Dodge = false;
+
+            if (rolldice <= 10)
+            {
+                Dodge = true;
+            }
+        }
+
 
         // 15% 확률로 발생하는 치명타 계산기
         void Criticalcalculator(float damage)
@@ -84,7 +100,7 @@ namespace project_TextRPG
             return shuffled;
         }
 
-        
+        // 던전 층수에 따라서 Monsters리스트에 몬스터를 생성해주는 함수
         // 던전 층수에 따라서 Monsters리스트에 몬스터를 생성해주는 함수
         List<Monster> CreateMonsters(int dungeonId)
         {
@@ -141,27 +157,35 @@ namespace project_TextRPG
             Console.Clear();
             Console.WriteLine("Battle!!\n");
             Console.WriteLine("LV.{0} {1} 의 공격!", selectedMonster.Level, selectedMonster.Name);
-            if (CriticalHit != null && CriticalHit)
+            if (!Dodge)
             {
-                Console.WriteLine("{0} 을(를) 맞췄습니다. [데미지 : {1}] - 치명타공격!!\n", Player.Name, TrueDamage - Player.Defense);
+                if (CriticalHit != null && CriticalHit)
+                {
+                    Console.WriteLine("{0} 을(를) 맞췄습니다. [데미지 : {1}] - 치명타공격!!\n", Player.Name, TrueDamage - Player.Defense);
+                }
+                else
+                {
+                    Console.WriteLine("{0} 을(를) 맞췄습니다. [데미지 : {1}]\n",
+                        Player.Name, TrueDamage - Player.Defense);
+                }
+                Console.WriteLine("LV.{0} {1}", Player.Level, Player.Name);
+                if (Player.Health - (TrueDamage - Player.Defense) <= 0)
+                {
+                    Console.WriteLine("{0} -> Dead\n", Player.Health);
+                    Player.isDead = true;
+                }
+                else
+                {
+                    Console.WriteLine("{0} -> {1}\n", Player.Health, Player.Health - (TrueDamage - Player.Defense));
+                }
+                Console.WriteLine();
+                Player.TakeDamage(TrueDamage - Player.Defense);
             }
             else
             {
-                Console.WriteLine("{0} 을(를) 맞췄습니다. [데미지 : {1}]\n",
-                    Player.Name, TrueDamage - Player.Defense);
+                Console.WriteLine("회피 성공!");
+                Console.WriteLine("LV.{0} {1}이 공격했지만 아무일도 일어나지 않았습니다.\n", selectedMonster.Level, selectedMonster.Name);
             }
-            Console.WriteLine("LV.{0} {1}", Player.Level, Player.Name);
-            if (Player.Health - (TrueDamage - Player.Defense) <= 0)
-            {
-                Console.WriteLine("{0} -> Dead\n", Player.Health);
-                Player.isDead = true;
-            }
-            else
-            {
-                Console.WriteLine("{0} -> {1}\n", Player.Health, Player.Health - (TrueDamage - Player.Defense));
-            }
-            Console.WriteLine();
-            Player.TakeDamage(TrueDamage - Player.Defense);
             Console.WriteLine("0. 다음\n");
             Console.Write(">> ");
 
@@ -203,8 +227,6 @@ namespace project_TextRPG
             Console.WriteLine("exp {0} -> {1}\n", DefaultExp, Player.Exp);
             Console.WriteLine("0. 다음\n");
             Console.Write(">> ");
-            Player.UpdateStageScore();
-            Floar++;  // 층수 증가
             while (true)
             {
                 if (int.TryParse(Console.ReadLine(), out int choice))
@@ -264,30 +286,38 @@ namespace project_TextRPG
             Console.Clear();
             Console.WriteLine("Battle!!\n");
             Console.WriteLine("{0} 의 공격!", Player.Name);
-            if (CriticalHit != null && CriticalHit)
+            if (!Dodge)
             {
-                Console.WriteLine("LV.{0} {1} 을(를) 맞췄습니다. [데미지 : {2}] - 치명타공격!!\n",
-    selectedMonster.Level, selectedMonster.Name, TrueDamage - selectedMonster.Defense);
+                if (CriticalHit != null && CriticalHit)
+                {
+                    Console.WriteLine("LV.{0} {1} 을(를) 맞췄습니다. [데미지 : {2}] - 치명타공격!!\n",
+                     selectedMonster.Level, selectedMonster.Name, TrueDamage - selectedMonster.Defense);
+                }
+                else
+                {
+                    Console.WriteLine("LV.{0} {1} 을(를) 맞췄습니다. [데미지 : {2}]\n",
+                      selectedMonster.Level, selectedMonster.Name, TrueDamage - selectedMonster.Defense);
+                }
+                Console.WriteLine("LV.{0} {1}", selectedMonster.Level, selectedMonster.Name);
+                if (selectedMonster.Health - (TrueDamage - selectedMonster.Defense) <= 0)
+                {
+                    Console.WriteLine("{0} -> Dead\n", selectedMonster.Health);
+                    selectedMonster.isDead = true;
+                    killcount++;
+                    Player.Exp += selectedMonster.Exp + selectedMonster.Level;
+                }
+                else
+                {
+                    Console.WriteLine("{0} -> {1}\n", selectedMonster.Health, selectedMonster.Health - (TrueDamage - selectedMonster.Defense));
+                }
+                Console.WriteLine();
+                selectedMonster.TakeDamage(TrueDamage - selectedMonster.Defense);
             }
             else
             {
-                Console.WriteLine("LV.{0} {1} 을(를) 맞췄습니다. [데미지 : {2}]\n",
-    selectedMonster.Level, selectedMonster.Name, TrueDamage - selectedMonster.Defense);
+                Console.WriteLine("회피 성공!");
+                Console.WriteLine("LV.{0} {1}이 공격했지만 아무일도 일어나지 않았습니다.\n", Player.Level, Player.Name);
             }
-            Console.WriteLine("LV.{0} {1}", selectedMonster.Level, selectedMonster.Name);
-            if (selectedMonster.Health - (TrueDamage - selectedMonster.Defense) <= 0)
-            {
-                Console.WriteLine("{0} -> Dead\n", selectedMonster.Health);
-                selectedMonster.isDead = true;
-                killcount++;
-                Player.Exp += selectedMonster.Exp + selectedMonster.Level;
-            }
-            else
-            {
-                Console.WriteLine("{0} -> {1}\n", selectedMonster.Health, selectedMonster.Health - (TrueDamage - selectedMonster.Defense));
-            }
-            Console.WriteLine();
-            selectedMonster.TakeDamage(TrueDamage - selectedMonster.Defense);
             Console.WriteLine("0. 다음\n");
             Console.Write(">> ");
 
@@ -310,11 +340,86 @@ namespace project_TextRPG
                                     ShowEnemyPhase(monster);
                                     TrueDamage = GetTrueDamage(monster.Attack);
                                     Criticalcalculator(TrueDamage);
+                                    dodgecalcalculator();
                                 }
                             }
                         }
                         StartBattle(Floar);
                         return;
+                    }
+                    else
+                    {
+                        Console.WriteLine("잘못된 입력입니다. 다시 시도하세요.");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("잘못된 입력입니다. 다시 시도하세요.");
+                }
+            }
+        }
+
+        // 배틀시작 화면에서 2번을 입력시 진입하는 스킬목록창
+        public void ShowSkilllist()
+        {
+            int n = 1;
+            Console.Clear();
+            Console.WriteLine("Battle!!\n");
+            foreach (var monster in Monsters)
+            {
+                if (!monster.isDead)
+                {
+                    Console.WriteLine("Lv.{0} {1} HP {2}", monster.Level, monster.Name, monster.Health);
+                }
+                else
+                {
+                    DeadWriteLine($"Lv.{monster.Level} {monster.Name} Dead");
+                }
+            }
+            Console.WriteLine();
+            Console.WriteLine("[내정보]");
+            Console.WriteLine("Lv.{0}  {1} ({2})", Player.Level, Player.Name, Player.CharClass);
+            Console.WriteLine("HP {0}/{1}", Player.Health, Player.MaxHealth);
+            Console.WriteLine("MP {0}/{1}\n", Player.Mana, Player.MaxMana);
+            foreach (var skill in Player.Skills)
+            {
+                if (skill.RequiredLevel <= Player.Level)
+                {
+                    Console.WriteLine("{0}. {1} - MP {2}\n    스킬설명이 들어갈 예정.", n, skill.Name, skill.RequiredMana);
+                    n++;
+                }
+            }
+            Console.WriteLine("0. 취소");
+            Console.WriteLine("원하시는 행동을 입력해주세요.");
+            Console.Write(">> ");
+
+            while (true)
+            {
+                if (int.TryParse(Console.ReadLine(), out int choice))
+                {
+                    if (choice == 0)
+                    {
+                        return;
+                    }
+                    else if (choice == 1)
+                    {
+                        ShowAttackList();
+                    }
+                    else if (choice > 0 && choice <= Monsters.Count)
+                    {
+                        var selectedMonster = Monsters[choice - 1];
+
+                        if (selectedMonster != null && selectedMonster.isDead)
+                        {
+                            Console.WriteLine("이미 죽은 대상입니다.");
+                        }
+                        else
+                        {
+                            TrueDamage = GetTrueDamage(Player.Attack);
+                            Criticalcalculator(TrueDamage);
+                            dodgecalcalculator();
+                            ShowAttackresult(selectedMonster);
+                        }
                     }
                     else
                     {
@@ -349,7 +454,8 @@ namespace project_TextRPG
             Console.WriteLine();
             Console.WriteLine("[내정보]");
             Console.WriteLine("Lv.{0}  {1} ({2})", Player.Level, Player.Name, Player.CharClass);
-            Console.WriteLine("HP {0}/{1}\n", Player.Health, Player.MaxHealth);
+            Console.WriteLine("HP {0}/{1}", Player.Health, Player.MaxHealth);
+            Console.WriteLine("MP {0}/{1}\n", Player.Mana, Player.MaxMana);
             Console.WriteLine("0. 취소\n");
             Console.WriteLine("대상을 선택해주세요.");
             Console.Write(">> ");
@@ -375,6 +481,7 @@ namespace project_TextRPG
                         {
                             TrueDamage = GetTrueDamage(Player.Attack);
                             Criticalcalculator(TrueDamage);
+                            dodgecalcalculator();
                             ShowAttackresult(selectedMonster);
                         }
                     }
@@ -393,8 +500,7 @@ namespace project_TextRPG
         // 플레이어가 던전진입시 처음 보여지는 화면.
         public void StartBattle(int dungeonid)
         {
-
-            Floar = Player.StageScore = dungeonid;
+            Floar = dungeonid;
 
             Console.Clear();
             Console.WriteLine("Battle!!\n");
@@ -412,8 +518,10 @@ namespace project_TextRPG
             Console.WriteLine();
             Console.WriteLine("[내정보]");
             Console.WriteLine("Lv.{0}  {1} ({2})", Player.Level, Player.Name, Player.CharClass);
-            Console.WriteLine("HP {0}/{1}\n", Player.Health, Player.MaxHealth);
-            Console.WriteLine("1. 공격\n");
+            Console.WriteLine("HP {0}/{1}", Player.Health, Player.MaxHealth);
+            Console.WriteLine("MP {0}/{1}\n", Player.Mana, Player.MaxMana);
+            Console.WriteLine("1. 공격");
+            Console.WriteLine("2. 스킬\n");
             Console.WriteLine("원하시는 행동을 입력해주세요.");
             Console.Write(">> ");
 
@@ -428,6 +536,10 @@ namespace project_TextRPG
                     else if (choice == 1)
                     {
                         ShowAttackList();
+                    }
+                    else if (choice == 2)
+                    {
+                        ShowSkilllist();
                     }
                     else
                     {

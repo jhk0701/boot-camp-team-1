@@ -14,10 +14,10 @@
             features = [
                 new FeatureStatus("상태보기", this),
                 new FeatureInventory("인벤토리", this),
-                new FeatureStore("사내 편의점", this),
+                new FeatureStore("상점", this),
                 new FeatureBattle("전투 시작", this),
                 new FeatureRest("휴식하기", this),
-                new FeatureQuest("사내 게시판", this),
+                new FeatureQuest("마을 게시판", this),
                 new FeatureGatcha("가챠 뽑기", this)
             ];
         }

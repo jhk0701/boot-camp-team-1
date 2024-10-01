@@ -48,7 +48,7 @@
                 if (Equipments[item.type] != null)
                 {
                     Equipment prev = Equipments[item.type];
-                    AdjustBonus(prev, -1);
+                    RemoveBonus(prev.Bonus);
                 }
 
                 Equipments[item.type] = item;
@@ -59,38 +59,56 @@
                 Equipments.Add(item.type, item);
             }
 
-            AdjustBonus(item);
+            AdjustBonus(item.Bonus);
         }
 
         public void Unequip(Equipment item)
         {
             Equipment prev = Equipments[item.type];
-            AdjustBonus(prev, -1);
+            RemoveBonus(prev.Bonus);
 
             Equipments[item.type] = null;
         }
 
-        void AdjustBonus(Equipment e, int dir = 1)
+        void RemoveBonus(Dictionary<EEquipBonus, float> bonus)
         {
-            float enhance = 1f + e.Enhancements.Sum() * 0.01f;
-
-            foreach (KeyValuePair<EEquipBonus, float> i in e.Bonus)
+            foreach (KeyValuePair<EEquipBonus, float> i in bonus)
             {
-                float val = i.Value * enhance * (float)dir;
-
                 switch (i.Key)
                 {
                     case EEquipBonus.ATK:
-                        _player.EquipAttack += val;
+                        _player.EquipAttack -= i.Value;
                         break;
                     case EEquipBonus.DEF:
-                        _player.EquipDefense += val;
+                        _player.EquipDefense -= i.Value;
                         break;
                     case EEquipBonus.HP:
-                        _player.EquipHealth += val;
+                        _player.EquipHealth -= i.Value;
                         break;
                     case EEquipBonus.MP:
-                        _player.EquipMana += val;
+                        _player.EquipMana -= i.Value;
+                        break;
+                }
+            }
+        }
+
+        void AdjustBonus(Dictionary<EEquipBonus, float> bonus)
+        {
+            foreach (KeyValuePair<EEquipBonus, float> i in bonus)
+            {
+                switch (i.Key)
+                {
+                    case EEquipBonus.ATK:
+                        _player.EquipAttack += i.Value;
+                        break;
+                    case EEquipBonus.DEF:
+                        _player.EquipDefense += i.Value;
+                        break;
+                    case EEquipBonus.HP:
+                        _player.EquipHealth += i.Value;
+                        break;
+                    case EEquipBonus.MP:
+                        _player.EquipMana += i.Value;
                         break;
                 }
             }
