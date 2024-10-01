@@ -84,40 +84,48 @@ namespace project_TextRPG
             return shuffled;
         }
 
+        
         // 던전 층수에 따라서 Monsters리스트에 몬스터를 생성해주는 함수
         List<Monster> CreateMonsters(int dungeonId)
+
         {
-            switch (dungeonId)
+            DataDefinition data = DataDefinition.GetInstance(); // DataDefinition 인스턴스 가져오기
+            List<Monster> monsters = new List<Monster>();
+            if (dungeonId == 1)
             {
-                case 1:
-                    for (int i = 0; i < 3; i++)
-                    {
-                        Monsters.Add(new Goblin("고블린"));
-                    }
-                    for (int i = 0; i < 3; i++)
-                    {
-                        Monsters.Add(new Orc("오크"));
-                    }
-                    break;
-
-                case 2:
-                    for (int i = 0; i < 10; i++)
-                    {
-                        Monsters.Add(new Orc("오크"));
-                    }
-                    break;
-
-                case 3:
-                    for (int i = 0; i < 10; i++)
-                    {
-                        Monsters.Add(new Slime("슬라임"));
-                    }
-                    break;
-                default:
-                    Console.WriteLine("잘못된 입력입니다. 다시 시도하세요.");
-                    break;
+                // 1층에서는 부당계약서, 연장근무
+                monsters.Add(data.Monsters[0]); // 부당계약서
+                monsters.Add(data.Monsters[1]); // 연장근무
             }
-            return Monsters;
+            else if (dungeonId == 2)
+            {
+                // 2층에서는 환영복지술사, 월급루팡, 인사고과망령 추가 등장
+                monsters.Add(data.Monsters[2]); // 환영복지술사
+                monsters.Add(data.Monsters[3]); // 월급루팡
+                monsters.Add(data.Monsters[4]); // 인사고과망령
+            }
+            else if (dungeonId == 3)
+            {
+                // 3층에서는 노동착취자, 과로골렘 추가 등장
+                monsters.Add(data.Monsters[5]); // 노동착취자
+                monsters.Add(data.Monsters[6]); // 과로골렘
+            }
+            else if (dungeonId == 4)
+            {
+                // 4층에서는 해고의그림자 추가 등장
+                monsters.Add(data.Monsters[7]); // 해고의그림자
+            }
+            else if (dungeonId == 5)
+            {
+                // 5층에서는 사장드래곤 등장
+                monsters.Add(data.Monsters[8]); // 사장드래곤
+            }
+            else if (dungeonId > 5)
+            {
+                // 6층 이상에서는 모든 몬스터들이 랜덤으로 등장
+                monsters.AddRange(data.Monsters);
+            }
+            return monsters;
         }
 
         void DeadWriteLine(string value)
@@ -196,6 +204,8 @@ namespace project_TextRPG
             Console.WriteLine("exp {0} -> {1}\n", DefaultExp, Player.Exp);
             Console.WriteLine("0. 다음\n");
             Console.Write(">> ");
+            Player.UpdateStageScore();
+            Floar++;  // 층수 증가
             while (true)
             {
                 if (int.TryParse(Console.ReadLine(), out int choice))
@@ -384,7 +394,8 @@ namespace project_TextRPG
         // 플레이어가 던전진입시 처음 보여지는 화면.
         public void StartBattle(int dungeonid)
         {
-            Floar = dungeonid;
+
+            Floar = Player.StageScore = dungeonid;
 
             Console.Clear();
             Console.WriteLine("Battle!!\n");

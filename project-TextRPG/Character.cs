@@ -7,9 +7,16 @@
         public Skill[] Skills { get; protected set; }
         public Inventory Inventory { get; protected set; }
 
-        public Character(string name) : base(name) 
-        { 
+        public int StageScore { get; set; }
+
+        public Character(string name) : base(name)
+        {
             Inventory = new Inventory(this);
+            StageScore = 1; 
+        }
+        public void UpdateStageScore()
+        {
+            StageScore ++;
         }
 
         public void LevelCalculator(Character player)
