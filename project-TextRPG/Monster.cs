@@ -1,4 +1,6 @@
-﻿namespace project_TextRPG
+﻿using System.Diagnostics;
+
+namespace project_TextRPG
 {
     public class Monster : Unit
     {
@@ -17,8 +19,18 @@
             Mana = MaxMana;
         }
 
+        public Monster Copy() // 프로토타입
+        {
+            Monster copy = new Monster(
+                Name, BasicAttack, BasicDefense, MaxHealth, MaxMana, Gold, Skills
+            );
+            return copy;
+        }
+
     }
     
+
+
     class Goblin : Monster
     {
         public Goblin(string name) : base(name)
@@ -109,4 +121,6 @@
         }
 
     }
+
+
 }

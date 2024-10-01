@@ -25,17 +25,21 @@ namespace project_TextRPG
             bool isLoaded = LoadCharacterFromSaveDate(); ; // 데이터 로드
 
             // 캐릭터 생성부분
-            if (isLoaded)
-            {
-                // 1. 데이터 있으면 로드
-                LoadCharacter();
-            }
-            else
-            {
-                // 2. 데이터 없으면 생성
-                CreateCharacter();
-                SaveGame();
-            }
+            //if (isLoaded)
+            //{
+            //    // 1. 데이터 있으면 로드
+            //    LoadCharacter();
+            //}
+            //else
+            //{
+            //    // 2. 데이터 없으면 생성
+            //    CreateCharacter();
+            //    SaveGame();
+            //}
+
+            // 스킬 테스트용
+            CreateCharacter();
+            //===
         }
         public Character End()
         {

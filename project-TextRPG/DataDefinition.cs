@@ -66,6 +66,7 @@ namespace project_TextRPG
         public float defense;
         public float maxHealth;
         public float maxMana;
+        public Skill[] Skills;
 
         public ClassInitData(string n, float atk, float def, float maxHp, float maxMp)
         {
@@ -84,7 +85,9 @@ namespace project_TextRPG
 
         public Monster[] Monsters { get; set; }
         public Skill[] Skills { get; set; }
-        
+
+        public Skill[] UnionSkills { get; set; }  // 유니온 스킬테스트용 변수
+
         public Equipment[] Equipments { get; set; }
         public BattleItem[] BattleItems { get; set; }
         public ClassInitData[] ClassInitDatas { get; private set; }
@@ -97,6 +100,7 @@ namespace project_TextRPG
                 new ClassInitData("사무총장", 6f, 5f, 50f, 50f),
                 new ClassInitData("조직 국장", 8f, 3f, 50f, 50f)
             ];
+
 
             Equipments = new Equipment[] 
             {

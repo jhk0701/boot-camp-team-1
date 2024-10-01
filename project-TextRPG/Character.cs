@@ -64,16 +64,7 @@
         public ChairmanOfUnion(string name) : base(name)
         {
             CharClass = EClass.ChairmanOfUnion;
-            //Name = name;
-            //isDead = false;
-
-            //Level = 5;
-            //BasicAttack = 10f;
-            //BasicDefense = 1f;
-            //MaxHealth = 50f;
-            //Health = MaxHealth;
-            //MaxMana = 50f;
-            //Mana = MaxMana;
+            Level = 50;
             Initialize(DataDefinition.GetInstance().ClassInitDatas[(int)CharClass]);
 
             Skills = [
