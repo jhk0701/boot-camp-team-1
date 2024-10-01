@@ -1,27 +1,19 @@
 ﻿
-using System.Reflection.Emit;
 using System.Threading;
 
 namespace project_TextRPG
 {
     class Battle
     {
-        IScene _scene;
-
         Character Player;
         List<Monster> Monsters;
 
-        int killcount;       //해당 층에서 플레이어가 죽인 몬스터의 숫자
-        float TrueDamage;    //플레이어 데미지의 10% 오차를 계산한 값
-        int Floar;           //던전 층수
-        bool CriticalHit;    //치명타 공격 발동여부
-
-        float Defaultlevel;  //플레이어의 던전진입당시의 레벨 (승리화면에서 비교용)
-        float DefaultHp;     //플레이어의 던전진입당시의 체력 (승리화면에서 비교용)
-        float DefaultExp;    //플레이어의 던전진입당시의 경험치 (승리화면에서 비교용)
+        int killcount;
+        float TrueDamage;
+        int Floar;
 
         Random ran;
-        public Battle(Character player, int dungeonid, IScene scene)
+        public Battle(Character player, int dungeonid)
         {
             Player = player;
 
@@ -32,27 +24,8 @@ namespace project_TextRPG
             Monsters = CreateMonsters(dungeonid);
             Monsters = ShuffleMonsters(Monsters);
 
-            Defaultlevel = player.Level;
-            DefaultHp = player.Health;
-            DefaultExp = player.Exp;
-
-            _scene = scene;
         }
 
-        // 15% 확률로 발생하는 치명타 계산기
-        void Criticalcalculator(float damage)
-        {
-            int rolldice = ran.Next(1, 101);
-            CriticalHit = false;
-
-            if (rolldice <= 15)
-            {
-                damage = damage * 1.6f;
-                CriticalHit = true;
-            }
-        }
-
-        // 플레이어 데미지오차 10% 를 계산후 다시 가져오는 함수
         float GetTrueDamage(float damage)
         {
             float RandomDamageRange = damage / 10;
@@ -65,8 +38,6 @@ namespace project_TextRPG
             return damage;
         }
 
-
-        // 몬스터 생성마리수, 몬스터 순서를 범위내에서 랜덤으로 배정해주는 함수
         List<Monster> ShuffleMonsters(List<Monster> values)
         {
             Random rand1 = new Random();
@@ -84,7 +55,6 @@ namespace project_TextRPG
             return shuffled;
         }
 
-        // 던전 층수에 따라서 Monsters리스트에 몬스터를 생성해주는 함수
         List<Monster> CreateMonsters(int dungeonId)
         {
             switch (dungeonId)
@@ -97,6 +67,10 @@ namespace project_TextRPG
                     for (int i = 0; i < 3; i++)
                     {
                         Monsters.Add(new Orc("오크"));
+                    }
+                    for (int i = 0; i < 3; i++)
+                    {
+                        Monsters.Add(new Orc("슬라임"));
                     }
                     break;
 
@@ -127,34 +101,25 @@ namespace project_TextRPG
             Console.ResetColor();
         }
 
-        // 적이 플레이어를 공격시 표출되는 화면
         void ShowEnemyPhase(Monster selectedMonster)
         {
-
             Console.Clear();
             Console.WriteLine("Battle!!\n");
             Console.WriteLine("LV.{0} {1} 의 공격!", selectedMonster.Level, selectedMonster.Name);
-            if (CriticalHit != null && CriticalHit)
-            {
-                Console.WriteLine("{0} 을(를) 맞췄습니다. [데미지 : {1}] - 치명타공격!!\n", Player.Name, TrueDamage - Player.Defense);
-            }
-            else
-            {
-                Console.WriteLine("{0} 을(를) 맞췄습니다. [데미지 : {1}]\n",
-                    Player.Name, TrueDamage - Player.Defense);
-            }
+            Console.WriteLine("{0} 을(를) 맞췄습니다. [데미지 : {1}]\n",
+                Player.Name, selectedMonster.Attack - Player.Defense);
             Console.WriteLine("LV.{0} {1}", Player.Level, Player.Name);
-            if (Player.Health - (TrueDamage - Player.Defense) <= 0)
+            if (Player.Health - (selectedMonster.Attack - Player.Defense) <= 0)
             {
                 Console.WriteLine("{0} -> Dead\n", Player.Health);
                 Player.isDead = true;
             }
             else
             {
-                Console.WriteLine("{0} -> {1}\n", Player.Health, Player.Health - (TrueDamage - Player.Defense));
+                Console.WriteLine("{0} -> {1}\n", Player.Health, Player.Health - (selectedMonster.Attack - Player.Defense));
             }
             Console.WriteLine();
-            Player.TakeDamage(TrueDamage - Player.Defense);
+            Player.TakeDamage(selectedMonster.Attack - Player.Defense);
             Console.WriteLine("0. 다음\n");
             Console.Write(">> ");
 
@@ -164,7 +129,7 @@ namespace project_TextRPG
                 {
                     if (choice == 0)
                     {
-                        if (Player.isDead)
+                        if(Player.isDead)
                         {
                             ShowLose();
                         }
@@ -182,18 +147,14 @@ namespace project_TextRPG
             }
         }
 
-        // 모든 몬스터를 잡으면 출력돼는 승리 화면.
         void ShowVictory()
         {
             Console.Clear();
             Console.WriteLine("Battle!! - Result\n");
             Console.WriteLine("Victory\n");
             Console.WriteLine("던전에서 몬스터 {0}마리를 잡았습니다.\n", killcount);
-            Console.WriteLine("[캐릭터 정보]");
-            Player.LevelCalculator(Player);
-            Console.WriteLine("LV.{0} {1} -> LV.{2} {1}", Defaultlevel, Player.Name, Player.Level);
-            Console.WriteLine("HP {0} -> {1}", DefaultHp, Player.Health);
-            Console.WriteLine("exp {0} -> {1}\n", DefaultExp, Player.Exp);
+            Console.WriteLine("LV.{0} {1}", Player.Level, Player.Name);
+            Console.WriteLine("{0} -> {1}\n", Player.MaxHealth,Player.Health);
             Console.WriteLine("0. 다음\n");
             Console.Write(">> ");
             while (true)
@@ -202,7 +163,6 @@ namespace project_TextRPG
                 {
                     if (choice == 0)
                     {
-                        _scene.Return();
                         return;
                     }
                     else
@@ -215,10 +175,8 @@ namespace project_TextRPG
                     Console.WriteLine("잘못된 입력입니다. 다시 시도하세요.");
                 }
             }
-
         }
 
-        // 플레이어가 isDead 상태가 되면 표출되는 패배화면.
         void ShowLose()
         {
             Console.Clear();
@@ -234,7 +192,6 @@ namespace project_TextRPG
                 {
                     if (choice == 0)
                     {
-                        _scene.Return();
                         return;
                     }
                     else
@@ -249,29 +206,19 @@ namespace project_TextRPG
             }
         }
 
-        // 플레이어가 몬스터를 공격했을때의 결과를 출력해주는 함수.
         void ShowAttackresult(Monster selectedMonster)
         {
             Console.Clear();
             Console.WriteLine("Battle!!\n");
             Console.WriteLine("{0} 의 공격!", Player.Name);
-            if (CriticalHit != null && CriticalHit)
-            {
-                Console.WriteLine("LV.{0} {1} 을(를) 맞췄습니다. [데미지 : {2}] - 치명타공격!!\n",
-    selectedMonster.Level, selectedMonster.Name, TrueDamage - selectedMonster.Defense);
-            }
-            else
-            {
-                Console.WriteLine("LV.{0} {1} 을(를) 맞췄습니다. [데미지 : {2}]\n",
-    selectedMonster.Level, selectedMonster.Name, TrueDamage - selectedMonster.Defense);
-            }
+            Console.WriteLine("LV.{0} {1} 을(를) 맞췄습니다. [데미지 : {2}]\n",
+                selectedMonster.Level, selectedMonster.Name, TrueDamage - selectedMonster.Defense);
             Console.WriteLine("LV.{0} {1}", selectedMonster.Level, selectedMonster.Name);
             if (selectedMonster.Health - (TrueDamage - selectedMonster.Defense) <= 0)
             {
                 Console.WriteLine("{0} -> Dead\n", selectedMonster.Health);
                 selectedMonster.isDead = true;
                 killcount++;
-                Player.Exp += selectedMonster.Exp + selectedMonster.Level;
             }
             else
             {
@@ -299,8 +246,6 @@ namespace project_TextRPG
                                 if (!monster.isDead)
                                 {
                                     ShowEnemyPhase(monster);
-                                    TrueDamage = GetTrueDamage(monster.Attack);
-                                    Criticalcalculator(TrueDamage);
                                 }
                             }
                         }
@@ -319,7 +264,6 @@ namespace project_TextRPG
             }
         }
 
-        // 시작전투화면에서 1번을 입력시 표출되는 공격대상선택화면
         void ShowAttackList()
         {
             int n = 1;
@@ -365,7 +309,6 @@ namespace project_TextRPG
                         else
                         {
                             TrueDamage = GetTrueDamage(Player.Attack);
-                            Criticalcalculator(TrueDamage);
                             ShowAttackresult(selectedMonster);
                         }
                     }
@@ -381,7 +324,6 @@ namespace project_TextRPG
             }
         }
 
-        // 플레이어가 던전진입시 처음 보여지는 화면.
         public void StartBattle(int dungeonid)
         {
             Floar = dungeonid;

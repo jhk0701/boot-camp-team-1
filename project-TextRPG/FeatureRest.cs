@@ -51,14 +51,12 @@
                 $"{COST} G를 지불하고 캐릭터를 회복시켰습니다.\n\n",
 
                 $"Lv. {_player.Level} {_player.Name}\n",
-                $"Hp {_player.Health} -> {_player.MaxHealth}\n",
-                $"Mp {_player.Mana} -> {_player.MaxMana}\n",
+                $"Hp {_player.Health} -> {_player.Cure(_player.MaxHealth)}\n",
                 $"보유 골드 {_player.Gold} -> {_player.Gold - COST}\n\n",
 
                 "0. 나가기\n"
             );
             _player.Gold -= COST;
-            _player.Rest();
 
             Utility.GetSelection(0, 0);
             End();

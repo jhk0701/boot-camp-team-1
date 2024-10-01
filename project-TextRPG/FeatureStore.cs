@@ -9,9 +9,8 @@
             _scene = scene;
             _name = featureName;
             _subFeatures = [
-                new FeatureStoreBuying($"{_name}-아이템 구매", _scene),
-                new FeatureStoreSelling($"{_name}-아이템 판매", _scene),
-                new FeatureStoreEnhance($"{_name}-아이템 강화", _scene)
+                new FeatureStoreBuying("상점-아이템 구매", _scene),
+                new FeatureStoreSelling("상점-아이템 판매", _scene)
             ];
         }
 
@@ -27,12 +26,10 @@
             );
             
             Equipment[] e = DataDefinition.GetInstance().Equipments;
-            //  
             for (int i = 0; i < e.Length; i++)
             {
                 Utility.ShowScript(
-                    "- ",
-                    e[i].GetDesc(1, _player.Inventory.HasItem(e[i]))
+                    $"- {e[i].Name, -15} | {e[i].GetBonusSpec(), -15} | {e[i].Price} G | {e[i].Description}"
                 );
             }
 
@@ -42,10 +39,10 @@
         public override void Act()
         {
             Utility.ShowScript(
-                "1. 아이템 구매\n2. 아이템 판매\n3. 아이템 강화\n0. 나가기\n"
+                "1. 아이템 구매\n2. 아이템 판매\n0. 나가기\n"
             );
 
-            int select = Utility.GetSelection(0, _subFeatures.Length);
+            int select = Utility.GetSelection(0, 2);
             if (select == 0) 
             {
                 End();

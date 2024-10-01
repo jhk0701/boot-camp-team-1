@@ -23,7 +23,8 @@
 
                 Utility.ShowScript(
                     $"{i + 1}. ",
-                    item.GetDesc(0, _player.Inventory.IsEquipped(item))
+                    _player.Inventory.IsEquipped(item) ? "[E]" : "",
+                    $"{item.Name,-15} | {item.GetBonusSpec(),-15} | {item.Description}"
                 );
             }
 
@@ -32,10 +33,6 @@
 
         public override void Act()
         {
-            Utility.ShowScript(
-                "0. 나가기\n"
-            );
-
             Equipment[] e = _player.Inventory.Items;
             int select = Utility.GetSelection(0, e.Length);
 

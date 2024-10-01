@@ -1,61 +1,15 @@
 ﻿namespace project_TextRPG
 {
-    public class Character : Unit
+    class Character : Unit
     {
         public EClass CharClass { get; protected set; }
         public int Gold { get; set; }
         public Skill[] Skills { get; protected set; }
         public Inventory Inventory { get; protected set; }
 
-        public override bool IsPlayer => true;
-
         public Character(string name) : base(name) 
         { 
-
             Inventory = new Inventory(this);
-        }
-
-        public void LevelCalculator(Character player)
-        {
-            int needexp;
-            if (player.Level == 1)
-            {
-                needexp = 10;
-            }
-            else if (player.Level == 2)
-            {
-                needexp = 25;
-            }
-            else if (player.Level == 3)
-            {
-                needexp = 30;
-            }
-            else if (player.Level == 4)
-            {
-                needexp = 35;
-            }
-            else if (player.Level == 5)
-            {
-                needexp = 40;
-            }
-            else
-            {
-                needexp = 45;
-            }
-            if (player.Exp >= needexp)
-            {
-                player.Level += 1;
-            }
-        }
-
-        public void Initialize(ClassInitData initData)
-        {
-            BasicAttack = initData.attack;
-            BasicDefense = initData.defense;
-            MaxHealth = initData.maxHealth;
-            MaxMana = initData.maxMana;
-            Health = MaxHealth;
-            Mana = MaxMana;
         }
     }
 
@@ -67,17 +21,16 @@
         public ChairmanOfUnion(string name) : base(name)
         {
             CharClass = EClass.ChairmanOfUnion;
-            //Name = name;
-            //isDead = false;
+            Name = name;
+            Level = 5;
+            BasicAttack = 10f;
+            BasicDefense = 1f;
+            MaxHealth = 50f;
+            Health = MaxHealth;
+            MaxMana = 50f;
+            Mana = MaxMana;
+            isDead = false;
 
-            //Level = 5;
-            //BasicAttack = 10f;
-            //BasicDefense = 1f;
-            //MaxHealth = 50f;
-            //Health = MaxHealth;
-            //MaxMana = 50f;
-            //Mana = MaxMana;
-            Initialize(DataDefinition.GetInstance().ClassInitDatas[(int)CharClass]);
 
             Skills = [
                 new Skill("파업", [120f, 150f], 5, 10f),
@@ -96,7 +49,6 @@
         public SecretaryGeneral(string name) : base(name)
         {
             CharClass = EClass.SecretaryGeneral;
-            Initialize(DataDefinition.GetInstance().ClassInitDatas[(int)CharClass]);
 
             Skills = [
                 new Skill("언론 고발", [120f, 150f], 5, 10f),
@@ -115,7 +67,6 @@
         public DirectorOfUnion(string name) : base(name)
         {
             CharClass = EClass.DirectorOfUnion;
-            Initialize(DataDefinition.GetInstance().ClassInitDatas[(int)CharClass]);
 
             Skills = [
                 new Skill("죽창", [120f, 120f], 5, 10f),

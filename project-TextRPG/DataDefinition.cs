@@ -53,58 +53,35 @@ namespace project_TextRPG
         Mythic
     }
 
-    // 아이템 타입 분류할 필요 없이 아이템이 배틀아이템 / 힐아이템으로 나뉘어져서 삭제합니다.
-    //public enum CItemType : int
-    //{
-    //    Potion = 0,
-    //    DamageItem = 1
-    //}
-
-    public struct ClassInitData
+    public enum BattleItemType : int
     {
-        public string name;
-        public float attack;
-        public float defense;
-        public float maxHealth;
-        public float maxMana;
-
-        public ClassInitData(string n, float atk, float def, float maxHp, float maxMp)
-        {
-            name = n;
-            attack = atk;
-            defense = def;
-            maxHealth = maxHp;
-            maxMana = maxMp;
-        }
+        Potion = 0,
+        DamageItem = 1
     }
 
 
     public class DataDefinition
     {
+        long _instanceId = 1;
         static DataDefinition _instance;
 
+        public Item[] Items { get; set; }
         public Monster[] Monsters { get; set; }
         public Skill[] Skills { get; set; }
-
-        public Item[] Items { get; set; }
+        
         public Equipment[] Equipments { get; set; }
-        public ClassInitData[] ClassInitDatas { get; private set; }
+        public BattleItem[] BattleItems { get; set; }
+
 
         private DataDefinition()
         {
-
-            ClassInitDatas = [
-                new ClassInitData("노조 위원장", 10f, 1f, 50f, 50f),
-                new ClassInitData("사무총장", 6f, 5f, 50f, 50f),
-                new ClassInitData("조직 국장", 8f, 3f, 50f, 50f)
-            ];
-
-            Equipments = new Equipment[] 
-            {
+            Equipments = new Equipment[] {
                 new Equipment("정장", "Manners, Maketh, Man.", 1000, EEquipType.Armor, ERank.Normal, 0f, 10f, 10f, 0f),
                 new Equipment("서류 가방", "사실은 총이 들어갑니다.", 2000, EEquipType.Weapon, ERank.Normal, 10f, 0f, 0f, 10f),
             };
 
+            BattleItems = new BattleItem[] {
+            };
             //string name, float basicattack, float basicdefence, float maxhealth, float maxmana, int gold, Skill[] skills) : base(name)
             Monsters = new Monster[]
             {
@@ -119,6 +96,7 @@ namespace project_TextRPG
                 new Monster("사장드래곤", 3f, 3f, 10f, 10f, 50, new Skill[]{ new Skill("최상위결정권", new float[]{35f}, 0, 10f)}),
 
             };
+
 
 
             //string name, float[] power, int requiredLv, float requiredMp)
@@ -136,50 +114,14 @@ namespace project_TextRPG
             };
 
 
-    //    public enum EEquipType : int
-    //    {
-    //        Weapon = 0,
-    //        Armor,
-    //        Helmet,
-    //        Accessary
-    //    }
 
-    //    public enum EEquipBonus : int
-    //    {
-    //        ATK = 0,    // Attack
-    //        DEF,    // Defense
-    //        HP,     // Hp
-    //        MP      // MP
-    //    }
 
-    //    public enum ERank : int
-    //    {
-    //        Normal = 0,
-    //        Rare,
-    //        Epic,
-    //        Legendary,
-    //        Mythic
-    //    }
 
-        // Equipment(string itemName, string description, int itemPrice, EEquipType eType, ERank rank, float atkBonus, float defBonus, float maxHpBonus, float maxMpBonus)
-        // HealItem(string itemName, string description, int itemPrice, int itemCount, float healAmount)
-        // DamageItem(string itemName, string description, int itemPrice, int itemCount, float itemDamage)
-        Items = new Item[]
-            {
-                //Weapon List
-                new Equipment("회사 화장실 휴지", "[무기] [공격력 +10] 닦을 때 따가운 화장실 휴지, 엉덩이의 처우를 개선해달라.", 100, 0, ERank.Normal, 10f, 0, 0, 0),
-                new Equipment("부러진 법인카드", "[무기] [공격력 +30] 부도 직전 회사의 한도초과 카드, 가려운 곳 긁기에는 쓸만하다.", 500, 0, ERank.Rare, 30f, 0, 0, 0),
-                new Equipment("연대의 확성기", "[무기] [공격력 +70] 우리의 처절한 외침이 들리는가.", 2000, 0, ERank.Epic, 70f, 0, 0, 0),
-                new Equipment("평화의 죽창", "[무기] [공격력 +100] 회사 앞에 심어놓은 대나무를 뽑아서 만들었다.", 5000, 0, ERank.Legendary, 100f, 0, 0, 0),
-                new Equipment("사장님의 신용카드", "[무기] [공격력 +200] 사장님의 비자금이 숨겨진 카드. 돈쭐을 내줄 수 있다.", 10000, 0, ERank.Mythic, 200f, 0, 0, 0),
-
-                //HealItem List
-                new HealItem("믹스 커피", "아침 필수 도핑약 [HP + 50]", 10, 1, 50),
-                new HealItem("야근의 핫식스", "야근을 버티게 하는 마법의  [HP + 100]", 30, 1, 100),
-                new HealItem("박카스", "풀려라 5천만, 풀려라 피로! [HP + 300]", 100, 1, 300),
-            };
 
         }
+
+
+        
 
         public static DataDefinition GetInstance()
         {
@@ -188,26 +130,10 @@ namespace project_TextRPG
 
             return _instance;
         }
-    }
-    
-    public class InstanceManager
-    {
-        static InstanceManager _instance;
-        long _instId = 0;
 
-        private InstanceManager() { }
-
-        public static InstanceManager GetInstacne()
+        public long GetInstanceId()
         {
-            if(_instance == null)
-                _instance = new InstanceManager();
-
-            return _instance;
-        }
-
-        public long GetId()
-        {
-            return ++_instId;
+            return _instanceId++;
         }
     }
 }

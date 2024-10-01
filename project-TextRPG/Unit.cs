@@ -5,9 +5,7 @@
         public String Name { get; protected set; }
 
         public float BasicAttack { get; protected set; }
-        public virtual float EquipAttack { get; set; }
-        public virtual bool IsPlayer { get; set; } //소비아이템 사용시 target이 플레이어인지 몬스터인지 체크용
-
+        public float EquipAttack { get; set; }
         public float Attack 
         { 
             get 
@@ -17,7 +15,7 @@
         }
 
         public float BasicDefense { get; protected set; }
-        public virtual float EquipDefense { get; set; }
+        public float EquipDefense { get; set; }
         public float Defense 
         { 
             get 
@@ -27,47 +25,12 @@
         }
 
         public float MaxHealth { get; protected set; }
-        public virtual float EquipHealth { get; set; }
-
-        float _health;
-        public float Health 
-        { 
-            get { return _health; }
-            protected set
-            {
-                if (isDead) return;
-
-                _health = value;
-                if(_health < 0f) // 사망
-                {
-                    _health = 0f;
-                    isDead = true; 
-                }
-
-                if(_health > MaxHealth + EquipHealth) // 과회복
-                    _health = MaxHealth + EquipHealth;
-            }
-        }
+        public float EquipHealth { get; set; }
+        public float Health { get; protected set; }
 
         public float MaxMana { get; protected set; }
-        public virtual float EquipMana { get; set; }
-
-        float _mana;
-        public float Mana 
-        {
-            get { return _mana; }
-            protected set
-            {
-                _mana = value;
-
-                if (_mana < 0f)
-                    _mana = 0f;
-
-                if (_mana > MaxMana + EquipMana) // 과회복
-                    _mana = MaxMana + EquipMana;
-            }
-        }
-
+        public float EquipMana { get; set; }
+        public float Mana { get; protected set; }
         public bool isDead { get; set; }
 
         int _lv;
@@ -81,8 +44,7 @@
 
                 _lv = value;
 
-                //Console.WriteLine($"레벨이 상승했습니다.\nLv. {_lv - 1} -> {_lv}\n능력치가 소폭 상승합니다.");
-                Console.WriteLine("레벨이 상승했습니다.");
+                Console.WriteLine($"레벨이 상승했습니다.\nLv. {_lv - 1} -> {_lv}\n능력치가 소폭 상승합니다.");
 
                 BasicAttack += 0.5f;
                 BasicDefense += 1f;
@@ -97,11 +59,11 @@
                 _exp = value;
                 // 레벨업 데이터 반영 구간
                 // 임시 반영
-                //if(_exp >= Level * 5)
-                //{
-                //    Level++;
-                //    _exp = 0;
-                //}
+                if(_exp >= Level * 5)
+                {
+                    Level++;
+                    _exp = 0;
+                }
             }
         }
 
@@ -112,36 +74,19 @@
         public Unit(string name) 
         { 
             Name = name;
-            isDead = false;
         }
 
 
         public virtual float TakeDamage(float damage) 
-        {
-            if (damage <= 0f)
-                return Health;
-
+        { 
             Health -= damage;
             return Health;
         }
 
-        public void Heal(float healAmount)
+        public virtual float Cure(float val)
         {
-            Health += healAmount;
-            Console.WriteLine($"{Name}은(는) {healAmount}의 체력을 회복했습니다. 현재 체력: {Health}");
-        }
-
-        public virtual void Rest()
-        {
-            Health = MaxHealth + EquipHealth;
-            Mana = MaxMana + EquipMana;
-        }
-
-        public virtual void Revive()
-        {
-            isDead = false;
-            Health = 1f;
-            Mana = 1f;
+            Health += val;
+            return Health;
         }
     }
 }

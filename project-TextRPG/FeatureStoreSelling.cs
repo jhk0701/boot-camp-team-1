@@ -24,8 +24,7 @@
             for (int i = 0; i < e.Length; i++)
             {
                 Utility.ShowScript(
-                    $"-{i + 1}. ",
-                    e[i].GetDesc(2)
+                    $"-{i + 1}. {e[i].Name,-15} | {e[i].GetBonusSpec(),-15} | {e[i].Price * 0.85} G | {e[i].Description}"
                 );
             }
 
