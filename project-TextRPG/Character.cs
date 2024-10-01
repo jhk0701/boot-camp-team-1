@@ -7,6 +7,8 @@
         public Skill[] Skills { get; protected set; }
         public Inventory Inventory { get; protected set; }
 
+        public Quest[] Quests { get; protected set; }
+
         public Character(string name) : base(name)
         {
             Level = 1;
