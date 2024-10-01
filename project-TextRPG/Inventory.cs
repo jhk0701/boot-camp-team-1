@@ -1,6 +1,6 @@
 ﻿namespace project_TextRPG
 {
-    class Inventory
+    public class Inventory
     {
         Character _player;
         

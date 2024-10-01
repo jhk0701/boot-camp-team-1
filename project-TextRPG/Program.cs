@@ -2,10 +2,9 @@
 
 namespace project_TextRPG
 {
-    class Program
+    public class Program
     {
-        static string saveFilePath = "saveData.json";
-
+       
         const string COMMON_NAME = "악덕 기업";
 
         static void Main(string[] args)
@@ -22,13 +21,6 @@ namespace project_TextRPG
             gameScene.Start(player);
         }
 
-
-        static void SaveGame()
-        {
-           // string jsonString = JsonSerializer.Serialize(playerCharacter);
-           // File.WriteAllText(saveFilePath, jsonString);
-           // Console.WriteLine("게임이 저장되었습니다.");
-        }
 
     }
 }

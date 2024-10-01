@@ -1,6 +1,6 @@
 ﻿namespace project_TextRPG
 {
-    class Character : Unit
+    public class Character : Unit
     {
         public EClass CharClass { get; protected set; }
         public int Gold { get; set; }
