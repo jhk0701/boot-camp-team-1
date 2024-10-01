@@ -33,6 +33,9 @@ namespace project_TextRPG
         Accessary
     }
 
+    /// <summary>
+    /// 장비 착용 시 적용 성능
+    /// </summary>
     public enum EEquipBonus : int
     {
         ATK = 0,    // Attack
@@ -59,6 +62,9 @@ namespace project_TextRPG
         DamageItem = 1
     }
 
+    /// <summary>
+    /// 클래스별 초기 데이터
+    /// </summary>
     public struct ClassInitData
     {
         public string name;
@@ -89,6 +95,11 @@ namespace project_TextRPG
         public BattleItem[] BattleItems { get; set; }
         public ClassInitData[] ClassInitDatas { get; private set; }
 
+        /// <summary>
+        /// 퀘스트 정의 리스트. 레벨별 퀘스트
+        /// </summary>
+        public Quest[] QuestList { get; private set; }
+
         private DataDefinition()
         {
 
@@ -107,19 +118,19 @@ namespace project_TextRPG
             BattleItems = new BattleItem[] 
             {
             };
+
             //string name, float basicattack, float basicdefence, float maxhealth, float maxmana, int gold, Skill[] skills) : base(name)
             Monsters = new Monster[]
             {
-                new Monster("부당계약서", 3f, 3f, 10f, 10f, 50, new Skill[]{ new Skill("계약이행", new float[]{10f}, 0, 10f)}),
-                new Monster("연장근무", 3f, 3f, 10f, 10f, 50, new Skill[]{ new Skill("업무의심연", new float[]{15f}, 0, 10f)}),
-                new Monster("환영복지술사", 3f, 3f, 10f, 10f, 50, new Skill[]{ new Skill("덫없는환상", new float[]{12f}, 0, 10f)}),
-                new Monster("월급루팡", 3f, 3f, 10f, 10f, 50, new Skill[]{ new Skill("훔치기", new float[]{5f}, 0, 10f)}),
-                new Monster("인사고과망령", 3f, 3f, 10f, 10f, 50, new Skill[]{ new Skill("불공정평가", new float[]{8f}, 0, 10f)}),
-                new Monster("노동착취자", 3f, 3f, 10f, 10f, 50, new Skill[]{ new Skill("착취", new float[]{20f}, 0, 10f)}),
-                new Monster("과로골렘", 3f, 3f, 10f, 10f, 50, new Skill[]{ new Skill("압박", new float[]{25f}, 0, 10f)}),
-                new Monster("해고의그림자", 3f, 3f, 10f, 10f, 50, new Skill[]{ new Skill("권고사직", new float[]{30f}, 0, 10f)}),
-                new Monster("사장드래곤", 3f, 3f, 10f, 10f, 50, new Skill[]{ new Skill("최상위결정권", new float[]{35f}, 0, 10f)}),
-
+                new Monster(0, "부당계약서", 3f, 3f, 10f, 10f, 50, new Skill[]{ new Skill("계약이행", new float[]{10f}, 0, 10f)}),
+                new Monster(1, "연장근무", 3f, 3f, 10f, 10f, 50, new Skill[]{ new Skill("업무의심연", new float[]{15f}, 0, 10f)}),
+                new Monster(2, "환영복지술사", 3f, 3f, 10f, 10f, 50, new Skill[]{ new Skill("덫없는환상", new float[]{12f}, 0, 10f)}),
+                new Monster(3, "월급루팡", 3f, 3f, 10f, 10f, 50, new Skill[]{ new Skill("훔치기", new float[]{5f}, 0, 10f)}),
+                new Monster(4, "인사고과망령", 3f, 3f, 10f, 10f, 50, new Skill[]{ new Skill("불공정평가", new float[]{8f}, 0, 10f)}),
+                new Monster(5, "노동착취자", 3f, 3f, 10f, 10f, 50, new Skill[]{ new Skill("착취", new float[]{20f}, 0, 10f)}),
+                new Monster(6, "과로골렘", 3f, 3f, 10f, 10f, 50, new Skill[]{ new Skill("압박", new float[]{25f}, 0, 10f)}),
+                new Monster(7, "해고의그림자", 3f, 3f, 10f, 10f, 50, new Skill[]{ new Skill("권고사직", new float[]{30f}, 0, 10f)}),
+                new Monster(8, "사장드래곤", 3f, 3f, 10f, 10f, 50, new Skill[]{ new Skill("최상위결정권", new float[]{35f}, 0, 10f)}),
             };
 
 
@@ -137,6 +148,11 @@ namespace project_TextRPG
                 new Skill("최상위결정권", new float[]{35f}, 0, 10f),
             };
 
+            QuestList = [
+                //new Quest("부당 계약 적발", "사내에 완연한 부당계약서들을 적발하고 기강을 바로 세워주세요!"),
+                //new Quest("과로의 원인", "비일비재한 연장근무에서 벗어나고 싶은 직장인들을 구해주세요."),
+                //new Quest("월급루팡", "일하는 손 따로 노는 손 따로.\n양심없는 루팡들을 처지해주세요!")
+            ];
         }
 
         public static DataDefinition GetInstance()
