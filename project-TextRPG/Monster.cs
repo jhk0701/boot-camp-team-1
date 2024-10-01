@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.ConstrainedExecution;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
-using static System.Net.Mime.MediaTypeNames;
-
-namespace project_TextRPG
+﻿namespace project_TextRPG
 {
     public class Monster : Unit
     {
@@ -16,22 +7,8 @@ namespace project_TextRPG
         public Skill[] Skills { get; set; }
 
         public Monster(string name) : base(name) { }
-        public Monster(string name, int id, float atk, float def, float hp = 10f, float mp = 10f) : base(name) 
-        { 
-            Id = id;
-
-            BasicAttack = atk;
-            BasicDefense = def;
-            MaxHealth = hp;
-            Health = MaxHealth;
-            MaxMana = mp;
-            Mana = MaxMana;
-
-            isDead = false;
-        }
         public Monster(string name, float basicattack, float basicdefence, float maxhealth, float maxmana, int gold, Skill[] skills) : base(name)
         {
-            Name = name;
             BasicAttack = basicattack;
             BasicDefense = basicdefence;
             MaxHealth = maxhealth;
@@ -46,7 +23,6 @@ namespace project_TextRPG
     {
         public Goblin(string name) : base(name)
         {
-            Name = name;
             Exp = 3;
             BasicAttack = 5f;
             BasicDefense = 5f;
@@ -54,7 +30,6 @@ namespace project_TextRPG
             Health = MaxHealth;
             MaxMana = 12f;
             Mana = MaxMana;
-            isDead = false;
             //BasicAttack = basicattack;
             //BasicDefense = basicdefence;
             //MaxHealth = maxhealth;
@@ -69,7 +44,6 @@ namespace project_TextRPG
     {
         public Orc(string name) : base(name)
         {
-            Name = name;
             Exp = 4;
             BasicAttack = 5f;
             BasicDefense = 5f;
@@ -77,7 +51,6 @@ namespace project_TextRPG
             Health = MaxHealth;
             MaxMana = 12f;
             Mana = MaxMana;   
-            isDead = false;
             //Skills = [
             //    new Skill()
             //    ]
@@ -88,7 +61,6 @@ namespace project_TextRPG
     {
         public Troll(string name) : base(name)
         {
-            Name = name;
             Exp = 5;
             BasicAttack = 7f;
             BasicDefense = 7f;
@@ -96,7 +68,6 @@ namespace project_TextRPG
             Health = MaxHealth;
             MaxMana = 14f;
             Mana = MaxMana;
-            isDead = false;
             //Skills = [
             //    new Skill()
             //];
@@ -107,7 +78,6 @@ namespace project_TextRPG
     {
         public Slime(string name) : base(name)
         {
-            Name = name;
             Exp = 6;
             BasicAttack = 9f;
             BasicDefense = 9f;
@@ -115,7 +85,6 @@ namespace project_TextRPG
             Health = MaxHealth;
             MaxMana = 16f;
             Mana = MaxMana;
-            isDead = false;
             //Skills = [
             //    new Skill()
             //];
@@ -126,7 +95,6 @@ namespace project_TextRPG
     {
         public Dragon(string name) : base(name)
         {
-            Name = name;
             Exp = 7;
             BasicAttack = 3f;
             BasicDefense = 3f;
@@ -134,7 +102,6 @@ namespace project_TextRPG
             Health = MaxHealth;
             MaxMana = 10f;
             Mana = MaxMana;
-            isDead = false;
             //Skills = [
             //    new Skill()
             //];

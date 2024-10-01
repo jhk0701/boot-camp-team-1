@@ -5,7 +5,7 @@
         public String Name { get; protected set; }
 
         public float BasicAttack { get; protected set; }
-        public float EquipAttack { get; set; }
+        public virtual float EquipAttack { get; set; }
         public float Attack 
         { 
             get 
@@ -15,7 +15,7 @@
         }
 
         public float BasicDefense { get; protected set; }
-        public float EquipDefense { get; set; }
+        public virtual float EquipDefense { get; set; }
         public float Defense 
         { 
             get 
@@ -25,12 +25,48 @@
         }
 
         public float MaxHealth { get; protected set; }
-        public float EquipHealth { get; set; }
-        public float Health { get; protected set; }
+        public virtual float EquipHealth { get; set; }
+
+        float _health;
+        public float Health 
+        { 
+            get { return _health; }
+            protected set
+            {
+                if (isDead) return;
+
+                _health = value;
+                if(_health < 0f) // 사망
+                {
+                    _health = 0f;
+                    isDead = true; 
+                }
+
+                if(_health > MaxHealth + EquipHealth) // 과회복
+                    _health = MaxHealth + EquipHealth;
+            }
+        }
 
         public float MaxMana { get; protected set; }
-        public float EquipMana { get; set; }
-        public float Mana { get; protected set; }
+        public virtual float EquipMana { get; set; }
+
+        float _mana;
+        public float Mana 
+        {
+            get { return _mana; }
+            protected set
+            {
+                _mana = value;
+
+                if (_mana < 0f)
+                    _mana = 0f;
+
+                if (_mana > MaxMana + EquipMana) // 과회복
+                    _mana = MaxMana + EquipMana;
+            }
+        }
+
+
         public bool isDead { get; set; }
 
         int _lv;
@@ -75,19 +111,30 @@
         public Unit(string name) 
         { 
             Name = name;
+            isDead = false;
         }
 
 
         public virtual float TakeDamage(float damage) 
-        { 
+        {
+            if (damage <= 0f)
+                return Health;
+
             Health -= damage;
             return Health;
         }
 
-        public virtual float Cure(float val)
+        public virtual void Rest()
         {
-            Health += val;
-            return Health;
+            Health = MaxHealth + EquipHealth;
+            Mana = MaxMana + EquipMana;
+        }
+
+        public virtual void Revive()
+        {
+            isDead = false;
+            Health = 1f;
+            Mana = 1f;
         }
     }
 }

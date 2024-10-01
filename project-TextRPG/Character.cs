@@ -1,6 +1,6 @@
 ﻿namespace project_TextRPG
 {
-    class Character : Unit
+    public class Character : Unit
     {
         public EClass CharClass { get; protected set; }
         public int Gold { get; set; }
@@ -45,6 +45,15 @@
             }
         }
 
+        public void Initialize(ClassInitData initData)
+        {
+            BasicAttack = initData.attack;
+            BasicDefense = initData.defense;
+            MaxHealth = initData.maxHealth;
+            MaxMana = initData.maxMana;
+            Health = MaxHealth;
+            Mana = MaxMana;
+        }
     }
 
     /// <summary>
@@ -55,16 +64,17 @@
         public ChairmanOfUnion(string name) : base(name)
         {
             CharClass = EClass.ChairmanOfUnion;
-            Name = name;
-            Level = 1;
-            BasicAttack = 10f;
-            BasicDefense = 1f;
-            MaxHealth = 50f;
-            Health = MaxHealth;
-            MaxMana = 50f;
-            Mana = MaxMana;
-            isDead = false;
+            //Name = name;
+            //isDead = false;
 
+            //Level = 5;
+            //BasicAttack = 10f;
+            //BasicDefense = 1f;
+            //MaxHealth = 50f;
+            //Health = MaxHealth;
+            //MaxMana = 50f;
+            //Mana = MaxMana;
+            Initialize(DataDefinition.GetInstance().ClassInitDatas[(int)CharClass]);
 
             Skills = [
                 new Skill("파업", [120f, 150f], 5, 10f),
@@ -83,6 +93,7 @@
         public SecretaryGeneral(string name) : base(name)
         {
             CharClass = EClass.SecretaryGeneral;
+            Initialize(DataDefinition.GetInstance().ClassInitDatas[(int)CharClass]);
 
             Skills = [
                 new Skill("언론 고발", [120f, 150f], 5, 10f),
@@ -101,6 +112,7 @@
         public DirectorOfUnion(string name) : base(name)
         {
             CharClass = EClass.DirectorOfUnion;
+            Initialize(DataDefinition.GetInstance().ClassInitDatas[(int)CharClass]);
 
             Skills = [
                 new Skill("죽창", [120f, 120f], 5, 10f),

@@ -59,28 +59,53 @@ namespace project_TextRPG
         DamageItem = 1
     }
 
+    public struct ClassInitData
+    {
+        public string name;
+        public float attack;
+        public float defense;
+        public float maxHealth;
+        public float maxMana;
+
+        public ClassInitData(string n, float atk, float def, float maxHp, float maxMp)
+        {
+            name = n;
+            attack = atk;
+            defense = def;
+            maxHealth = maxHp;
+            maxMana = maxMp;
+        }
+    }
+
 
     public class DataDefinition
     {
-        long _instanceId = 1;
         static DataDefinition _instance;
 
-        public Item[] Items { get; set; }
         public Monster[] Monsters { get; set; }
         public Skill[] Skills { get; set; }
         
         public Equipment[] Equipments { get; set; }
         public BattleItem[] BattleItems { get; set; }
-
+        public ClassInitData[] ClassInitDatas { get; private set; }
 
         private DataDefinition()
         {
-            Equipments = new Equipment[] {
+
+            ClassInitDatas = [
+                new ClassInitData("노조 위원장", 10f, 1f, 50f, 50f),
+                new ClassInitData("사무총장", 6f, 5f, 50f, 50f),
+                new ClassInitData("조직 국장", 8f, 3f, 50f, 50f)
+            ];
+
+            Equipments = new Equipment[] 
+            {
                 new Equipment("정장", "Manners, Maketh, Man.", 1000, EEquipType.Armor, ERank.Normal, 0f, 10f, 10f, 0f),
                 new Equipment("서류 가방", "사실은 총이 들어갑니다.", 2000, EEquipType.Weapon, ERank.Normal, 10f, 0f, 0f, 10f),
             };
 
-            BattleItems = new BattleItem[] {
+            BattleItems = new BattleItem[] 
+            {
             };
             //string name, float basicattack, float basicdefence, float maxhealth, float maxmana, int gold, Skill[] skills) : base(name)
             Monsters = new Monster[]
@@ -98,7 +123,6 @@ namespace project_TextRPG
             };
 
 
-
             //string name, float[] power, int requiredLv, float requiredMp)
             Skills = new Skill[] 
             {
@@ -113,15 +137,7 @@ namespace project_TextRPG
                 new Skill("최상위결정권", new float[]{35f}, 0, 10f),
             };
 
-
-
-
-
-
         }
-
-
-        
 
         public static DataDefinition GetInstance()
         {
@@ -130,10 +146,26 @@ namespace project_TextRPG
 
             return _instance;
         }
+    }
+    
+    public class InstanceManager
+    {
+        static InstanceManager _instance;
+        long _instId = 0;
 
-        public long GetInstanceId()
+        private InstanceManager() { }
+
+        public static InstanceManager GetInstacne()
         {
-            return _instanceId++;
+            if(_instance == null)
+                _instance = new InstanceManager();
+
+            return _instance;
+        }
+
+        public long GetId()
+        {
+            return ++_instId;
         }
     }
 }
