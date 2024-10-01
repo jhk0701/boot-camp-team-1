@@ -127,6 +127,9 @@
 
         public void Heal(float healAmount)
         {
+            if (healAmount < 0f)
+                return;
+
             Health += healAmount;
             Console.WriteLine($"{Name}은(는) {healAmount}의 체력을 회복했습니다. 현재 체력: {Health}");
         }

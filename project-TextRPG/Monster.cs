@@ -18,7 +18,7 @@ namespace project_TextRPG
             Mana = MaxMana;
         }
 
-        public Monster Copy() // ?��로토????��
+        public Monster Copy() // 프로토타입
         {
             Monster copy = new Monster(
                 Id, Name, BasicAttack, BasicDefense, MaxHealth, MaxMana, Gold, Skills
