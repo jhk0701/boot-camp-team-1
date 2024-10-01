@@ -36,7 +36,11 @@ namespace project_TextRPG
         }
   }
 
+<<<<<<< Updated upstream
     public class Equipment : Item, ICopyable<Equipment>
+=======
+    public class Equipment : Item/*, ICopyable<Equipment>*/
+>>>>>>> Stashed changes
     {
         // 장착 여부
         // 소지 여부 때와 마찬가지로
@@ -101,6 +105,7 @@ namespace project_TextRPG
             return sb.ToString();
         }
 
+<<<<<<< Updated upstream
         public Equipment Copy()
         {
             Equipment copy = new Equipment(
@@ -112,6 +117,19 @@ namespace project_TextRPG
             );
             return copy;
         }
+=======
+        //public Equipment Copy()
+        //{
+        //    Equipment copy = new Equipment(
+        //        Name, Description, Price, type, Rank, 
+        //        Bonus[EEquipBonus.ATK],
+        //        Bonus[EEquipBonus.DEF],
+        //        Bonus[EEquipBonus.HP],
+        //        Bonus[EEquipBonus.MP]
+        //    );
+        //    return copy;
+        //}
+>>>>>>> Stashed changes
     }
 
     public class BattleItem : Item
@@ -136,6 +154,7 @@ namespace project_TextRPG
     }
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     class Program
     {
         public static void Main(string[] args)
@@ -144,6 +163,8 @@ namespace project_TextRPG
 
             potion.Use();
 =======
+=======
+>>>>>>> Stashed changes
     class NewProgram
     {
         static void Main(string[] args)
@@ -153,6 +174,9 @@ namespace project_TextRPG
                 new BattleItem("박카스", "박카스는 노조를 응원합니다. 힘내세요! HP + 100", 100, 1, 1),
                 new BattleItem("화염병", "화염병을 투척한다. 데미지 200", 10, 1, 0),
             };
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
         }
     }
