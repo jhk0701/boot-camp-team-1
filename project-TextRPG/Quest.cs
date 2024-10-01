@@ -1,8 +1,6 @@
-﻿using System.Text;
-
-namespace project_TextRPG
+﻿namespace project_TextRPG
 {
-    public class Quest
+    public abstract class Quest
     {
         public string Title { get; protected set; }
         
@@ -12,7 +10,7 @@ namespace project_TextRPG
         
         public int Count { get; set; }
 
-
-
+        protected abstract void Perform<T>(T target, int cnt);
+        protected abstract void Clear();
     }
 }
