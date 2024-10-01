@@ -48,7 +48,7 @@
 
         public override void Act()
         {
-            IEnhanceable[] e = _player.Inventory.Items;
+            Equipment[] e = _player.Inventory.Items;
             int select = Utility.GetSelection(0, e.Length);
             if (select == 0)
             {
@@ -81,10 +81,18 @@
             int p = GetRandom();
             if (p < probabilityOfSuccess[e[select].EnhanceLevel])
             {
-                ShowSuccessResult(e[select] as Equipment);
-                
+                bool isEquipped = _player.Inventory.IsEquipped(e[select]);
+                if (isEquipped)
+                    _player.Inventory.Unequip(e[select]);
+
                 // 강화 성공
+                ShowSuccessResult(e[select]);
+
                 e[select].Enhance(valueOfEnhancement[e[select].EnhanceLevel]);
+
+                if (isEquipped)
+                    _player.Inventory.Equip(e[select]);
+
                 Utility.GetSelection(0, 0); // 돌아가기                
             }
             else

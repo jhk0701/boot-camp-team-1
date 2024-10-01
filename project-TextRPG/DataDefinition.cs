@@ -119,7 +119,6 @@ namespace project_TextRPG
                 new Monster("과로골렘", 3f, 3f, 10f, 10f, 50, new Skill[]{ new Skill("압박", new float[]{25f}, 0, 10f)}),
                 new Monster("해고의그림자", 3f, 3f, 10f, 10f, 50, new Skill[]{ new Skill("권고사직", new float[]{30f}, 0, 10f)}),
                 new Monster("사장드래곤", 3f, 3f, 10f, 10f, 50, new Skill[]{ new Skill("최상위결정권", new float[]{35f}, 0, 10f)}),
-
             };
 
 
