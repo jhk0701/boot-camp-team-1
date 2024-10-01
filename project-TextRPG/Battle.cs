@@ -1,4 +1,4 @@
-
+ï»¿
 using System.Reflection.Emit;
 using System.Threading;
 using System.Linq;
@@ -12,15 +12,15 @@ namespace project_TextRPG
         Character Player;
         List<Monster> Monsters;
 
-        int killcount;       //ÇØ´ç Ãş¿¡¼­ ÇÃ·¹ÀÌ¾î°¡ Á×ÀÎ ¸ó½ºÅÍÀÇ ¼ıÀÚ
-        float TrueDamage;    //ÇÃ·¹ÀÌ¾î µ¥¹ÌÁöÀÇ 10% ¿ÀÂ÷¸¦ °è»êÇÑ °ª
-        int Floar;           //´øÀü Ãş¼ö
-        bool CriticalHit;    //Ä¡¸íÅ¸ °ø°İ ¹ßµ¿¿©ºÎ
-        bool Dodge;          //È¸ÇÇ¼º°ø ¿©ºÎ
+        int killcount;       //í•´ë‹¹ ì¸µì—ì„œ í”Œë ˆì´ì–´ê°€ ì£½ì¸ ëª¬ìŠ¤í„°ì˜ ìˆ«ì
+        float TrueDamage;    //í”Œë ˆì´ì–´ ë°ë¯¸ì§€ì˜ 10% ì˜¤ì°¨ë¥¼ ê³„ì‚°í•œ ê°’
+        int Floar;           //ë˜ì „ ì¸µìˆ˜
+        bool CriticalHit;    //ì¹˜ëª…íƒ€ ê³µê²© ë°œë™ì—¬ë¶€
+        bool Dodge;          //íšŒí”¼ì„±ê³µ ì—¬ë¶€
 
-        float Defaultlevel;  //ÇÃ·¹ÀÌ¾îÀÇ ´øÀüÁøÀÔ´ç½ÃÀÇ ·¹º§ (½Â¸®È­¸é¿¡¼­ ºñ±³¿ë)
-        float DefaultHp;     //ÇÃ·¹ÀÌ¾îÀÇ ´øÀüÁøÀÔ´ç½ÃÀÇ Ã¼·Â (½Â¸®È­¸é¿¡¼­ ºñ±³¿ë)
-        float DefaultExp;    //ÇÃ·¹ÀÌ¾îÀÇ ´øÀüÁøÀÔ´ç½ÃÀÇ °æÇèÄ¡ (½Â¸®È­¸é¿¡¼­ ºñ±³¿ë)
+        float Defaultlevel;  //í”Œë ˆì´ì–´ì˜ ë˜ì „ì§„ì…ë‹¹ì‹œì˜ ë ˆë²¨ (ìŠ¹ë¦¬í™”ë©´ì—ì„œ ë¹„êµìš©)
+        float DefaultHp;     //í”Œë ˆì´ì–´ì˜ ë˜ì „ì§„ì…ë‹¹ì‹œì˜ ì²´ë ¥ (ìŠ¹ë¦¬í™”ë©´ì—ì„œ ë¹„êµìš©)
+        float DefaultExp;    //í”Œë ˆì´ì–´ì˜ ë˜ì „ì§„ì…ë‹¹ì‹œì˜ ê²½í—˜ì¹˜ (ìŠ¹ë¦¬í™”ë©´ì—ì„œ ë¹„êµìš©)
 
         Random ran;
         public Battle(Character player, int dungeonid, IScene scene)
@@ -42,7 +42,7 @@ namespace project_TextRPG
 
         }
 
-        // 10% È®·ü·Î ¹ß»ıÇÏ´Â È¸ÇÇ °è»ê±â
+        // 10% í™•ë¥ ë¡œ ë°œìƒí•˜ëŠ” íšŒí”¼ ê³„ì‚°ê¸°
         void dodgecalcalculator()
         {
             int rolldice = ran.Next(1, 101);
@@ -55,7 +55,7 @@ namespace project_TextRPG
         }
 
 
-        // 15% È®·ü·Î ¹ß»ıÇÏ´Â Ä¡¸íÅ¸ °è»ê±â
+        // 15% í™•ë¥ ë¡œ ë°œìƒí•˜ëŠ” ì¹˜ëª…íƒ€ ê³„ì‚°ê¸°
         void Criticalcalculator(float damage)
         {
             int rolldice = ran.Next(1, 101);
@@ -68,7 +68,7 @@ namespace project_TextRPG
             }
         }
 
-        // ÇÃ·¹ÀÌ¾î µ¥¹ÌÁö¿ÀÂ÷ 10% ¸¦ °è»êÈÄ ´Ù½Ã °¡Á®¿À´Â ÇÔ¼ö
+        // í”Œë ˆì´ì–´ ë°ë¯¸ì§€ì˜¤ì°¨ 10% ë¥¼ ê³„ì‚°í›„ ë‹¤ì‹œ ê°€ì ¸ì˜¤ëŠ” í•¨ìˆ˜
         float GetTrueDamage(float damage)
         {
             float RandomDamageRange = damage / 10;
@@ -82,7 +82,7 @@ namespace project_TextRPG
         }
 
 
-        // ¸ó½ºÅÍ »ı¼º¸¶¸®¼ö, ¸ó½ºÅÍ ¼ø¼­¸¦ ¹üÀ§³»¿¡¼­ ·£´ıÀ¸·Î ¹èÁ¤ÇØÁÖ´Â ÇÔ¼ö
+        // ëª¬ìŠ¤í„° ìƒì„±ë§ˆë¦¬ìˆ˜, ëª¬ìŠ¤í„° ìˆœì„œë¥¼ ë²”ìœ„ë‚´ì—ì„œ ëœë¤ìœ¼ë¡œ ë°°ì •í•´ì£¼ëŠ” í•¨ìˆ˜
         List<Monster> ShuffleMonsters(List<Monster> values)
         {
             Random rand1 = new Random();
@@ -100,14 +100,10 @@ namespace project_TextRPG
             return shuffled;
         }
 
-        
-        // ´øÀü Ãş¼ö¿¡ µû¶ó¼­ Monsters¸®½ºÆ®¿¡ ¸ó½ºÅÍ¸¦ »ı¼ºÇØÁÖ´Â ÇÔ¼ö
+        // ë˜ì „ ì¸µìˆ˜ì— ë”°ë¼ì„œ Monstersë¦¬ìŠ¤íŠ¸ì— ëª¬ìŠ¤í„°ë¥¼ ìƒì„±í•´ì£¼ëŠ” í•¨ìˆ˜
         List<Monster> CreateMonsters(int dungeonId)
-
         {
-            DataDefinition data = DataDefinition.GetInstance(); // DataDefinition ÀÎ½ºÅÏ½º °¡Á®¿À±â
-            List<Monster> monsters = new List<Monster>();
-            if (dungeonId == 1)
+            switch (dungeonId)
             {
                 case 1:
                     for (int i = 0; i < 3; i++)
@@ -130,42 +126,14 @@ namespace project_TextRPG
                 case 3:
                     for (int i = 0; i < 10; i++)
                     {
-                        Monsters.Add(new Slime("½½¶óÀÓ"));
+                        Monsters.Add(new Slime("ìŠ¬ë¼ì„"));
                     }
                     break;
                 default:
-                    Console.WriteLine("Àß¸øµÈ ÀÔ·ÂÀÔ´Ï´Ù. ´Ù½Ã ½ÃµµÇÏ¼¼¿ä.");
+                    Console.WriteLine("ì˜ëª»ëœ ì…ë ¥ì…ë‹ˆë‹¤. ë‹¤ì‹œ ì‹œë„í•˜ì„¸ìš”.");
                     break;
             }
-            else if (dungeonId == 2)
-            {
-                // 2Ãş¿¡¼­´Â È¯¿µº¹Áö¼ú»ç, ¿ù±Ş·çÆÎ, ÀÎ»ç°í°ú¸Á·É Ãß°¡ µîÀå
-                monsters.Add(data.Monsters[2]); // È¯¿µº¹Áö¼ú»ç
-                monsters.Add(data.Monsters[3]); // ¿ù±Ş·çÆÎ
-                monsters.Add(data.Monsters[4]); // ÀÎ»ç°í°ú¸Á·É
-            }
-            else if (dungeonId == 3)
-            {
-                // 3Ãş¿¡¼­´Â ³ëµ¿ÂøÃëÀÚ, °ú·Î°ñ·½ Ãß°¡ µîÀå
-                monsters.Add(data.Monsters[5]); // ³ëµ¿ÂøÃëÀÚ
-                monsters.Add(data.Monsters[6]); // °ú·Î°ñ·½
-            }
-            else if (dungeonId == 4)
-            {
-                // 4Ãş¿¡¼­´Â ÇØ°íÀÇ±×¸²ÀÚ Ãß°¡ µîÀå
-                monsters.Add(data.Monsters[7]); // ÇØ°íÀÇ±×¸²ÀÚ
-            }
-            else if (dungeonId == 5)
-            {
-                // 5Ãş¿¡¼­´Â »çÀåµå·¡°ï µîÀå
-                monsters.Add(data.Monsters[8]); // »çÀåµå·¡°ï
-            }
-            else if (dungeonId > 5)
-            {
-                // 6Ãş ÀÌ»ó¿¡¼­´Â ¸ğµç ¸ó½ºÅÍµéÀÌ ·£´ıÀ¸·Î µîÀå
-                monsters.AddRange(data.Monsters);
-            }
-            return monsters;
+            return Monsters;
         }
 
         void DeadWriteLine(string value)
@@ -175,22 +143,22 @@ namespace project_TextRPG
             Console.ResetColor();
         }
 
-        // ÀûÀÌ ÇÃ·¹ÀÌ¾î¸¦ °ø°İ½Ã Ç¥ÃâµÇ´Â È­¸é
+        // ì ì´ í”Œë ˆì´ì–´ë¥¼ ê³µê²©ì‹œ í‘œì¶œë˜ëŠ” í™”ë©´
         void ShowEnemyPhase(Monster selectedMonster)
         {
 
             Console.Clear();
             Console.WriteLine("Battle!!\n");
-            Console.WriteLine("LV.{0} {1} ÀÇ °ø°İ!", selectedMonster.Level, selectedMonster.Name);
+            Console.WriteLine("LV.{0} {1} ì˜ ê³µê²©!", selectedMonster.Level, selectedMonster.Name);
             if (!Dodge)
             {
                 if (CriticalHit != null && CriticalHit)
                 {
-                    Console.WriteLine("{0} À»(¸¦) ¸ÂÃè½À´Ï´Ù. [µ¥¹ÌÁö : {1}] - Ä¡¸íÅ¸°ø°İ!!\n", Player.Name, TrueDamage - Player.Defense);
+                    Console.WriteLine("{0} ì„(ë¥¼) ë§ì·„ìŠµë‹ˆë‹¤. [ë°ë¯¸ì§€ : {1}] - ì¹˜ëª…íƒ€ê³µê²©!!\n", Player.Name, TrueDamage - Player.Defense);
                 }
                 else
                 {
-                    Console.WriteLine("{0} À»(¸¦) ¸ÂÃè½À´Ï´Ù. [µ¥¹ÌÁö : {1}]\n",
+                    Console.WriteLine("{0} ì„(ë¥¼) ë§ì·„ìŠµë‹ˆë‹¤. [ë°ë¯¸ì§€ : {1}]\n",
                         Player.Name, TrueDamage - Player.Defense);
                 }
                 Console.WriteLine("LV.{0} {1}", Player.Level, Player.Name);
@@ -208,10 +176,10 @@ namespace project_TextRPG
             }
             else
             {
-                Console.WriteLine("È¸ÇÇ ¼º°ø!");
-                Console.WriteLine("LV.{0} {1}ÀÌ °ø°İÇßÁö¸¸ ¾Æ¹«ÀÏµµ ÀÏ¾î³ªÁö ¾Ê¾Ò½À´Ï´Ù.\n", selectedMonster.Level, selectedMonster.Name);
+                Console.WriteLine("íšŒí”¼ ì„±ê³µ!");
+                Console.WriteLine("LV.{0} {1}ì´ ê³µê²©í–ˆì§€ë§Œ ì•„ë¬´ì¼ë„ ì¼ì–´ë‚˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤.\n", selectedMonster.Level, selectedMonster.Name);
             }
-            Console.WriteLine("0. ´ÙÀ½\n");
+            Console.WriteLine("0. ë‹¤ìŒ\n");
             Console.Write(">> ");
 
             while (true)
@@ -228,32 +196,30 @@ namespace project_TextRPG
                     }
                     else
                     {
-                        Console.WriteLine("Àß¸øµÈ ÀÔ·ÂÀÔ´Ï´Ù. ´Ù½Ã ½ÃµµÇÏ¼¼¿ä.");
+                        Console.WriteLine("ì˜ëª»ëœ ì…ë ¥ì…ë‹ˆë‹¤. ë‹¤ì‹œ ì‹œë„í•˜ì„¸ìš”.");
                     }
                 }
                 else
                 {
-                    Console.WriteLine("Àß¸øµÈ ÀÔ·ÂÀÔ´Ï´Ù. ´Ù½Ã ½ÃµµÇÏ¼¼¿ä.");
+                    Console.WriteLine("ì˜ëª»ëœ ì…ë ¥ì…ë‹ˆë‹¤. ë‹¤ì‹œ ì‹œë„í•˜ì„¸ìš”.");
                 }
             }
         }
 
-        // ¸ğµç ¸ó½ºÅÍ¸¦ ÀâÀ¸¸é Ãâ·ÂµÅ´Â ½Â¸® È­¸é.
+        // ëª¨ë“  ëª¬ìŠ¤í„°ë¥¼ ì¡ìœ¼ë©´ ì¶œë ¥ë¼ëŠ” ìŠ¹ë¦¬ í™”ë©´.
         void ShowVictory()
         {
             Console.Clear();
             Console.WriteLine("Battle!! - Result\n");
             Console.WriteLine("Victory\n");
-            Console.WriteLine("´øÀü¿¡¼­ ¸ó½ºÅÍ {0}¸¶¸®¸¦ Àâ¾Ò½À´Ï´Ù.\n", killcount);
-            Console.WriteLine("[Ä³¸¯ÅÍ Á¤º¸]");
+            Console.WriteLine("ë˜ì „ì—ì„œ ëª¬ìŠ¤í„° {0}ë§ˆë¦¬ë¥¼ ì¡ì•˜ìŠµë‹ˆë‹¤.\n", killcount);
+            Console.WriteLine("[ìºë¦­í„° ì •ë³´]");
             Player.LevelCalculator(Player);
             Console.WriteLine("LV.{0} {1} -> LV.{2} {1}", Defaultlevel, Player.Name, Player.Level);
             Console.WriteLine("HP {0} -> {1}", DefaultHp, Player.Health);
             Console.WriteLine("exp {0} -> {1}\n", DefaultExp, Player.Exp);
-            Console.WriteLine("0. ´ÙÀ½\n");
+            Console.WriteLine("0. ë‹¤ìŒ\n");
             Console.Write(">> ");
-            Player.UpdateStageScore();
-            Floar++;  // Ãş¼ö Áõ°¡
             while (true)
             {
                 if (int.TryParse(Console.ReadLine(), out int choice))
@@ -265,18 +231,18 @@ namespace project_TextRPG
                     }
                     else
                     {
-                        Console.WriteLine("Àß¸øµÈ ÀÔ·ÂÀÔ´Ï´Ù. ´Ù½Ã ½ÃµµÇÏ¼¼¿ä.");
+                        Console.WriteLine("ì˜ëª»ëœ ì…ë ¥ì…ë‹ˆë‹¤. ë‹¤ì‹œ ì‹œë„í•˜ì„¸ìš”.");
                     }
                 }
                 else
                 {
-                    Console.WriteLine("Àß¸øµÈ ÀÔ·ÂÀÔ´Ï´Ù. ´Ù½Ã ½ÃµµÇÏ¼¼¿ä.");
+                    Console.WriteLine("ì˜ëª»ëœ ì…ë ¥ì…ë‹ˆë‹¤. ë‹¤ì‹œ ì‹œë„í•˜ì„¸ìš”.");
                 }
             }
 
         }
 
-        // ÇÃ·¹ÀÌ¾î°¡ isDead »óÅÂ°¡ µÇ¸é Ç¥ÃâµÇ´Â ÆĞ¹èÈ­¸é.
+        // í”Œë ˆì´ì–´ê°€ isDead ìƒíƒœê°€ ë˜ë©´ í‘œì¶œë˜ëŠ” íŒ¨ë°°í™”ë©´.
         void ShowLose()
         {
             Console.Clear();
@@ -284,7 +250,7 @@ namespace project_TextRPG
             Console.WriteLine("You Lose\n");
             Console.WriteLine("LV.{0} {1}", Player.Level, Player.Name);
             Console.WriteLine("{0} -> {1}\n", Player.MaxHealth, Player.Health);
-            Console.WriteLine("0. ´ÙÀ½\n");
+            Console.WriteLine("0. ë‹¤ìŒ\n");
             Console.Write(">> ");
             while (true)
             {
@@ -297,32 +263,32 @@ namespace project_TextRPG
                     }
                     else
                     {
-                        Console.WriteLine("Àß¸øµÈ ÀÔ·ÂÀÔ´Ï´Ù. ´Ù½Ã ½ÃµµÇÏ¼¼¿ä.");
+                        Console.WriteLine("ì˜ëª»ëœ ì…ë ¥ì…ë‹ˆë‹¤. ë‹¤ì‹œ ì‹œë„í•˜ì„¸ìš”.");
                     }
                 }
                 else
                 {
-                    Console.WriteLine("Àß¸øµÈ ÀÔ·ÂÀÔ´Ï´Ù. ´Ù½Ã ½ÃµµÇÏ¼¼¿ä.");
+                    Console.WriteLine("ì˜ëª»ëœ ì…ë ¥ì…ë‹ˆë‹¤. ë‹¤ì‹œ ì‹œë„í•˜ì„¸ìš”.");
                 }
             }
         }
 
-        // ÇÃ·¹ÀÌ¾î°¡ ¸ó½ºÅÍ¸¦ °ø°İÇßÀ»¶§ÀÇ °á°ú¸¦ Ãâ·ÂÇØÁÖ´Â ÇÔ¼ö.
+        // í”Œë ˆì´ì–´ê°€ ëª¬ìŠ¤í„°ë¥¼ ê³µê²©í–ˆì„ë•Œì˜ ê²°ê³¼ë¥¼ ì¶œë ¥í•´ì£¼ëŠ” í•¨ìˆ˜.
         void ShowAttackresult(Monster selectedMonster)
         {
             Console.Clear();
             Console.WriteLine("Battle!!\n");
-            Console.WriteLine("{0} ÀÇ °ø°İ!", Player.Name);
+            Console.WriteLine("{0} ì˜ ê³µê²©!", Player.Name);
             if (!Dodge)
             {
                 if (CriticalHit != null && CriticalHit)
                 {
-                    Console.WriteLine("LV.{0} {1} À»(¸¦) ¸ÂÃè½À´Ï´Ù. [µ¥¹ÌÁö : {2}] - Ä¡¸íÅ¸°ø°İ!!\n",
+                    Console.WriteLine("LV.{0} {1} ì„(ë¥¼) ë§ì·„ìŠµë‹ˆë‹¤. [ë°ë¯¸ì§€ : {2}] - ì¹˜ëª…íƒ€ê³µê²©!!\n",
                      selectedMonster.Level, selectedMonster.Name, TrueDamage - selectedMonster.Defense);
                 }
                 else
                 {
-                    Console.WriteLine("LV.{0} {1} À»(¸¦) ¸ÂÃè½À´Ï´Ù. [µ¥¹ÌÁö : {2}]\n",
+                    Console.WriteLine("LV.{0} {1} ì„(ë¥¼) ë§ì·„ìŠµë‹ˆë‹¤. [ë°ë¯¸ì§€ : {2}]\n",
                       selectedMonster.Level, selectedMonster.Name, TrueDamage - selectedMonster.Defense);
                 }
                 Console.WriteLine("LV.{0} {1}", selectedMonster.Level, selectedMonster.Name);
@@ -342,10 +308,10 @@ namespace project_TextRPG
             }
             else
             {
-                Console.WriteLine("È¸ÇÇ ¼º°ø!");
-                Console.WriteLine("LV.{0} {1}ÀÌ °ø°İÇßÁö¸¸ ¾Æ¹«ÀÏµµ ÀÏ¾î³ªÁö ¾Ê¾Ò½À´Ï´Ù.\n", Player.Level, Player.Name);
+                Console.WriteLine("íšŒí”¼ ì„±ê³µ!");
+                Console.WriteLine("LV.{0} {1}ì´ ê³µê²©í–ˆì§€ë§Œ ì•„ë¬´ì¼ë„ ì¼ì–´ë‚˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤.\n", Player.Level, Player.Name);
             }
-            Console.WriteLine("0. ´ÙÀ½\n");
+            Console.WriteLine("0. ë‹¤ìŒ\n");
             Console.Write(">> ");
 
             while (true)
@@ -376,17 +342,17 @@ namespace project_TextRPG
                     }
                     else
                     {
-                        Console.WriteLine("Àß¸øµÈ ÀÔ·ÂÀÔ´Ï´Ù. ´Ù½Ã ½ÃµµÇÏ¼¼¿ä.");
+                        Console.WriteLine("ì˜ëª»ëœ ì…ë ¥ì…ë‹ˆë‹¤. ë‹¤ì‹œ ì‹œë„í•˜ì„¸ìš”.");
                     }
                 }
                 else
                 {
-                    Console.WriteLine("Àß¸øµÈ ÀÔ·ÂÀÔ´Ï´Ù. ´Ù½Ã ½ÃµµÇÏ¼¼¿ä.");
+                    Console.WriteLine("ì˜ëª»ëœ ì…ë ¥ì…ë‹ˆë‹¤. ë‹¤ì‹œ ì‹œë„í•˜ì„¸ìš”.");
                 }
             }
         }
 
-        // ¹èÆ²½ÃÀÛ È­¸é¿¡¼­ 2¹øÀ» ÀÔ·Â½Ã ÁøÀÔÇÏ´Â ½ºÅ³¸ñ·ÏÃ¢
+        // ë°°í‹€ì‹œì‘ í™”ë©´ì—ì„œ 2ë²ˆì„ ì…ë ¥ì‹œ ì§„ì…í•˜ëŠ” ìŠ¤í‚¬ëª©ë¡ì°½
         public void ShowSkilllist()
         {
             int n = 1;
@@ -404,7 +370,7 @@ namespace project_TextRPG
                 }
             }
             Console.WriteLine();
-            Console.WriteLine("[³»Á¤º¸]");
+            Console.WriteLine("[ë‚´ì •ë³´]");
             Console.WriteLine("Lv.{0}  {1} ({2})", Player.Level, Player.Name, Player.CharClass);
             Console.WriteLine("HP {0}/{1}", Player.Health, Player.MaxHealth);
             Console.WriteLine("MP {0}/{1}\n", Player.Mana, Player.MaxMana);
@@ -412,12 +378,12 @@ namespace project_TextRPG
             {
                 if (skill.RequiredLevel <= Player.Level)
                 {
-                    Console.WriteLine("{0}. {1} - MP {2}\n    ½ºÅ³¼³¸íÀÌ µé¾î°¥ ¿¹Á¤.", n, skill.Name, skill.RequiredMana);
+                    Console.WriteLine("{0}. {1} - MP {2}\n    ìŠ¤í‚¬ì„¤ëª…ì´ ë“¤ì–´ê°ˆ ì˜ˆì •.", n, skill.Name, skill.RequiredMana);
                     n++;
                 }
             }
-            Console.WriteLine("0. Ãë¼Ò");
-            Console.WriteLine("¿øÇÏ½Ã´Â Çàµ¿À» ÀÔ·ÂÇØÁÖ¼¼¿ä.");
+            Console.WriteLine("0. ì·¨ì†Œ");
+            Console.WriteLine("ì›í•˜ì‹œëŠ” í–‰ë™ì„ ì…ë ¥í•´ì£¼ì„¸ìš”.");
             Console.Write(">> ");
 
             while (true)
@@ -438,7 +404,7 @@ namespace project_TextRPG
 
                         if (selectedMonster != null && selectedMonster.isDead)
                         {
-                            Console.WriteLine("ÀÌ¹Ì Á×Àº ´ë»óÀÔ´Ï´Ù.");
+                            Console.WriteLine("ì´ë¯¸ ì£½ì€ ëŒ€ìƒì…ë‹ˆë‹¤.");
                         }
                         else
                         {
@@ -450,17 +416,17 @@ namespace project_TextRPG
                     }
                     else
                     {
-                        Console.WriteLine("Àß¸øµÈ ÀÔ·ÂÀÔ´Ï´Ù. ´Ù½Ã ½ÃµµÇÏ¼¼¿ä.");
+                        Console.WriteLine("ì˜ëª»ëœ ì…ë ¥ì…ë‹ˆë‹¤. ë‹¤ì‹œ ì‹œë„í•˜ì„¸ìš”.");
                     }
                 }
                 else
                 {
-                    Console.WriteLine("Àß¸øµÈ ÀÔ·ÂÀÔ´Ï´Ù. ´Ù½Ã ½ÃµµÇÏ¼¼¿ä.");
+                    Console.WriteLine("ì˜ëª»ëœ ì…ë ¥ì…ë‹ˆë‹¤. ë‹¤ì‹œ ì‹œë„í•˜ì„¸ìš”.");
                 }
             }
         }
 
-        // ½ÃÀÛÀüÅõÈ­¸é¿¡¼­ 1¹øÀ» ÀÔ·Â½Ã Ç¥ÃâµÇ´Â °ø°İ´ë»ó¼±ÅÃÈ­¸é
+        // ì‹œì‘ì „íˆ¬í™”ë©´ì—ì„œ 1ë²ˆì„ ì…ë ¥ì‹œ í‘œì¶œë˜ëŠ” ê³µê²©ëŒ€ìƒì„ íƒí™”ë©´
         void ShowAttackList()
         {
             int n = 1;
@@ -479,12 +445,12 @@ namespace project_TextRPG
                 n++;
             }
             Console.WriteLine();
-            Console.WriteLine("[³»Á¤º¸]");
+            Console.WriteLine("[ë‚´ì •ë³´]");
             Console.WriteLine("Lv.{0}  {1} ({2})", Player.Level, Player.Name, Player.CharClass);
             Console.WriteLine("HP {0}/{1}", Player.Health, Player.MaxHealth);
             Console.WriteLine("MP {0}/{1}\n", Player.Mana, Player.MaxMana);
-            Console.WriteLine("0. Ãë¼Ò\n");
-            Console.WriteLine("´ë»óÀ» ¼±ÅÃÇØÁÖ¼¼¿ä.");
+            Console.WriteLine("0. ì·¨ì†Œ\n");
+            Console.WriteLine("ëŒ€ìƒì„ ì„ íƒí•´ì£¼ì„¸ìš”.");
             Console.Write(">> ");
 
             while (true)
@@ -502,7 +468,7 @@ namespace project_TextRPG
 
                         if (selectedMonster != null && selectedMonster.isDead)
                         {
-                            Console.WriteLine("ÀÌ¹Ì Á×Àº ´ë»óÀÔ´Ï´Ù.");
+                            Console.WriteLine("ì´ë¯¸ ì£½ì€ ëŒ€ìƒì…ë‹ˆë‹¤.");
                         }
                         else
                         {
@@ -514,21 +480,20 @@ namespace project_TextRPG
                     }
                     else
                     {
-                        Console.WriteLine("Àß¸øµÈ ÀÔ·ÂÀÔ´Ï´Ù.");
+                        Console.WriteLine("ì˜ëª»ëœ ì…ë ¥ì…ë‹ˆë‹¤.");
                     }
                 }
                 else
                 {
-                    Console.WriteLine("Àß¸øµÈ ÀÔ·ÂÀÔ´Ï´Ù. ´Ù½Ã ½ÃµµÇÏ¼¼¿ä.");
+                    Console.WriteLine("ì˜ëª»ëœ ì…ë ¥ì…ë‹ˆë‹¤. ë‹¤ì‹œ ì‹œë„í•˜ì„¸ìš”.");
                 }
             }
         }
 
-        // ÇÃ·¹ÀÌ¾î°¡ ´øÀüÁøÀÔ½Ã Ã³À½ º¸¿©Áö´Â È­¸é.
+        // í”Œë ˆì´ì–´ê°€ ë˜ì „ì§„ì…ì‹œ ì²˜ìŒ ë³´ì—¬ì§€ëŠ” í™”ë©´.
         public void StartBattle(int dungeonid)
         {
-
-            Floar = Player.StageScore = dungeonid;
+            Floar = dungeonid;
 
             Console.Clear();
             Console.WriteLine("Battle!!\n");
@@ -544,13 +509,13 @@ namespace project_TextRPG
                 }
             }
             Console.WriteLine();
-            Console.WriteLine("[³»Á¤º¸]");
+            Console.WriteLine("[ë‚´ì •ë³´]");
             Console.WriteLine("Lv.{0}  {1} ({2})", Player.Level, Player.Name, Player.CharClass);
             Console.WriteLine("HP {0}/{1}", Player.Health, Player.MaxHealth);
             Console.WriteLine("MP {0}/{1}\n", Player.Mana, Player.MaxMana);
-            Console.WriteLine("1. °ø°İ");
-            Console.WriteLine("2. ½ºÅ³\n");
-            Console.WriteLine("¿øÇÏ½Ã´Â Çàµ¿À» ÀÔ·ÂÇØÁÖ¼¼¿ä.");
+            Console.WriteLine("1. ê³µê²©");
+            Console.WriteLine("2. ìŠ¤í‚¬\n");
+            Console.WriteLine("ì›í•˜ì‹œëŠ” í–‰ë™ì„ ì…ë ¥í•´ì£¼ì„¸ìš”.");
             Console.Write(">> ");
 
             while (true)
@@ -571,12 +536,12 @@ namespace project_TextRPG
                     }
                     else
                     {
-                        Console.WriteLine("Àß¸øµÈ ÀÔ·ÂÀÔ´Ï´Ù. ´Ù½Ã ½ÃµµÇÏ¼¼¿ä.");
+                        Console.WriteLine("ì˜ëª»ëœ ì…ë ¥ì…ë‹ˆë‹¤. ë‹¤ì‹œ ì‹œë„í•˜ì„¸ìš”.");
                     }
                 }
                 else
                 {
-                    Console.WriteLine("Àß¸øµÈ ÀÔ·ÂÀÔ´Ï´Ù. ´Ù½Ã ½ÃµµÇÏ¼¼¿ä.");
+                    Console.WriteLine("ì˜ëª»ëœ ì…ë ¥ì…ë‹ˆë‹¤. ë‹¤ì‹œ ì‹œë„í•˜ì„¸ìš”.");
                 }
             }
         }

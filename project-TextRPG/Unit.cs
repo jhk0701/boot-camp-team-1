@@ -5,7 +5,7 @@
         public String Name { get; protected set; }
 
         public float BasicAttack { get; protected set; }
-        public float EquipAttack { get; set; }
+        public virtual float EquipAttack { get; set; }
         public float Attack 
         { 
             get 
@@ -15,7 +15,7 @@
         }
 
         public float BasicDefense { get; protected set; }
-        public float EquipDefense { get; set; }
+        public virtual float EquipDefense { get; set; }
         public float Defense 
         { 
             get 
@@ -25,7 +25,7 @@
         }
 
         public float MaxHealth { get; protected set; }
-        public float EquipHealth { get; set; }
+        public virtual float EquipHealth { get; set; }
 
         float _health;
         public float Health 
@@ -48,7 +48,7 @@
         }
 
         public float MaxMana { get; protected set; }
-        public float EquipMana { get; set; }
+        public virtual float EquipMana { get; set; }
 
         float _mana;
         public float Mana 
