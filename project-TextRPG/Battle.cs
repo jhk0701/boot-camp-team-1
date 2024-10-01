@@ -307,7 +307,7 @@ namespace project_TextRPG
                     Player.Exp += selectedMonster.Exp + selectedMonster.Level;
 
                     // 퀘스트 수행
-                    Player.PerformQuest(selectedMonster, 1);
+                    QuestManager.GetInstance().PerformQuest(selectedMonster, 1);
                 }
                 else
                 {

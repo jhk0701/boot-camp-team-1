@@ -21,7 +21,7 @@ namespace project_TextRPG
                     $"{i + 1}. ",
                     q[i].Title,
 
-                    _player.IsProceedingQuest(q[i]) ? " (진행중)": ""
+                    QuestManager.GetInstance().IsProceedingQuest(q[i]) ? " (진행중)": ""
                 );
             }
 
@@ -45,7 +45,7 @@ namespace project_TextRPG
 
             // 퀘스트 선택
             Quest selectedQuest = q[select];
-            bool isProceeding = _player.IsProceedingQuest(selectedQuest);
+            bool isProceeding = QuestManager.GetInstance().IsProceedingQuest(selectedQuest);
 
             ShowQuest(selectedQuest, isProceeding);
             select = Utility.GetSelection(0, isProceeding ? 2 : 1);
@@ -59,13 +59,13 @@ namespace project_TextRPG
             if (!isProceeding)
             {
                 // 진행중이지 않을 때는 수락
-                _player.AcceptQuest(selectedQuest);
+                QuestManager.GetInstance().AcceptQuest(selectedQuest);
                 Utility.WriteColorScript("퀘스트를 수락했습니다.\n", ConsoleColor.Green);
             }
             else if (select == 1)
             {
                 // 기존 진행 중일때는 퀘스트 포기
-                _player.RejectQuest(selectedQuest);
+                QuestManager.GetInstance().RejectQuest(selectedQuest);
                 Utility.WriteColorScript("퀘스트를 포기했습니다.\n", ConsoleColor.Red);
             }
             else if (select == 2) 
