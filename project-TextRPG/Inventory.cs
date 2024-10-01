@@ -121,7 +121,8 @@
 
         public bool HasItem(Equipment item)
         {
-            return Items.Contains(item);
+            //return Items.Contains(item);
+            return Items.Any(n => n.Name.Equals(item.Name));
         }
     }
 }
