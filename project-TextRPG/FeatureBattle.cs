@@ -7,7 +7,7 @@ namespace project_TextRPG
         public FeatureBattle(string featureName, IScene scene)
         {
             _scene = scene;
-            _name = featureName;
+            Name = featureName;
         }
 
         public override void Start(Character player)

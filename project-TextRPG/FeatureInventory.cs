@@ -7,7 +7,7 @@
         public FeatureInventory(string featureName, IScene scene) 
         { 
             _scene = scene;
-            _name = featureName;
+            Name = featureName;
 
             _subFeatures = [
                 new FeatureInventoryEquip("인벤토리 - 장착 관리", scene)

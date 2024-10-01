@@ -6,7 +6,7 @@
         public FeatureStatus(string featureName, IScene scene)
         {
             _scene = scene;
-            _name = featureName;
+            Name = featureName;
         }
 
         public override void ShowMenu()
@@ -17,7 +17,7 @@
             float eHp = _player.EquipHealth;
             float eMp = _player.EquipMana;
 
-            Utility.WriteColorScript(_name, ConsoleColor.Yellow);
+            Utility.WriteColorScript(Name, ConsoleColor.Yellow);
             Utility.ShowScript(
                 "캐릭터의 정보가 표시됩니다.\n\n",
 

@@ -14,6 +14,7 @@
             Level = 1;
             Exp = 0;
             Inventory = new Inventory(this);
+            Quests = new Quest[0];
         }
 
         public void LevelCalculator(Character player)
@@ -57,6 +58,33 @@
             MaxMana = initData.maxMana;
             Health = MaxHealth;
             Mana = MaxMana;
+        }
+    
+        public void PerformQuest<T>(T target, int cnt)
+        {
+            foreach (Quest q in Quests)
+                q.Perform(target, cnt);
+        }
+
+        public void AcceptQuest(Quest q)
+        {
+            List<Quest> t = Quests.ToList();
+            t.Add(q);
+            Quests = t.ToArray();
+        }
+
+        public void RejectQuest(Quest q)
+        {
+            q.Clear();
+
+            List<Quest> t = Quests.ToList();
+            t.Remove(q);
+            Quests = t.ToArray();
+        }
+
+        public bool IsProceedingQuest(Quest q)
+        {
+            return Quests.Contains(q);
         }
     }
 

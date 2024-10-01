@@ -10,7 +10,7 @@
         public FeatureStoreEnhance(string featureName, IScene scene)
         {
             _scene = scene;
-            _name = featureName;
+            Name = featureName;
 
             probabilityOfSuccess = [70, 50, 30];
             valueOfEnhancement = [20f, 20f, 20f];

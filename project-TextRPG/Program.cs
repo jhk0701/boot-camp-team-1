@@ -18,7 +18,6 @@ namespace project_TextRPG
             // 게임 시작
             IScene gameScene = new GameScene(COMMON_NAME);
             gameScene.Start(player);
-
         }
 
     }

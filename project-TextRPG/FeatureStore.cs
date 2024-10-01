@@ -7,11 +7,11 @@
         public FeatureStore(string featureName, IScene scene)
         {
             _scene = scene;
-            _name = featureName;
+            Name = featureName;
             _subFeatures = [
-                new FeatureStoreBuying($"{_name}-아이템 구매", _scene),
-                new FeatureStoreSelling($"{_name}-아이템 판매", _scene),
-                new FeatureStoreEnhance($"{_name}-아이템 강화", _scene)
+                new FeatureStoreBuying($"{Name}-아이템 구매", _scene),
+                new FeatureStoreSelling($"{Name}-아이템 판매", _scene),
+                new FeatureStoreEnhance($"{Name}-아이템 강화", _scene)
             ];
         }
 

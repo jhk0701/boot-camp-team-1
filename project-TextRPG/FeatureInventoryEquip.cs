@@ -5,7 +5,7 @@
         public FeatureInventoryEquip(string featureName, IScene scene)
         {
             _scene = scene;
-            _name = featureName;
+            Name = featureName;
         }
 
         public override void ShowMenu()

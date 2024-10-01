@@ -305,6 +305,9 @@ namespace project_TextRPG
                     selectedMonster.isDead = true;
                     killcount++;
                     Player.Exp += selectedMonster.Exp + selectedMonster.Level;
+
+                    // 퀘스트 수행
+                    Player.PerformQuest(selectedMonster, 1);
                 }
                 else
                 {

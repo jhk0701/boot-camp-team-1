@@ -1,4 +1,6 @@
-﻿namespace project_TextRPG
+﻿using System.Security.Cryptography;
+
+namespace project_TextRPG
 {
     /// <summary>
     /// 플레이어 캐릭터 직업 타입
@@ -78,6 +80,22 @@
         }
     }
 
+    public struct QuestReward
+    {
+        public int gold;
+        public int exp;
+        public int[] equips;
+        public Dictionary<int, int> heals;
+
+        public QuestReward(int g, int ex, int[] eq, Dictionary<int, int> hls)
+        {
+            gold = g; 
+            exp = ex;
+            equips = eq; 
+            heals = hls;
+        }
+    }
+
 
     public class DataDefinition
     {
@@ -98,7 +116,6 @@
         public Quest[] QuestList { get; private set; }
         private DataDefinition()
         {
-
             ClassInitDatas = [
                 new ClassInitData("노조 위원장", 10f, 1f, 50f, 50f),
                 new ClassInitData("사무총장", 6f, 5f, 50f, 50f),
@@ -107,8 +124,8 @@
 
             Equipments = new Equipment[] 
             {
-                new Equipment("정장", "Manners, Maketh, Man.", 1000, EEquipType.Armor, ERank.Normal, 0f, 10f, 10f, 0f),
-                new Equipment("서류 가방", "사실은 총이 들어갑니다.", 2000, EEquipType.Weapon, ERank.Normal, 10f, 0f, 0f, 10f),
+                new Equipment("정장", "[방어구] Manners, Maketh, Man.", 1000, EEquipType.Armor, ERank.Normal, 0f, 10f, 10f, 0f),
+                new Equipment("서류 가방", "[무기] 사실은 총이 들어갑니다.", 2000, EEquipType.Weapon, ERank.Normal, 10f, 0f, 0f, 10f),
                 //Weapon List
                 new Equipment("회사 화장실 휴지", "[무기] [공격력 +10] 닦을 때 따가운 화장실 휴지, 엉덩이의 처우를 개선해달라.", 100, 0, ERank.Normal, 10f, 0, 0, 0),
                 new Equipment("부러진 법인카드", "[무기] [공격력 +30] 부도 직전 회사의 한도초과 카드, 가려운 곳 긁기에는 쓸만하다.", 500, 0, ERank.Rare, 30f, 0, 0, 0),
@@ -125,7 +142,7 @@
                 new HealItem("야근의 핫식스", "야근을 버티게 하는 마법의  [HP + 100]", 30, 1, 100),
                 new HealItem("박카스", "풀려라 5천만, 풀려라 피로! [HP + 300]", 100, 1, 300),
             };
-            //string name, float basicattack, float basicdefence, float maxhealth, float maxmana, int gold, Skill[] skills) : base(name)
+
             Monsters = new Monster[]
             {
                 new Monster(0, "부당계약서", 3f, 3f, 10f, 10f, 50, new Skill[]{ new Skill("계약이행", new float[]{10f}, 0, 10f)}),
@@ -139,8 +156,6 @@
                 new Monster(8, "사장드래곤", 3f, 3f, 10f, 10f, 50, new Skill[]{ new Skill("최상위결정권", new float[]{35f}, 0, 10f)}),
             };
 
-
-            //string name, float[] power, int requiredLv, float requiredMp)
             Skills = new Skill[] 
             {
                 new Skill("계약이행", new float[]{10f}, 0, 10f),
@@ -153,10 +168,16 @@
                 new Skill("권고사직", new float[]{30f}, 0, 10f),
                 new Skill("최상위결정권", new float[]{35f}, 0, 10f),
             };
+            
+            
+
             QuestList = [
-                //new Quest("부당 계약 적발", "사내에 완연한 부당계약서들을 적발하고 기강을 바로 세워주세요!"),
-                //new Quest("과로의 원인", "비일비재한 연장근무에서 벗어나고 싶은 직장인들을 구해주세요."),
-                //new Quest("월급루팡", "일하는 손 따로 노는 손 따로.\n양심없는 루팡들을 처지해주세요!")
+                new QuestModelHunting(0, 3, "부당 계약 적발", "사내에 완연한 부당계약서들을 적발하고 기강을 바로 세워주세요!", 
+                    new QuestReward(100, 30, [], new Dictionary<int, int>{ })),
+                new QuestModelHunting(1, 5, "과로의 원인", "비일비재한 연장근무에서 벗어나고 싶은 직장인들을 구해주세요.",
+                    new QuestReward(500, 100, [2], new Dictionary<int, int>{ })),
+                new QuestModelHunting(3, 5,"월급루팡", "일하는 손 따로 노는 손 따로.\n양심없는 루팡들을 처지해주세요!",
+                    new QuestReward(2000, 150, [3], new Dictionary<int, int>{ })),
             ];
         }
 
