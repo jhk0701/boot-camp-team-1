@@ -23,7 +23,7 @@ namespace project_TextRPG
         public Monster Copy() // 프로토타입
         {
             Monster copy = new Monster(
-                Name, BasicAttack, BasicDefense, MaxHealth, MaxMana, Gold, Skills
+                Id, Name, BasicAttack, BasicDefense, MaxHealth, MaxMana, Gold, Skills
             );
             return copy;
         }
