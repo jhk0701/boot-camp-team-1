@@ -59,6 +59,24 @@ namespace project_TextRPG
         DamageItem = 1
     }
 
+    public struct ClassInitData
+    {
+        public string name;
+        public float attack;
+        public float defense;
+        public float maxHealth;
+        public float maxMana;
+
+        public ClassInitData(string n, float atk, float def, float maxHp, float maxMp)
+        {
+            name = n;
+            attack = atk;
+            defense = def;
+            maxHealth = maxHp;
+            maxMana = maxMp;
+        }
+    }
+
 
     public class DataDefinition
     {
@@ -69,10 +87,17 @@ namespace project_TextRPG
         
         public Equipment[] Equipments { get; set; }
         public BattleItem[] BattleItems { get; set; }
-
+        public ClassInitData[] ClassInitDatas { get; private set; }
 
         private DataDefinition()
         {
+
+            ClassInitDatas = [
+                new ClassInitData("노조 위원장", 10f, 1f, 50f, 50f),
+                new ClassInitData("사무총장", 6f, 5f, 50f, 50f),
+                new ClassInitData("조직 국장", 8f, 3f, 50f, 50f)
+            ];
+
             Equipments = new Equipment[] 
             {
                 new Equipment("정장", "Manners, Maketh, Man.", 1000, EEquipType.Armor, ERank.Normal, 0f, 10f, 10f, 0f),
@@ -96,7 +121,6 @@ namespace project_TextRPG
                 new Monster("사장드래곤", 3f, 3f, 10f, 10f, 50, new Skill[]{ new Skill("최상위결정권", new float[]{35f}, 0, 10f)}),
 
             };
-
 
 
             //string name, float[] power, int requiredLv, float requiredMp)
