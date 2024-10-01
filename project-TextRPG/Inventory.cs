@@ -1,6 +1,6 @@
 ﻿namespace project_TextRPG
 {
-    class Inventory
+    public class Inventory
     {
         Character _player;
         
@@ -121,7 +121,8 @@
 
         public bool HasItem(Equipment item)
         {
-            return Items.Contains(item);
+            //return Items.Contains(item);
+            return Items.Any(n => n.Name.Equals(item.Name));
         }
     }
 }

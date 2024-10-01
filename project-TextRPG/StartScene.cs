@@ -1,7 +1,10 @@
-﻿namespace project_TextRPG
+﻿using System.Text.Json;
+
+namespace project_TextRPG
 {
-    class StartScene : IScene
+    public class StartScene : IScene
     {
+        public static string saveFilePath = "saveData.json";
         public string SceneName { get; set; }
         public Character Player { get; set; }
 
@@ -16,20 +19,22 @@
         public void Start(Character visitor)
         {
             Player = visitor;
-            if(!_isSkip)
+            if (!_isSkip)
                 ShowIntro();
 
-            bool isLoaded = false; // 데이터 로드
+            bool isLoaded = LoadCharacterFromSaveDate(); ; // 데이터 로드
 
             // 캐릭터 생성부분
-            if (isLoaded) 
+            if (isLoaded)
             {
                 // 1. 데이터 있으면 로드
+                LoadCharacter();
             }
             else
             {
                 // 2. 데이터 없으면 생성
                 CreateCharacter();
+                SaveGame();
             }
         }
         public Character End()
@@ -95,7 +100,7 @@
         {
 
         }
-        
+
         Character LoadCharacter()
         {
             return new Character("name");
@@ -140,7 +145,7 @@
             );
 
             select = Utility.GetSelection(1, 3);
-            switch((EClass)(select - 1))
+            switch ((EClass)(select - 1))
             {
                 case EClass.ChairmanOfUnion:
                     Player = new ChairmanOfUnion(name);
@@ -153,6 +158,37 @@
                     break;
             }
         }
-    
+
+        public void SaveGame()
+        {
+            string jsonString = JsonSerializer.Serialize(Player);
+            File.WriteAllText(saveFilePath, jsonString);
+            Console.WriteLine("게임이 저장되었습니다.");
+        }
+
+        public bool LoadCharacterFromSaveDate()
+        {
+            if (File.Exists(saveFilePath))
+            {
+                try
+                {
+                    // 파일에서 데이터를 읽어와서 캐릭터 객체로 복원합니다.
+                    string jsonString = File.ReadAllText(saveFilePath);
+                    Player = JsonSerializer.Deserialize<Character>(jsonString);
+
+                    Console.WriteLine("저장된 게임을 불러왔습니다!");
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    // 데이터를 불러오는 중 오류가 발생할 경우 메시지를 출력합니다.
+                    Console.WriteLine($"저장된 데이터를 불러오는 중 오류가 발생했습니다: {ex.Message}");
+                    return false;
+                }
+            }
+            return false;   
+        }
+
     }
-}
+ }
+
