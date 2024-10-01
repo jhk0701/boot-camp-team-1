@@ -23,7 +23,7 @@ namespace project_TextRPG
         // public bool IsPossessed { get; set; } = false;
 
         public ERank Rank { get; set; }
-        
+
         public Item(string itemName, string description, int itemPrice, ERank rank)
         {
             Name = itemName;
@@ -34,13 +34,9 @@ namespace project_TextRPG
 
             //_id = DataDefinition.GetInstance().GetInstanceId();
         }
-  }
+    }
 
-<<<<<<< Updated upstream
     public class Equipment : Item, ICopyable<Equipment>
-=======
-    public class Equipment : Item/*, ICopyable<Equipment>*/
->>>>>>> Stashed changes
     {
         // 장착 여부
         // 소지 여부 때와 마찬가지로
@@ -76,9 +72,9 @@ namespace project_TextRPG
         {
             type = eType;
             Rank = rank;
-            
+
             Bonus = new Dictionary<EEquipBonus, float>();
-            if(atkBonus != 0f)
+            if (atkBonus != 0f)
                 Bonus.Add(EEquipBonus.ATK, atkBonus);
             if (defBonus != 0f)
                 Bonus.Add(EEquipBonus.DEF, defBonus);
@@ -93,7 +89,7 @@ namespace project_TextRPG
             StringBuilder sb = new StringBuilder();
 
             EEquipBonus[] type = Bonus.Keys.ToArray();
-            for(int i = 0; i < type.Length; i++)
+            for (int i = 0; i < type.Length; i++)
             {
                 if (Bonus[type[i]] != 0f)
                     sb.Append($"{type[i].ToString()} {(Bonus[type[i]] > 0 ? $"+{Bonus[type[i]]}" : $"{Bonus[type[i]]}")}");
@@ -105,11 +101,10 @@ namespace project_TextRPG
             return sb.ToString();
         }
 
-<<<<<<< Updated upstream
         public Equipment Copy()
         {
             Equipment copy = new Equipment(
-                Name, Description, Price, type, Rank, 
+                Name, Description, Price, type, Rank,
                 Bonus[EEquipBonus.ATK],
                 Bonus[EEquipBonus.DEF],
                 Bonus[EEquipBonus.HP],
@@ -117,19 +112,6 @@ namespace project_TextRPG
             );
             return copy;
         }
-=======
-        //public Equipment Copy()
-        //{
-        //    Equipment copy = new Equipment(
-        //        Name, Description, Price, type, Rank, 
-        //        Bonus[EEquipBonus.ATK],
-        //        Bonus[EEquipBonus.DEF],
-        //        Bonus[EEquipBonus.HP],
-        //        Bonus[EEquipBonus.MP]
-        //    );
-        //    return copy;
-        //}
->>>>>>> Stashed changes
     }
 
     public class BattleItem : Item
@@ -153,32 +135,5 @@ namespace project_TextRPG
         }
     }
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-    class Program
-    {
-        public static void Main(string[] args)
-        {
-            BattleItem potion = new BattleItem("Healing Potion", "회복 포션", 50, true, 3, 0);
-
-            potion.Use();
-=======
-=======
->>>>>>> Stashed changes
-    class NewProgram
-    {
-        static void Main(string[] args)
-        {
-            List<BattleItem> battleitems = new List<BattleItem>
-            {
-                new BattleItem("박카스", "박카스는 노조를 응원합니다. 힘내세요! HP + 100", 100, 1, 1),
-                new BattleItem("화염병", "화염병을 투척한다. 데미지 200", 10, 1, 0),
-            };
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-        }
-    }
 
 }

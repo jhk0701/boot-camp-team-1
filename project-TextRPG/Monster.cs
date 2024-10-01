@@ -47,13 +47,13 @@ namespace project_TextRPG
         public Goblin(string name) : base(name)
         {
             Name = name;
-            BasicAttack = basicattack;
-            BasicDefense = basicdefence;
-            MaxHealth = maxhealth;
-            Health = MaxHealth;
-            MaxMana = maxmana;
-            Mana = MaxMana;Gold = gold;
-            Skills = skills;
+            //BasicAttack = basicattack;
+            //BasicDefense = basicdefence;
+            //MaxHealth = maxhealth;
+            //Health = MaxHealth;
+            //MaxMana = maxmana;
+            //Mana = MaxMana;Gold = gold;
+            //Skills = skills;
             isDead = false;
         }
     }
