@@ -394,7 +394,6 @@
         // 배틀시작 화면에서 2번을 입력시 진입하는 스킬목록창
         public void ShowSkilllist()
         {
-            int n = 1;
             Console.Clear();
             Console.WriteLine("Battle!!\n");
             foreach (var monster in Monsters)
@@ -413,12 +412,19 @@
             Console.WriteLine("Lv.{0}  {1} ({2})", Player.Level, Player.Name, Player.CharClass);
             Console.WriteLine("HP {0}/{1}", Player.Health, Player.MaxHealth);
             Console.WriteLine("MP {0}/{1}\n", Player.Mana, Player.MaxMana);
+            int skillCount = 0;
+            int checkHaveSkill = 0;
             foreach (var skill in Player.Skills)
             {
                 if (skill.RequiredLevel <= Player.Level)
                 {
-                    Console.WriteLine("{0}. {1} - MP {2}\n    스킬설명이 들어갈 예정.", n, skill.Name, skill.RequiredMana);
-                    n++;
+                    Console.WriteLine("{0}. {1} - MP {2}\n    {3}\n", skillCount + 1, skill.Name, skill.RequiredMana, skill.Description);
+                    skillCount++;
+                }
+                if (skillCount == checkHaveSkill)
+                {
+                    Console.WriteLine("현재 사용할수있는 스킬이 없습니다\n");
+                    checkHaveSkill++;
                 }
             }
             Console.WriteLine("0. 취소");
@@ -434,15 +440,23 @@
                         StartBattle(Floar);
                         return;
                     }
-                    else if (choice > 0 && choice <= n)
+                    else if (choice > 0 && choice <= skillCount)
                     {
                         var selectedSkill = Player.Skills[choice - 1];
                         SelectedSkill = selectedSkill;
 
-                        float skillPercentage = rand.Next((int)selectedSkill.MinPowerRange, (int)selectedSkill.MaxPowerRange);
-                        TrueDamage = GetSkillDamage(Player.Attack, skillPercentage);
-                        UseSkill = true;
-                        ShowAttackList();
+                        if (selectedSkill != null && selectedSkill.RequiredMana <= Player.Mana)
+                        {
+                            float skillPercentage = rand.Next((int)selectedSkill.MinPowerRange, (int)selectedSkill.MaxPowerRange);
+                            TrueDamage = GetSkillDamage(Player.Attack, skillPercentage);
+                            UseSkill = true;
+                            ShowAttackList();
+                        }
+                        else
+                        {
+                            Console.WriteLine("마나가 부족합니다.");
+                        }
+
 
                     }
                     else

@@ -156,30 +156,30 @@ namespace project_TextRPG
 
             Monsters = new Monster[]
             {
-                new Monster(0, 1, 1, "부당계약서", 3f, 3f, 10f, 10f, 50, new Skill[]{ new Skill("계약이행", 10f, 10f, 0, 10f)}),
-                new Monster(1, 2, 3, "연장근무", 3f, 3f, 10f, 10f, 50, new Skill[]{ new Skill("업무의심연", 15f, 15f, 0, 10f)}),
-                new Monster(2, 5, 5, "환영복지술사", 3f, 3f, 10f, 10f, 50, new Skill[]{ new Skill("덫없는환상", 12f, 12f, 0, 10f)}),
-                new Monster(3, 6, 7, "월급루팡", 3f, 3f, 10f, 10f, 50, new Skill[]{ new Skill("훔치기", 5f, 5f, 0, 10f)}),
-                new Monster(4, 7, 10, "인사고과망령", 3f, 3f, 10f, 10f, 50, new Skill[]{ new Skill("불공정평가", 8f, 8f, 0, 10f)}),
-                new Monster(5, 10, 12, "노동착취자", 3f, 3f, 10f, 10f, 50, new Skill[]{ new Skill("착취", 20f, 20f, 0, 10f)}),
-                new Monster(6, 12, 15, "과로골렘", 3f, 3f, 10f, 10f, 50, new Skill[]{ new Skill("압박", 25f, 25f, 0, 10f)}),
-                new Monster(7, 18, 25, "해고의그림자", 3f, 3f, 10f, 10f, 50, new Skill[]{ new Skill("권고사직", 30f, 30f, 0, 10f)}),
-                new Monster(8, 25, 50, "사장드래곤", 3f, 3f, 10f, 10f, 50, new Skill[]{ new Skill("최상위결정권", 35, 35f, 0, 10f)}),
+                new Monster(0, 1, 1, "부당계약서", 3f, 3f, 10f, 10f, 50, new Skill[]{ new Skill("계약이행", "", 10f, 10f, 0, 10f)}),
+                new Monster(1, 2, 3, "연장근무", 3f, 3f, 10f, 10f, 50, new Skill[]{ new Skill("업무의심연", "", 15f, 15f, 0, 10f)}),
+                new Monster(2, 5, 5, "환영복지술사", 3f, 3f, 10f, 10f, 50, new Skill[]{ new Skill("덫없는환상","", 12f, 12f, 0, 10f)}),
+                new Monster(3, 6, 7, "월급루팡", 3f, 3f, 10f, 10f, 50, new Skill[]{ new Skill("훔치기", "", 5f, 5f, 0, 10f)}),
+                new Monster(4, 7, 10, "인사고과망령", 3f, 3f, 10f, 10f, 50, new Skill[]{ new Skill("불공정평가", "", 8f, 8f, 0, 10f)}),
+                new Monster(5, 10, 12, "노동착취자", 3f, 3f, 10f, 10f, 50, new Skill[]{ new Skill("착취", "", 20f, 20f, 0, 10f)}),
+                new Monster(6, 12, 15, "과로골렘", 3f, 3f, 10f, 10f, 50, new Skill[]{ new Skill("압박", "", 25f, 25f, 0, 10f)}),
+                new Monster(7, 18, 25, "해고의그림자", 3f, 3f, 10f, 10f, 50, new Skill[]{ new Skill("권고사직", "", 30f, 30f, 0, 10f)}),
+                new Monster(8, 25, 50, "사장드래곤", 3f, 3f, 10f, 10f, 50, new Skill[]{ new Skill("최상위결정권", "", 35, 35f, 0, 10f)}),
 
             };
 
             //string name, float[] power, int requiredLv, float requiredMp)
             Skills = new Skill[]
             {
-                new Skill("계약이행", 10f, 10f, 0, 10f),
-                new Skill("업무의심연", 15f, 15f, 0, 10f),
-                new Skill("덫없는환상", 12f, 12f, 0, 10f),
-                new Skill("훔치기", 5f, 5f, 0, 10f),
-                new Skill("불공정평가", 8f, 8f, 0, 10f),
-                new Skill("착취", 20f, 20f, 0, 10f),
-                new Skill("압박", 25f, 25f, 0, 10f),
-                new Skill("권고사직", 30f, 30f, 0, 10f),
-                new Skill("최상위결정권", 35, 35f, 0, 10f),
+                new Skill("계약이행","", 10f, 10f, 0, 10f),
+                new Skill("업무의심연","", 15f, 15f, 0, 10f),
+                new Skill("덫없는환상","", 12f, 12f, 0, 10f),
+                new Skill("훔치기","", 5f, 5f, 0, 10f),
+                new Skill("불공정평가","", 8f, 8f, 0, 10f),
+                new Skill("착취","", 20f, 20f, 0, 10f),
+                new Skill("압박","", 25f, 25f, 0, 10f),
+                new Skill("권고사직","", 30f, 30f, 0, 10f),
+                new Skill("최상위결정권","", 35, 35f, 0, 10f),
             };
 
             QuestList = [
