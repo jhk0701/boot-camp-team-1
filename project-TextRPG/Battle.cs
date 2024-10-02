@@ -102,9 +102,7 @@ namespace project_TextRPG
 
         
         // 던전 층수에 따라서 Monsters리스트에 몬스터를 생성해주는 함수
-        // 던전 층수에 따라서 Monsters리스트에 몬스터를 생성해주는 함수
         List<Monster> CreateMonsters(int dungeonId)
-
         {
             DataDefinition data = DataDefinition.GetInstance(); // DataDefinition 인스턴스 가져오기
             List<Monster> monsters = new List<Monster>();
