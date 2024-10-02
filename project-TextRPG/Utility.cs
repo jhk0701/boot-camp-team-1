@@ -23,11 +23,9 @@ namespace project_TextRPG
 
             while (!int.TryParse(i, out result) || result < min || result > max)
             {
-                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine();
-                Console.WriteLine("잘못된 입력입니다.\n");
+                WriteColorScript("잘못된 입력입니다.\n", ConsoleColor.Red);
 
-                Console.ResetColor();
                 Console.WriteLine(msg);
                 i = Console.ReadLine();
             }
@@ -44,11 +42,17 @@ namespace project_TextRPG
         /// <param name="backColor"></param>
         public static void WriteColorScript(string script, ConsoleColor foreColor, ConsoleColor backColor = ConsoleColor.Black)
         {
+            ConsoleColor oForeCol = Console.ForegroundColor;
+            ConsoleColor oBackCol = Console.BackgroundColor;
+
             Console.ForegroundColor = foreColor;
             Console.BackgroundColor = backColor;
             Console.WriteLine(script);
 
-            Console.ResetColor();
+            // Console.ResetColor();
+
+            Console.ForegroundColor = oForeCol;
+            Console.BackgroundColor = oBackCol;
         }
 
         public static void ShowScript(params string[] scripts)

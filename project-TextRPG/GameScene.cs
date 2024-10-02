@@ -12,13 +12,13 @@
             SceneName = name;
 
             features = [
-                new Feature("상태보기", this),
+                new FeatureStatus("상태보기", this),
                 new FeatureInventory("인벤토리", this),
-                new Feature("상점", this),
-                new Feature("전투 시작", this),
-                new Feature("휴식하기", this),
-                new Feature("마을 게시판", this),
-                new Feature("가챠 뽑기", this)
+                new FeatureStore("사내 편의점", this),
+                new FeatureBattle("전투 시작", this),
+                new FeatureRest("휴식하기", this),
+                new FeatureQuest("사내 게시판", this),
+                //new FeatureGatcha("가챠 뽑기", this)
             ];
         }
 
@@ -29,6 +29,10 @@
         public void Start(Character visitor) 
         {
             Player = visitor;
+
+            foreach (Feature feature in features)
+                feature.Initialize(Player);
+
             ShowMenu();
         }
 
@@ -54,10 +58,13 @@
 
             // 옵션 출력 : 임시로 추가
             for (int i = 0; i < features.Length; i++)
-                Console.WriteLine($"{i + 1}. {features[i].Name}");
+                Utility.ShowScript($"{i + 1}. {features[i].Name}");
 
             Console.WriteLine();
-            int select = Utility.GetSelection(1, 7);
+            int select = Utility.GetSelection(1, features.Length);
+
+            // 자동 저장
+            DataIO.GetInstance().Save(Player, QuestManager.GetInstance());
 
             Select(select);
         }
@@ -69,7 +76,7 @@
         void Select(int select)
         {
             // 여기부터 플레이어가 선택한 기능 실행
-            features[select].Start();
+            features[select - 1].Start();
         }
 
         /// <summary>

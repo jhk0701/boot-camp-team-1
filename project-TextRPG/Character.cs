@@ -1,16 +1,139 @@
-﻿namespace project_TextRPG
+﻿using Newtonsoft.Json;
+
+namespace project_TextRPG
 {
-    class Character : Unit
+    public class Character : Unit
     {
+        [JsonProperty]
         public EClass CharClass { get; protected set; }
         public int Gold { get; set; }
+
+        public override int Level 
+        {
+            get { return base.Level; } 
+            set
+            {
+                if (value < base.Level)
+                    return;
+                
+                base.Level = value;
+
+                onLevelChanged?.Invoke();
+            } 
+        }
+
+        public override int Exp 
+        {
+            get { return base.Exp; }
+            set 
+            {
+                base.Exp = value;
+                int needExp = LevelCalculator();
+
+                while(base.Exp >= needExp)
+                {
+                    Level++;
+                    base.Exp -= needExp;
+
+                    needExp = LevelCalculator();
+                }
+            } 
+        }
+
+        [JsonProperty]
         public Skill[] Skills { get; protected set; }
+
+        [JsonProperty]
         public Inventory Inventory { get; protected set; }
 
-        public Character(string name) : base(name) 
-        { 
+        public int StageScore { get; set; }
+
+        Action onLevelChanged { get; set; }
+
+
+        public Character(string name) : base(name)
+        {
+            Level = 1;
+            Exp = 0;
             Inventory = new Inventory();
+            StageScore = 1; 
         }
+
+        public void UpdateStageScore(int clearedDungeon)
+        {
+            if (clearedDungeon < StageScore)
+                return;
+
+            StageScore++;
+        }
+
+        public int LevelCalculator()
+        {
+            int needexp;
+            if (Level == 1)
+            {
+                needexp = 10;
+            }
+            else if (Level == 2)
+            {
+                needexp = 25;
+            }
+            else if (Level == 3)
+            {
+                needexp = 30;
+            }
+            else if (Level == 4)
+            {
+                needexp = 35;
+            }
+            else if (Level == 5)
+            {
+                needexp = 40;
+            }
+            else
+            {
+                needexp = Level * 10;
+            }
+
+            return needexp;
+
+            if (Exp >= needexp)
+            {
+                Level += 1;
+                Exp -= needexp;
+            }
+        }
+
+
+        public void Initialize(ClassInitData initData)
+        {
+            BasicAttack = initData.attack;
+            BasicDefense = initData.defense;
+            MaxHealth = initData.maxHealth;
+            MaxMana = initData.maxMana;
+
+            Health = MaxHealth;
+            Mana = MaxMana;
+
+            Skills = initData.skills;
+        }
+
+        public void Start()
+        {
+            Inventory.Start(this);
+
+            onLevelChanged = () =>
+            {
+                // 레벨업 시, 호출 이벤트
+                // 관련 퀘스트 수행
+                QuestManager.GetInstance().PerformQuest(this, base.Level);
+                Utility.WriteColorScript("레벨이 상승했습니다.", ConsoleColor.Blue);
+
+                BasicAttack += 0.5f;
+                BasicDefense += 1f;
+            };
+        }
+    
     }
 
     /// <summary>
@@ -21,13 +144,7 @@
         public ChairmanOfUnion(string name) : base(name)
         {
             CharClass = EClass.ChairmanOfUnion;
-
-            Skills = [
-                new Skill("파업", [120f, 150f], 5, 10f),
-                new Skill("단식 투쟁", [250f, 250f], 10, 30f),
-                new Skill("트럭 시위", [300f, 500f], 20, 50f),
-                new Skill("투쟁의 불꽃", [9999f, 9999f], 50, 60f),
-            ];
+            Initialize(DataDefinition.GetInstance().ClassInitDatas[(int)CharClass]);
         }
     }
 
@@ -39,13 +156,7 @@
         public SecretaryGeneral(string name) : base(name)
         {
             CharClass = EClass.SecretaryGeneral;
-
-            Skills = [
-                new Skill("언론 고발", [120f, 150f], 5, 10f),
-                new Skill("보이콧", [200f, 200f], 10, 30f),
-                new Skill("가스라이팅", [300f, 500f], 20, 50f),
-                new Skill("국민 청원", [9999f, 9999f], 50, 60f),
-            ];
+            Initialize(DataDefinition.GetInstance().ClassInitDatas[(int)CharClass]);
         }
     }
 
@@ -57,13 +168,7 @@
         public DirectorOfUnion(string name) : base(name)
         {
             CharClass = EClass.DirectorOfUnion;
-
-            Skills = [
-                new Skill("죽창", [120f, 120f], 5, 10f),
-                new Skill("화염병", [200f, 200f], 10, 30f),
-                new Skill("프로파간다", [0f, 0f], 20, 50f),
-                new Skill("진정한 죽창", [9999f, 9999f], 50, 60f),
-            ];
+            Initialize(DataDefinition.GetInstance().ClassInitDatas[(int)CharClass]);
         }
     }
 
