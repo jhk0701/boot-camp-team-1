@@ -23,18 +23,42 @@ namespace project_TextRPG
                 ShowIntro();
 
             bool isLoaded = LoadCharacterFromSaveDate(); ; // 데이터 로드
-
+            Console.Clear(); // 화면을 지우고 메뉴를 새로 출력합니다.
+            // 메뉴 항목을 출력합니다.
+            Console.WriteLine("1. 새 게임");
+            Console.WriteLine("2. 이어하기");
+            Console.WriteLine("3. 종료");
+            Console.Write("옵션을 선택하세요: ");
+            string? choice = Console.ReadLine(); // 사용자 입력을 받습니다.
             //캐릭터 생성부분
-            if (isLoaded)
+            switch (choice)
             {
-                // 1. 데이터 있으면 로드
-                LoadCharacter();
-            }
-            else
-            {
-                // 2. 데이터 없으면 생성
-                CreateCharacter();
-                SaveGame();
+                case "1":
+                    // 새 게임을 시작합니다.
+                    CreateCharacter();
+                    SaveGame();
+                    break;
+                case "2":
+                    if (isLoaded)
+                    {
+                        // 1. 데이터 있으면 로드
+                        LoadCharacter();
+                    }
+                    else
+                    {
+                        // 2. 데이터 없으면 생성
+                        CreateCharacter();
+                        SaveGame();
+                    }
+                    break;
+                case "3":
+                    // 게임을 종료합니다.
+                    ExitGame();
+                    return;
+                default:
+                    // 잘못된 입력이 있을 경우 메시지를 출력하고 다시 입력을 받습니다.
+                    Console.WriteLine("잘못된 입력입니다. 다시 시도하세요.");
+                    break;
             }
         }
         public Character End()
@@ -187,9 +211,15 @@ namespace project_TextRPG
                     return false;
                 }
             }
-            return false;   
+            return false;
+        }
+        static void ExitGame()
+        {
+            Console.Clear(); // 화면을 지우고 종료 메시지를 출력합니다.
+            Console.WriteLine("게임을 종료합니다. 안녕히 가세요!");
+            Environment.Exit(0); // 프로그램을 종료합니다.
         }
 
     }
- }
+}
 
