@@ -226,24 +226,4 @@ namespace project_TextRPG
         }
     }
 
-    public class InstanceManager
-    {
-        static InstanceManager _instance;
-        long _instId = 0;
-
-        private InstanceManager() { }
-
-        public static InstanceManager GetInstacne()
-        {
-            if (_instance == null)
-                _instance = new InstanceManager();
-
-            return _instance;
-        }
-
-        public long GetId()
-        {
-            return ++_instId;
-        }
-    }
 }

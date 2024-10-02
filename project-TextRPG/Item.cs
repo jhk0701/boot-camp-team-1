@@ -5,10 +5,6 @@ namespace project_TextRPG
 {
     public class Item
     {
-        /// <summary>
-        /// 구분을 위한 키
-        /// </summary>
-        public long Id { get; protected set; }
         public string Name { get; protected set; }
         public string Description { get; protected set; } //아이템 설명
         public int Price { get; protected set; } // 아이템 가격
@@ -26,9 +22,6 @@ namespace project_TextRPG
             Description = description;
             Price = itemPrice;
             Rank = rank;
-
-            // 아이템 생성 단계에서 아이디 부여
-            Id = InstanceManager.GetInstacne().GetId();
         }
     }
 
