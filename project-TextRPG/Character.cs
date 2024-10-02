@@ -14,11 +14,31 @@
                     return;
                 
                 base.Level = value;
+
+                // 관련 퀘스트 수행
                 QuestManager.GetInstance().PerformQuest(this, base.Level);
                 Utility.WriteColorScript("레벨이 상승했습니다.", ConsoleColor.Blue);
 
                 BasicAttack += 0.5f;
                 BasicDefense += 1f;
+            } 
+        }
+
+        public override int Exp 
+        {
+            get { return base.Exp; }
+            set 
+            {
+                base.Exp = value;
+                int needExp = LevelCalculator();
+
+                while(base.Exp >= needExp)
+                {
+                    Level++;
+                    base.Exp -= needExp;
+
+                    needExp = LevelCalculator();
+                }
             } 
         }
 
@@ -34,42 +54,46 @@
             Inventory = new Inventory(this);
             StageScore = 1; 
         }
+
         public void UpdateStageScore()
         {
             StageScore ++;
         }
 
-        public void LevelCalculator(Character player)
+        public int LevelCalculator()
         {
             int needexp;
-            if (player.Level == 1)
+            if (Level == 1)
             {
                 needexp = 10;
             }
-            else if (player.Level == 2)
+            else if (Level == 2)
             {
                 needexp = 25;
             }
-            else if (player.Level == 3)
+            else if (Level == 3)
             {
                 needexp = 30;
             }
-            else if (player.Level == 4)
+            else if (Level == 4)
             {
                 needexp = 35;
             }
-            else if (player.Level == 5)
+            else if (Level == 5)
             {
                 needexp = 40;
             }
             else
             {
-                needexp = 45;
+                needexp = Level * 10;
             }
-            if (player.Exp >= needexp)
+
+            return needexp;
+
+            if (Exp >= needexp)
             {
-                player.Level += 1;
-                player.Exp -= needexp;
+                Level += 1;
+                Exp -= needexp;
             }
         }
 
@@ -96,7 +120,7 @@
         {
             CharClass = EClass.ChairmanOfUnion;
             Initialize(DataDefinition.GetInstance().ClassInitDatas[(int)CharClass]);
-            Level = 50;
+            //Level = 50;
 
             Skills = [
                 new Skill("파업","공격력의 120 ~ 150%의 데미지를 준다", 120f, 150f, 5, 10f),

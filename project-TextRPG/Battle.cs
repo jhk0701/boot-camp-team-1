@@ -19,6 +19,7 @@
         float Defaultlevel;  //플레이어의 던전진입당시의 레벨 (승리화면에서 비교용)
         float DefaultHp;     //플레이어의 던전진입당시의 체력 (승리화면에서 비교용)
         float DefaultExp;    //플레이어의 던전진입당시의 경험치 (승리화면에서 비교용)
+        int _aquiredExp = 0;
 
         Random rand;
         public Battle(Character player, int dungeonid, IScene scene)
@@ -37,7 +38,7 @@
             DefaultExp = player.Exp;
 
             _scene = scene;
-
+            _aquiredExp = 0;
         }
 
 
@@ -228,12 +229,12 @@
             Console.WriteLine("던전에서 몬스터 {0}마리를 잡았습니다.\n", killcount);
             Console.WriteLine("[캐릭터 정보]");
 
-            int afterBattleExp = Player.Exp;
-            Player.LevelCalculator(Player);
+            Player.Exp += _aquiredExp;
+            //Player.LevelCalculator(Player);
 
             Console.WriteLine("LV.{0} {1} -> LV.{2} {1}", Defaultlevel, Player.Name, Player.Level);
             Console.WriteLine("HP {0} -> {1}", DefaultHp, Player.Health);
-            Console.WriteLine("exp {0} -> {1}\n", DefaultExp, afterBattleExp);
+            Console.WriteLine("exp {0} -> {1}\n", DefaultExp, _aquiredExp);
             Console.WriteLine("0. 다음\n");
             Console.Write(">> ");
             Player.UpdateStageScore();
@@ -331,7 +332,7 @@
                     Console.WriteLine("{0} -> Dead\n", selectedMonster.Health);
                     selectedMonster.isDead = true;
                     killcount++;
-                    Player.Exp += selectedMonster.Exp + selectedMonster.Level;
+                    _aquiredExp += selectedMonster.Exp + selectedMonster.Level;
 
                     // 퀘스트 수행
                     QuestManager.GetInstance().PerformQuest(selectedMonster, 1);

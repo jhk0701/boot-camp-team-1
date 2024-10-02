@@ -88,8 +88,8 @@
         //        BasicDefense += 1f;
         //    }
         //}
-        //int _exp;
-        public int Exp { get; set; }
+        int _exp;
+        public virtual int Exp { get; set; }
         //{
         //    get { return _exp; }
         //    set 
