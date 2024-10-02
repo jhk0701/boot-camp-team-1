@@ -121,7 +121,10 @@
         public virtual float TakeDamage(float damage) 
         {
             if (damage <= 0f)
+            {
+                damage = 1f;
                 return Health;
+            }
 
             Health -= damage;
             return Health;
@@ -134,6 +137,15 @@
 
             Health += healAmount;
             Console.WriteLine($"{Name}은(는) {healAmount}의 체력을 회복했습니다. 현재 체력: {Health}");
+        }
+        
+        public virtual float SetManaDrop(float usemana)
+        {
+            if (usemana <= 0f)
+                return Mana;
+
+            Mana -= usemana;
+            return Mana;
         }
 
         public virtual void Rest()

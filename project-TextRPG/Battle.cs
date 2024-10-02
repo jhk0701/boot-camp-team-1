@@ -2,6 +2,8 @@
 using System.Reflection.Emit;
 using System.Threading;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
+using System.Collections.Generic;
 
 namespace project_TextRPG
 {
@@ -10,28 +12,31 @@ namespace project_TextRPG
         IScene _scene;
 
         Character Player;
-        List<Monster> Monsters;
+        List<Monster> Monsters;  // 해당 층에서 사용될 몬스터 리스트
+        Skill SelectedSkill;    //선택된 스킬값 저장용 변수
 
         int killcount;       //해당 층에서 플레이어가 죽인 몬스터의 숫자
         float TrueDamage;    //플레이어 데미지의 10% 오차를 계산한 값
         int Floar;           //던전 층수
+        bool UseSkill;       //스킬사용 여부
         bool CriticalHit;    //치명타 공격 발동여부
         bool Dodge;          //회피성공 여부
+
 
         float Defaultlevel;  //플레이어의 던전진입당시의 레벨 (승리화면에서 비교용)
         float DefaultHp;     //플레이어의 던전진입당시의 체력 (승리화면에서 비교용)
         float DefaultExp;    //플레이어의 던전진입당시의 경험치 (승리화면에서 비교용)
 
-        Random ran;
+        Random rand;
         public Battle(Character player, int dungeonid, IScene scene)
         {
             Player = player;
 
             Monsters = new List<Monster>();
 
-            ran = new Random();
+            rand = new Random();
 
-            Monsters = CreateMonsters(dungeonid);
+            CreateMonsters(dungeonid);
             Monsters = ShuffleMonsters(Monsters);
 
             Defaultlevel = player.Level;
@@ -42,10 +47,21 @@ namespace project_TextRPG
 
         }
 
+
+        // 스킬데미지를 계산하는 함수
+        float GetSkillDamage(float damage, float skillPercentage)
+        {
+            float skilldecimal = skillPercentage / 100;
+
+            float SkillDamage = damage * skilldecimal;
+
+            return SkillDamage;
+        }
+
         // 10% 확률로 발생하는 회피 계산기
         void dodgecalcalculator()
         {
-            int rolldice = ran.Next(1, 101);
+            int rolldice = rand.Next(1, 101);
             Dodge = false;
 
             if (rolldice <= 10)
@@ -58,7 +74,7 @@ namespace project_TextRPG
         // 15% 확률로 발생하는 치명타 계산기
         void Criticalcalculator(float damage)
         {
-            int rolldice = ran.Next(1, 101);
+            int rolldice = rand.Next(1, 101);
             CriticalHit = false;
 
             if (rolldice <= 15)
@@ -77,7 +93,7 @@ namespace project_TextRPG
                 RandomDamageRange += 1 - RandomDamageRange % 1;
             }
 
-            damage = ran.Next((int)(damage - RandomDamageRange), (int)(damage + RandomDamageRange));
+            damage = rand.Next((int)(damage - RandomDamageRange), (int)(damage + RandomDamageRange));
             return damage;
         }
 
@@ -85,12 +101,10 @@ namespace project_TextRPG
         // 몬스터 생성마리수, 몬스터 순서를 범위내에서 랜덤으로 배정해주는 함수
         List<Monster> ShuffleMonsters(List<Monster> values)
         {
-            Random rand1 = new Random();
-            int randMonsterCount = rand1.Next(1, 5);
+            int randMonsterCount = rand.Next(1, 5);
 
 
-            Random rand2 = new Random();
-            var shuffled = values.OrderBy(_ => rand2.Next()).ToList();
+            var shuffled = values.OrderBy(_ => rand.Next()).ToList();
 
             while (shuffled.Count > randMonsterCount)
             {
@@ -101,46 +115,42 @@ namespace project_TextRPG
         }
 
         // 던전 층수에 따라서 Monsters리스트에 몬스터를 생성해주는 함수
-        // 던전 층수에 따라서 Monsters리스트에 몬스터를 생성해주는 함수
-        List<Monster> CreateMonsters(int dungeonId)
+        void CreateMonsters(int dungeonId)
         {
-            DataDefinition data = DataDefinition.GetInstance(); // DataDefinition 인스턴스 가져오기
-            List<Monster> monsters = new List<Monster>();
             if (dungeonId == 1)
             {
                 // 1층에서는 부당계약서, 연장근무
-                monsters.Add(data.Monsters[0]); // 부당계약서
-                monsters.Add(data.Monsters[1]); // 연장근무
+                Monsters.Add(DataDefinition.GetInstance().Monsters[0].Copy()); // 부당계약서
+                Monsters.Add(DataDefinition.GetInstance().Monsters[1].Copy()); // 연장근무
             }
             else if (dungeonId == 2)
             {
                 // 2층에서는 환영복지술사, 월급루팡, 인사고과망령 추가 등장
-                monsters.Add(data.Monsters[2]); // 환영복지술사
-                monsters.Add(data.Monsters[3]); // 월급루팡
-                monsters.Add(data.Monsters[4]); // 인사고과망령
+                Monsters.Add(DataDefinition.GetInstance().Monsters[2].Copy()); // 환영복지술사
+                Monsters.Add(DataDefinition.GetInstance().Monsters[3].Copy()); // 월급루팡
+                Monsters.Add(DataDefinition.GetInstance().Monsters[4].Copy()); // 인사고과망령
             }
             else if (dungeonId == 3)
             {
                 // 3층에서는 노동착취자, 과로골렘 추가 등장
-                monsters.Add(data.Monsters[5]); // 노동착취자
-                monsters.Add(data.Monsters[6]); // 과로골렘
+                Monsters.Add(DataDefinition.GetInstance().Monsters[5].Copy()); // 노동착취자
+                Monsters.Add(DataDefinition.GetInstance().Monsters[6].Copy()); // 과로골렘
             }
             else if (dungeonId == 4)
             {
                 // 4층에서는 해고의그림자 추가 등장
-                monsters.Add(data.Monsters[7]); // 해고의그림자
+                Monsters.Add(DataDefinition.GetInstance().Monsters[7].Copy()); // 해고의그림자
             }
             else if (dungeonId == 5)
             {
                 // 5층에서는 사장드래곤 등장
-                monsters.Add(data.Monsters[8]); // 사장드래곤
+                Monsters.Add(DataDefinition.GetInstance().Monsters[8].Copy()); // 사장드래곤
             }
-            else if (dungeonId > 5)
+            else
             {
                 // 6층 이상에서는 모든 몬스터들이 랜덤으로 등장
-                monsters.AddRange(data.Monsters);
+                Monsters.Add(DataDefinition.GetInstance().Monsters[rand.Next(1,9)].Copy());
             }
-            return monsters;
         }
 
         void DeadWriteLine(string value)
@@ -183,7 +193,7 @@ namespace project_TextRPG
             }
             else
             {
-                Console.WriteLine("회피 성공!");
+                Console.WriteLine("{0} 회피 성공!\n", Player.Name);
                 Console.WriteLine("LV.{0} {1}이 공격했지만 아무일도 일어나지 않았습니다.\n", selectedMonster.Level, selectedMonster.Name);
             }
             Console.WriteLine("0. 다음\n");
@@ -286,18 +296,29 @@ namespace project_TextRPG
         {
             Console.Clear();
             Console.WriteLine("Battle!!\n");
-            Console.WriteLine("{0} 의 공격!", Player.Name);
+
+            if (!UseSkill)
+            {
+                Console.WriteLine("{0} 의 공격!", Player.Name);
+            }
+            // 스킬사용시 공격! 이 아닌 스킬명을 외침
+            else
+            {
+                Console.WriteLine("{0} 의 {1}!!!", Player.Name,SelectedSkill.Name);
+                Player.SetManaDrop(SelectedSkill.RequiredMana); //매개변수 값 만큼 플레이어의 mana를 떨어뜨리는 함수
+            }
+            // 공격하기전 회피계산기에서 회피를 실패할시 공격을 줌 (스킬은 회피하지 못함)
             if (!Dodge)
             {
                 if (CriticalHit != null && CriticalHit)
                 {
                     Console.WriteLine("LV.{0} {1} 을(를) 맞췄습니다. [데미지 : {2}] - 치명타공격!!\n",
-                     selectedMonster.Level, selectedMonster.Name, TrueDamage - selectedMonster.Defense);
+                     selectedMonster.Level, selectedMonster.Name, Math.Floor(TrueDamage - selectedMonster.Defense));
                 }
                 else
                 {
-                    Console.WriteLine("LV.{0} {1} 을(를) 맞췄습니다. [데미지 : {2}]\n",
-                      selectedMonster.Level, selectedMonster.Name, TrueDamage - selectedMonster.Defense);
+                    Console.WriteLine("LV.{0} {1} 을(를) 맞췄습니다. [데미지 : {2:0}]\n",
+                      selectedMonster.Level, selectedMonster.Name, Math.Floor(TrueDamage - selectedMonster.Defense));
                 }
                 Console.WriteLine("LV.{0} {1}", selectedMonster.Level, selectedMonster.Name);
                 if (selectedMonster.Health - (TrueDamage - selectedMonster.Defense) <= 0)
@@ -317,11 +338,13 @@ namespace project_TextRPG
                 Console.WriteLine();
                 selectedMonster.TakeDamage(TrueDamage - selectedMonster.Defense);
             }
+            // 상대가 회피하면 바로 턴종료
             else
             {
-                Console.WriteLine("회피 성공!");
+                Console.WriteLine("{0} 회피 성공!\n", selectedMonster.Name);
                 Console.WriteLine("LV.{0} {1}이 공격했지만 아무일도 일어나지 않았습니다.\n", Player.Level, Player.Name);
             }
+            UseSkill = false;
             Console.WriteLine("0. 다음\n");
             Console.Write(">> ");
 
@@ -341,10 +364,10 @@ namespace project_TextRPG
                             {
                                 if (!monster.isDead)
                                 {
-                                    ShowEnemyPhase(monster);
                                     TrueDamage = GetTrueDamage(monster.Attack);
                                     Criticalcalculator(TrueDamage);
                                     dodgecalcalculator();
+                                    ShowEnemyPhase(monster);
                                 }
                             }
                         }
@@ -403,27 +426,19 @@ namespace project_TextRPG
                 {
                     if (choice == 0)
                     {
+                        StartBattle(Floar);
                         return;
                     }
-                    else if (choice == 1)
+                    else if (choice > 0 && choice <= n)
                     {
-                        ShowAttackList();
-                    }
-                    else if (choice > 0 && choice <= Monsters.Count)
-                    {
-                        var selectedMonster = Monsters[choice - 1];
+                        var selectedSkill = Player.Skills[choice - 1];
+                        SelectedSkill = selectedSkill;
 
-                        if (selectedMonster != null && selectedMonster.isDead)
-                        {
-                            Console.WriteLine("이미 죽은 대상입니다.");
-                        }
-                        else
-                        {
-                            TrueDamage = GetTrueDamage(Player.Attack);
-                            Criticalcalculator(TrueDamage);
-                            dodgecalcalculator();
-                            ShowAttackresult(selectedMonster);
-                        }
+                        float skillPercentage = rand.Next((int)selectedSkill.MinPowerRange, (int)selectedSkill.MaxPowerRange);
+                        TrueDamage = GetSkillDamage(Player.Attack, skillPercentage);
+                        UseSkill = true;
+                        ShowAttackList();
+
                     }
                     else
                     {
@@ -483,10 +498,19 @@ namespace project_TextRPG
                         }
                         else
                         {
-                            TrueDamage = GetTrueDamage(Player.Attack);
-                            Criticalcalculator(TrueDamage);
-                            dodgecalcalculator();
-                            ShowAttackresult(selectedMonster);
+                            if (!UseSkill)
+                            {
+                                TrueDamage = GetTrueDamage(Player.Attack);
+                                Criticalcalculator(TrueDamage);
+                                dodgecalcalculator();
+                                ShowAttackresult(selectedMonster);
+                            }
+                            else
+                            {
+                                CriticalHit = false;
+                                Dodge = false;
+                                ShowAttackresult(selectedMonster);
+                            }
                         }
                     }
                     else
@@ -524,6 +548,7 @@ namespace project_TextRPG
             Console.WriteLine("Lv.{0}  {1} ({2})", Player.Level, Player.Name, Player.CharClass);
             Console.WriteLine("HP {0}/{1}", Player.Health, Player.MaxHealth);
             Console.WriteLine("MP {0}/{1}\n", Player.Mana, Player.MaxMana);
+            Console.WriteLine("0. 도망");
             Console.WriteLine("1. 공격");
             Console.WriteLine("2. 스킬\n");
             Console.WriteLine("원하시는 행동을 입력해주세요.");
@@ -535,6 +560,7 @@ namespace project_TextRPG
                 {
                     if (choice == 0)
                     {
+                        _scene.Return();
                         return;
                     }
                     else if (choice == 1)
