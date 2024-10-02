@@ -4,7 +4,6 @@
     {
         public string Name { get; protected set; }
         public float MinPowerRange { get; protected set; }
-
         public float MaxPowerRange { get; protected set; }
         public int RequiredLevel { get; protected set; }
         public float RequiredMana { get; protected set; }
