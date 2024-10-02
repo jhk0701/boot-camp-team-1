@@ -7,7 +7,9 @@
         Character Player;
         List<Monster> Monsters;  // 해당 층에서 사용될 몬스터 리스트
         Skill SelectedSkill;    //선택된 스킬값 저장용 변수
+        List<Equipment> DungeonRewardEquipItem; //해당 층의 장비보상아이템
 
+        float DungeonRewardGold; // 해당 층의 보상골드
         int killcount;       //해당 층에서 플레이어가 죽인 몬스터의 숫자
         float TrueDamage;    //플레이어 데미지의 10% 오차를 계산한 값
         int Floar;           //던전 층수
@@ -40,6 +42,11 @@
 
         }
 
+        // 던전 보상골드를 설정하는 함수
+        void SetDungeonRewardGold(int floar)
+        {
+            DungeonRewardGold = floar * 500;
+        }
 
         // 스킬데미지를 계산하는 함수
         float GetSkillDamage(float damage, float skillPercentage)
@@ -474,11 +481,12 @@
             int n = 1;
             Console.Clear();
             Console.WriteLine("Battle!!\n");
+            Console.WriteLine("[적정보]");
             foreach (var monster in Monsters)
             {
                 if (!monster.isDead)
                 {
-                    Console.WriteLine("{0} - Lv.{1} {2} HP {3}", n, monster.Level, monster.Name, monster.Health);
+                    Console.WriteLine("{0} - Lv.{1} {2} HP {3}\n", n, monster.Level, monster.Name, monster.Health);
                 }
                 else
                 {
@@ -546,14 +554,17 @@
         {
 
             Floar = Player.StageScore = dungeonid;
+            SetDungeonRewardGold(dungeonid);
 
             Console.Clear();
             Console.WriteLine("Battle!!\n");
+
+            Console.WriteLine("[적정보]");
             foreach (var monster in Monsters)
             {
                 if (!monster.isDead)
                 {
-                    Console.WriteLine("Lv.{0} {1} HP {2}", monster.Level, monster.Name, monster.Health);
+                    Console.WriteLine("Lv.{0} {1} HP {2}\n", monster.Level, monster.Name, monster.Health);
                 }
                 else
                 {
