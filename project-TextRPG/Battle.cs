@@ -391,7 +391,7 @@
         // 배틀시작 화면에서 2번을 입력시 진입하는 스킬목록창
         public void ShowSkilllist()
         {
-            int n = 1;
+            int n = 0;
             Console.Clear();
             Console.WriteLine("Battle!!\n");
             foreach (var monster in Monsters)
@@ -414,7 +414,7 @@
             {
                 if (skill.RequiredLevel <= Player.Level)
                 {
-                    Console.WriteLine("{0}. {1} - MP {2}\n    스킬설명이 들어갈 예정.", n, skill.Name, skill.RequiredMana);
+                    Console.WriteLine("{0}. {1} - MP {2}\n    스킬설명이 들어갈 예정.", n+1, skill.Name, skill.RequiredMana);
                     n++;
                 }
             }
