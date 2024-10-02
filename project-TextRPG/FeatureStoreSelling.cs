@@ -25,7 +25,7 @@
             {
                 Utility.ShowScript(
                     $"-{i + 1}. ",
-                    e[i].GetDesc(2)
+                    e[i].GetDesc(2, _player.Inventory.IsEquipped(e[i]))
                 );
             }
 

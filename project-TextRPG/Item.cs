@@ -103,7 +103,7 @@ namespace project_TextRPG
         {
             StringBuilder sb = new StringBuilder();
 
-            if (opt == 0 && isOpt)
+            if ((opt == 0 || opt == 2) && isOpt)
                 sb.Append("[E] ");
 
             sb.Append($"{Name + (EnhanceLevel > 0 ? $" +{EnhanceLevel}" : ""), -10}\t| "); // 이름
