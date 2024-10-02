@@ -162,27 +162,30 @@
             Console.WriteLine("LV.{0} {1} 의 공격!", selectedMonster.Level, selectedMonster.Name);
             if (!Dodge)
             {
+                float damage = TrueDamage - Player.Defense;
+                damage = damage > 0f ? damage : 0f;
+
                 if (CriticalHit != null && CriticalHit)
                 {
-                    Console.WriteLine("{0} 을(를) 맞췄습니다. [데미지 : {1}] - 치명타공격!!\n", Player.Name, TrueDamage - Player.Defense);
+                    Console.WriteLine("{0} 을(를) 맞췄습니다. [데미지 : {1}] - 치명타공격!!\n", Player.Name, damage);
                 }
                 else
                 {
                     Console.WriteLine("{0} 을(를) 맞췄습니다. [데미지 : {1}]\n",
-                        Player.Name, TrueDamage - Player.Defense);
+                        Player.Name, damage);
                 }
                 Console.WriteLine("LV.{0} {1}", Player.Level, Player.Name);
-                if (Player.Health - (TrueDamage - Player.Defense) <= 0)
+                if (Player.Health - (damage) <= 0)
                 {
                     Console.WriteLine("{0} -> Dead\n", Player.Health);
                     Player.isDead = true;
                 }
                 else
                 {
-                    Console.WriteLine("{0} -> {1}\n", Player.Health, Player.Health - (TrueDamage - Player.Defense));
+                    Console.WriteLine("{0} -> {1}\n", Player.Health, Player.Health - damage);
                 }
                 Console.WriteLine();
-                Player.TakeDamage(TrueDamage - Player.Defense);
+                Player.TakeDamage(damage);
             }
             else
             {
@@ -302,21 +305,25 @@
                 Console.WriteLine("{0} 의 {1}!!!", Player.Name,SelectedSkill.Name);
                 Player.SetManaDrop(SelectedSkill.RequiredMana); //매개변수 값 만큼 플레이어의 mana를 떨어뜨리는 함수
             }
+
+            float damage = TrueDamage - selectedMonster.Defense;
+            damage = damage <= 0f ? 0f : damage;
+
             // 공격하기전 회피계산기에서 회피를 실패할시 공격을 줌 (스킬은 회피하지 못함)
             if (!Dodge)
             {
                 if (CriticalHit != null && CriticalHit)
                 {
                     Console.WriteLine("LV.{0} {1} 을(를) 맞췄습니다. [데미지 : {2}] - 치명타공격!!\n",
-                     selectedMonster.Level, selectedMonster.Name, Math.Floor(TrueDamage - selectedMonster.Defense));
+                     selectedMonster.Level, selectedMonster.Name, Math.Floor(damage));
                 }
                 else
                 {
                     Console.WriteLine("LV.{0} {1} 을(를) 맞췄습니다. [데미지 : {2:0}]\n",
-                      selectedMonster.Level, selectedMonster.Name, Math.Floor(TrueDamage - selectedMonster.Defense));
+                      selectedMonster.Level, selectedMonster.Name, Math.Floor(damage));
                 }
                 Console.WriteLine("LV.{0} {1}", selectedMonster.Level, selectedMonster.Name);
-                if (selectedMonster.Health - (TrueDamage - selectedMonster.Defense) <= 0)
+                if (selectedMonster.Health - (damage) <= 0)
                 {
                     Console.WriteLine("{0} -> Dead\n", selectedMonster.Health);
                     selectedMonster.isDead = true;
@@ -328,10 +335,10 @@
                 }
                 else
                 {
-                    Console.WriteLine("{0} -> {1}\n", selectedMonster.Health, selectedMonster.Health - (TrueDamage - selectedMonster.Defense));
+                    Console.WriteLine("{0} -> {1}\n", selectedMonster.Health, selectedMonster.Health - (damage));
                 }
                 Console.WriteLine();
-                selectedMonster.TakeDamage(TrueDamage - selectedMonster.Defense);
+                selectedMonster.TakeDamage(damage);
             }
             // 상대가 회피하면 바로 턴종료
             else

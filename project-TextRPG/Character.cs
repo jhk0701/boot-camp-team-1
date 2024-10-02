@@ -76,7 +76,6 @@
         public ChairmanOfUnion(string name) : base(name)
         {
             CharClass = EClass.ChairmanOfUnion;
-            Level = 50;
             Initialize(DataDefinition.GetInstance().ClassInitDatas[(int)CharClass]);
 
             Skills = [

@@ -122,7 +122,6 @@
         {
             if (damage <= 0f)
             {
-                damage = 1f;
                 return Health;
             }
 
