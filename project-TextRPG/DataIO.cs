@@ -58,8 +58,20 @@ namespace project_TextRPG
             if(!File.Exists(PATH))
                 return false;
 
-            string data = File.ReadAllText(PATH);
-            _gameData = JsonConvert.DeserializeObject<GameData>(data);
+            try
+            {
+                string data = File.ReadAllText(PATH);
+                _gameData = JsonConvert.DeserializeObject<GameData>(data);
+            }
+            catch (Exception ex)
+            {
+                Utility.ShowScript(
+                    $"오류가 발생했습니다.\n",
+                    ex.Message
+                );
+
+                return false;
+            }
 
             return true;
         }

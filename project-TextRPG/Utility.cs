@@ -42,11 +42,17 @@ namespace project_TextRPG
         /// <param name="backColor"></param>
         public static void WriteColorScript(string script, ConsoleColor foreColor, ConsoleColor backColor = ConsoleColor.Black)
         {
+            ConsoleColor oForeCol = Console.ForegroundColor;
+            ConsoleColor oBackCol = Console.BackgroundColor;
+
             Console.ForegroundColor = foreColor;
             Console.BackgroundColor = backColor;
             Console.WriteLine(script);
 
-            Console.ResetColor();
+            // Console.ResetColor();
+
+            Console.ForegroundColor = oForeCol;
+            Console.BackgroundColor = oBackCol;
         }
 
         public static void ShowScript(params string[] scripts)

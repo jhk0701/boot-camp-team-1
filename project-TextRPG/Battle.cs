@@ -318,6 +318,7 @@
             Console.WriteLine("던전에서 몬스터 {0}마리를 잡았습니다.\n", killcount);
             Console.WriteLine("[캐릭터 정보]");
 
+            int afterBattleExp = Player.Exp;
             Player.Exp += _aquiredExp;
             //Player.LevelCalculator(Player);
 
