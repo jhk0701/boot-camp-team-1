@@ -48,7 +48,7 @@
 
             // buy
             // 구매불가
-            if (_player.Gold <= e[select - 1].Price)
+            if (_player.Gold < e[select - 1].Price)
             {
                 Utility.WriteColorScript("골드가 부족합니다.", ConsoleColor.Red);
                 Act();
