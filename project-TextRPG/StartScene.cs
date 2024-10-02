@@ -4,7 +4,6 @@ namespace project_TextRPG
 {
     public class StartScene : IScene
     {
-        public static string saveFilePath = "./SaveData.json";
         public string SceneName { get; set; }
         public Character Player { get; set; }
 
@@ -22,17 +21,19 @@ namespace project_TextRPG
             if (!_isSkip)
                 ShowIntro();
 
-            bool isLoaded = LoadCharacterFromSaveDate(); ; // 데이터 로드
+            bool isLoaded = DataIO.GetInstance().Load();//LoadCharacterFromSaveDate(); ; // 데이터 로드
             Console.Clear(); // 화면을 지우고 메뉴를 새로 출력합니다.
             // 메뉴 항목을 출력합니다.
             Utility.ShowScript(
                 "1. 새 게임\n",
                 "2. 이어하기\n",
-                "3. 종료\n\n"
+                "3. 종료\n"
             );
+
             //string? choice = Console.ReadLine(); // 사용자 입력을 받습니다.
-            int select = Utility.GetSelection(1,3, "옵션을 선택하세요.");
+            int select = Utility.GetSelection(1, 3, "옵션을 선택하세요.");
             //캐릭터 생성부분
+
             switch (select.ToString())
             {
                 case "1":
@@ -40,11 +41,11 @@ namespace project_TextRPG
                     CreateCharacter();
                     SaveGame();
                     break;
-                case "2":
+                case "2": // 이어하기
                     if (isLoaded)
                     {
                         // 1. 데이터 있으면 로드
-                        LoadCharacter();
+                        Player = DataIO.GetInstance().GetLoadedData().Player;
                     }
                     else
                     {
@@ -57,10 +58,6 @@ namespace project_TextRPG
                     // 게임을 종료합니다.
                     ExitGame();
                     return;
-                default:
-                    // 잘못된 입력이 있을 경우 메시지를 출력하고 다시 입력을 받습니다.
-                    Console.WriteLine("잘못된 입력입니다. 다시 시도하세요.");
-                    break;
             }
         }
         public Character End()
@@ -105,26 +102,25 @@ namespace project_TextRPG
                 /     \/ /       /     \/ /       /     \/ /       /     \/ /
                              
                                        ");
-            Thread.Sleep(2000);
+            Thread.Sleep(1000);
             Console.Write("                                         [TEAM ");
-            Thread.Sleep(500);
+            Thread.Sleep(100);
             Console.ForegroundColor = ConsoleColor.DarkBlue;
             Console.Write("넥");
-            Thread.Sleep(500);
+            Thread.Sleep(100);
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.Write("슨");
-            Thread.Sleep(500);
+            Thread.Sleep(100);
             Console.ForegroundColor = ConsoleColor.Green;
             Console.Write("노");
-            Thread.Sleep(500);
+            Thread.Sleep(100);
             Console.ForegroundColor = ConsoleColor.White;
             Console.Write("조]");
-            Thread.Sleep(2000);
+            Thread.Sleep(1000);
         }
 
         public void Return()
         {
-
         }
 
         Character LoadCharacter()
@@ -185,8 +181,11 @@ namespace project_TextRPG
             }
         }
 
+        public static string saveFilePath = "./SaveData.json";
+
         public void SaveGame()
         {
+            //DataIO.GetInstance().Save(Player);
             return;
             string jsonString = JsonSerializer.Serialize(Player);
             File.WriteAllText(saveFilePath, jsonString);
@@ -215,7 +214,8 @@ namespace project_TextRPG
             }
             return false;
         }
-        static void ExitGame()
+        
+        void ExitGame()
         {
             Console.Clear(); // 화면을 지우고 종료 메시지를 출력합니다.
             Console.WriteLine("게임을 종료합니다. 안녕히 가세요!");

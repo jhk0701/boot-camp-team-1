@@ -13,7 +13,7 @@
             string clName = DataDefinition.GetInstance().ClassInitDatas[(int)_player.CharClass].name;
             float eAtk = _player.EquipAttack;
             float eDef = _player.EquipDefense;
-            float eHp = _player.EquipHealth;
+            float eHp = _player.EquipHealth; //
             float eMp = _player.EquipMana;
 
             Utility.WriteColorScript(Name, ConsoleColor.Yellow);

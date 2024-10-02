@@ -15,12 +15,7 @@
                 
                 base.Level = value;
 
-                // 관련 퀘스트 수행
-                QuestManager.GetInstance().PerformQuest(this, base.Level);
-                Utility.WriteColorScript("레벨이 상승했습니다.", ConsoleColor.Blue);
-
-                BasicAttack += 0.5f;
-                BasicDefense += 1f;
+                onLevelChanged?.Invoke();
             } 
         }
 
@@ -47,6 +42,8 @@
 
         public int StageScore { get; set; }
 
+        Action onLevelChanged { get; set; }
+
         public Character(string name) : base(name)
         {
             Level = 1;
@@ -57,7 +54,7 @@
 
         public void UpdateStageScore()
         {
-            StageScore ++;
+            StageScore++;
         }
 
         public int LevelCalculator()
@@ -98,15 +95,27 @@
         }
 
 
-
         public void Initialize(ClassInitData initData)
         {
             BasicAttack = initData.attack;
             BasicDefense = initData.defense;
             MaxHealth = initData.maxHealth;
             MaxMana = initData.maxMana;
+
             Health = MaxHealth;
             Mana = MaxMana;
+
+
+            onLevelChanged = () => 
+            {
+                // 레벨업 시, 호출 이벤트
+                // 관련 퀘스트 수행
+                QuestManager.GetInstance().PerformQuest(this, base.Level);
+                Utility.WriteColorScript("레벨이 상승했습니다.", ConsoleColor.Blue);
+
+                BasicAttack += 0.5f;
+                BasicDefense += 1f;
+            };
         }
     
     }
