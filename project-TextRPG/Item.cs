@@ -73,18 +73,13 @@ namespace project_TextRPG
 
             float enhance = 1f + Enhancements.Sum() * 0.01f;
 
-            EEquipBonus[] type = Bonus.Keys.ToArray();
+            EEquipBonus[] type = Bonus.Keys.Where(k => Bonus[k] != 0f).ToArray();
             for (int i = 0; i < type.Length; i++)
             {
-                if (Bonus[type[i]] != 0f)
-                {
-                    if(i > 0)
-                        sb.Append(", ");
-
-                    sb.Append($"{type[i].ToString()} {(Bonus[type[i]] > 0 ? $"+{(int)(Bonus[type[i]] * enhance)}" : $"{Bonus[type[i]]}")}");
-                }
-                else
-                    continue;
+                sb.Append($"{type[i].ToString()} {(Bonus[type[i]] > 0 ? $"+{(int)(Bonus[type[i]] * enhance)}" : $"{Bonus[type[i]]}")}");
+                
+                if(i < type.Length - 1)
+                    sb.Append(", ");
             }
 
             return sb.ToString();
@@ -104,9 +99,9 @@ namespace project_TextRPG
             if (opt == 0 && isOpt)
                 sb.Append("[E] ");
 
-            sb.Append($"{Name + (EnhanceLevel > 0 ? $" +{EnhanceLevel}" : ""),-15} | "); // 이름
+            sb.Append($"{Name + (EnhanceLevel > 0 ? $" +{EnhanceLevel}" : ""), -10}\t| "); // 이름
 
-            sb.Append($"{GetBonusDesc(),-15} | "); // 성능
+            sb.Append($"{GetBonusDesc(), -10}\t| "); // 성능
 
             if (opt == 1)
             {
@@ -115,10 +110,10 @@ namespace project_TextRPG
                 if (isOpt)
                     sb.Append("(보유중) ");
 
-                sb.Append("| ");
+                sb.Append("\t| ");
             }
             else if (opt == 2)
-                sb.Append($"{(int)(Price * 0.85f)} G | ");
+                sb.Append($"{(int)(Price * 0.85f)} G\t| ");
 
             sb.Append(Description); // 설명
 
@@ -132,8 +127,8 @@ namespace project_TextRPG
             if (isEquipped)
                 sb.Append("[E] ");
 
-            sb.Append($"{Name + (EnhanceLevel > 0 ? $" +{EnhanceLevel}" : ""),-15} | "); // 이름
-            sb.Append($"{GetBonusDesc(),-15} | "); // 성능
+            sb.Append($"{Name + (EnhanceLevel > 0 ? $" +{EnhanceLevel}" : ""),-10}\t| "); // 이름
+            sb.Append($"{GetBonusDesc(), -10}\t| "); // 성능
             if (enhanceCost == 0)
                 sb.Append($"강화 불가 | ");
             else
@@ -192,7 +187,7 @@ namespace project_TextRPG
         public int ItemCount { get; set; } //아이템 개수
         public ConsumableItem(string itemName, string description, int itemPrice, int itemCount) : base(itemName, description, itemPrice, ERank.Normal)
         {
-            this.ItemCount = itemCount;
+            ItemCount = itemCount;
         }
 
         public virtual void Use(Unit target)
