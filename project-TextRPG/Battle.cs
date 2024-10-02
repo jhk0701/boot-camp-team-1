@@ -337,6 +337,15 @@
             }
             Player.Gold += DungeonRewardGold;
             Console.WriteLine();
+            if (Floar == 5)
+            {
+                Utility.WriteColorScript("Game Clear!\n", ConsoleColor.Yellow);
+                Utility.ShowScript("당신은 사장드래곤을 무찌르고 혁명에 성공하였습니다.\n",
+                    "사장은 고용노동부에 구속당하였으며 당신은 노조원들의 지지를 받아 사장의 자리를 이어받았습니다.\n",
+                    "당신은 직원복지에 온힘을 다하겠다 선언하였지만 회사는 수익을 내기위한곳, 회사가 없으면 노조또한 존재하지 못합니다.\n",
+                    "당신은 경영자와 노동자 모두를 만족시키는 유토피아를 만들수 있을까요, 아니면 또다른 사장 드래곤이 되어 도전을 받게될까요.\n\n");
+                Utility.ShowScript("게임을 게속 진행하실수 있으며 던전 6층 부터는 랜덤한 몬스터가 나오는 무한모드 입니다.\n");
+            }
             Console.WriteLine("0. 다음\n");
             Console.Write(">> ");
             Player.UpdateStageScore();
@@ -659,7 +668,8 @@
             if (dungeonid == 5)
             {
                 ShowBossBattle();
-                Utility.WriteColorScript("BOSS!!\n", ConsoleColor.Red);
+                Thread.Sleep(2000);
+                Utility.WriteColorScript("BOSS", ConsoleColor.Red);
             }
             Utility.WriteColorScript("Battle!!\n", ConsoleColor.Yellow);
 
