@@ -29,6 +29,10 @@
         public void Start(Character visitor) 
         {
             Player = visitor;
+
+            foreach (Feature feature in features)
+                feature.Initialize(Player);
+
             ShowMenu();
         }
 
@@ -54,10 +58,10 @@
 
             // 옵션 출력 : 임시로 추가
             for (int i = 0; i < features.Length; i++)
-                Console.WriteLine($"{i + 1}. {features[i].Name}");
+                Utility.ShowScript($"{i + 1}. {features[i].Name}");
 
             Console.WriteLine();
-            int select = Utility.GetSelection(1, 7);
+            int select = Utility.GetSelection(1, features.Length);
 
             Select(select);
         }
@@ -69,7 +73,7 @@
         void Select(int select)
         {
             // 여기부터 플레이어가 선택한 기능 실행
-            features[select - 1].Start(Player);
+            features[select - 1].Start();
         }
 
         /// <summary>

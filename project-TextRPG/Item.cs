@@ -84,12 +84,14 @@ namespace project_TextRPG
             for (int i = 0; i < type.Length; i++)
             {
                 if (Bonus[type[i]] != 0f)
+                {
+                    if(i > 0)
+                        sb.Append(", ");
+
                     sb.Append($"{type[i].ToString()} {(Bonus[type[i]] > 0 ? $"+{(int)(Bonus[type[i]] * enhance)}" : $"{Bonus[type[i]]}")}");
+                }
                 else
                     continue;
-
-                if (i < type.Length - 1)
-                    sb.Append(", ");
             }
 
             return sb.ToString();

@@ -14,6 +14,13 @@
             ];
         }
 
+        public override void Start()
+        {
+            foreach (Feature subFeature in _subFeatures)
+                subFeature.Initialize(_player);
+
+            base.Start();
+        }
 
         public override void ShowMenu()
         {
@@ -51,7 +58,7 @@
                 return;
             }
 
-            _subFeatures[select - 1].Start(_player);
+            _subFeatures[select - 1].Start();
         }
 
     }

@@ -15,6 +15,14 @@
             ];
         }
 
+        public override void Start()
+        {
+            foreach (Feature subFeature in _subFeatures)
+                subFeature.Initialize(_player);
+
+            base.Start();
+        }
+
         public override void ShowMenu()
         {
             Utility.WriteColorScript(Name, ConsoleColor.Yellow);
@@ -53,7 +61,7 @@
             }
 
             // 1. 구매 2. 판매
-            _subFeatures[select - 1].Start(_player);
+            _subFeatures[select - 1].Start();
         }
 
     }

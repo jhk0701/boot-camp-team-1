@@ -4,6 +4,24 @@
     {
         public EClass CharClass { get; protected set; }
         public int Gold { get; set; }
+
+        public override int Level 
+        {
+            get { return base.Level; } 
+            set
+            {
+                if (value < base.Level)
+                    return;
+                
+                base.Level = value;
+                QuestManager.GetInstance().PerformQuest(this, base.Level);
+                Utility.WriteColorScript("레벨이 상승했습니다.", ConsoleColor.Blue);
+
+                BasicAttack += 0.5f;
+                BasicDefense += 1f;
+            } 
+        }
+
         public Skill[] Skills { get; protected set; }
         public Inventory Inventory { get; protected set; }
 
@@ -51,6 +69,7 @@
             if (player.Exp >= needexp)
             {
                 player.Level += 1;
+                player.Exp -= needexp;
             }
         }
 

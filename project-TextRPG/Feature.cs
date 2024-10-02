@@ -5,7 +5,7 @@
         protected IScene _scene;
         protected Character _player;
 
-        string _name;
+        protected string _name;
         public virtual string Name 
         {
             get { return _name; } 
@@ -23,15 +23,17 @@
         /// </summary>
         public abstract void Act();
 
+        public virtual void Initialize(Character player)
+        {
+            _player = player;
+        }
 
         /// <summary>
         /// 기능(Feature) 시작함수
         /// </summary>
         /// <param name="player"></param>
-        public virtual void Start(Character player)
+        public virtual void Start()
         {
-            _player = player;
-
             Console.Clear();
             // 기능 실행
             // 1. 표시
