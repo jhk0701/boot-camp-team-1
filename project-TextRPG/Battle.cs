@@ -7,7 +7,9 @@
         Character Player;
         List<Monster> Monsters;  // 해당 층에서 사용될 몬스터 리스트
         Skill SelectedSkill;    //선택된 스킬값 저장용 변수
+        List<Equipment> DungeonRewardEquipItem; //해당 층의 장비보상아이템
 
+        int DungeonRewardGold; // 해당 층의 보상골드
         int killcount;       //해당 층에서 플레이어가 죽인 몬스터의 숫자
         float TrueDamage;    //플레이어 데미지의 10% 오차를 계산한 값
         int Floar;           //던전 층수
@@ -29,6 +31,8 @@
 
             Monsters = new List<Monster>();
 
+            DungeonRewardEquipItem = new List<Equipment>();
+
             rand = new Random();
 
             CreateMonsters(dungeonid);
@@ -43,6 +47,71 @@
             _className = DataDefinition.GetInstance().ClassInitDatas[(int)player.CharClass].name;
         }
 
+        void ShowBossBattle()
+        {
+            Utility.ShowScript(
+            "                       :=              ..;;:*!    \n",
+            "                      ;$#           .~~*~:~;=!    \n",
+            "                     *$=~        ,:,~~,,,-~=;     \n",
+            "                    !$$$.~!     $~..~:. !;;@;     \n",
+            "                 ,-$=$$:-*  --*,-~- ,.,,;*!;      \n",
+            "               ,;$***$=,:;:,;-., .,-.-:*!$*       \n",
+            "               ~$#!=-;*-=*!...    .~:!;$$:.       \n",
+            "             ..**-==- $#*,.~  ~~ ,-!=*!=-         \n",
+            "             !#*:.*;--,,!~. --,~:;=*$*~!          \n",
+            "            ~;#!~,;**,,,-;~,.:!!#=$!!,            \n",
+            "           ,#=#~ *-;= ,;$$..*!$-.:=*      ;;,     \n",
+            "           $!!-:=-:. .!$=,-*$*~:#@@#*!:*;!=.      \n",
+            "     -;;;;;=!- ~*$;;!*#$#*:;*;*$@@@$$==$#*        \n",
+            "     ~#@:,#@===*-:~=#@==$=**@@##@@@#@#=#,.        \n",
+            "      $ ;#@$@@...:!$*=*@:$~$@##$*;$@#*=           \n",
+            "      ;- .~@=#$=#@--;~~$,~:,~;-,*=#=~:!;!*!       \n",
+            " -,    : .#$;:@;=!!-~:~!;*:, !.-!=#**!$$=-        \n",
+            " ~=   =.$*!..=-*. .~:.!#,$,.$;*#@@#$$$$          .\n",
+            "  ~   ; ,-:~,-.~$-*~~,:;,-*-##*#$#$=$$;#        ..\n",
+            "  :,,,~--:*=-- ..-*=#@:!#=:=$;;=:-;$::!=-.    ....\n",
+            "  ,;!~,~.!=$, ,.,,-$$$#@;:,!#:~--.,,-$#$=*:  ....,\n",
+            "   ##!# -*:-;- ~:$@=$@$~,~*#,;:,.!$=#$=$ !#; ..., \n",
+            "   ==~: ~ .,-,,$$-@@=:,:~*:!:=$##@@@#$,     -..,-~\n",
+            "    =~,.~,~-=*-@@=#;~ :$!-~;;##$=@###=:;.   ..,-~:\n",
+            "    @!::.:!*#@;##;$.**:,.:==-~*@#$$=$@#.   ..,-~:!\n",
+            "    -=$$*!@;;@$##=.,*~-,,=;$~~.=$*!=##*   ..,-~:;*\n",
+            "    ,*:;,-##**!==:~;--!:!*~;!#*;!$!!#*$-, .,-~:;$$\n",
+            "     :.-~#@@#*-==,=*;*$!:##==@$*!=;:@**~:,-~:;;*$#\n",
+            "       @@@@$=,,-. -*-~@@@=*#@==#~;-.     .;;!*$###\n",
+            "       .$;*!,:-!::~#=-;#@@@=$*.--=!---,.. .:!!;;**\n",
+            "       .#*#-,-,;~#;$@#=$#$##**.,:!,,;:!!:-,.,..   \n",
+            "       .#!:,,-*$~!-#@@@##=@!,--: ..,~*===;,....., \n",
+            "       .#;:~!$$ !~,#@@##*#=*#   . ,-;=##=-,...  .~\n",
+            "       .#*-$;-    .*#@###=*! . .   ~==$#=~-,,..  .\n",
+            "       .=:*-.,    *!$@##@-.       :*$$$$=::--,..  \n",
+            "         ;@  !    =;$#$$$$       ~;#@=$*$!;:~-,.  \n",
+            "         :      .#$$=#=;;;*     -:*$=*==$=!!:~-,..\n",
+            "         ~     ,=#=@#=:~*=@*.  ::-**!*!=#*!!;:--,,\n",
+            "               ;#@*##~~!$#;=$ :~.**-!!;$$!*=!;:~--\n",
+            "             ;$##$$$$=#@@ . !;:.$=$::!*=$!*=*;!;::\n",
+            "           .~$@#@!!=###$~.   :-$*=;!!$#=$$=$$***!!\n",
+            "          -*=###$;~!$*#;,   . ~!!!;*!!=*$#$#==$$==\n",
+            "        !!=#$$#$*;:!$:$: . . ,!:#!;*;!*=#=###$@@@=\n",
+            "      .=$####$@@*-:#*;*~    ,!~=;!;!;;;*=$$#@@@#@@\n",
+            "      =#$$###$##;,:=!!;~. .~:;!$;;,;.!!=**$$#@@@#@@\n",
+            "      =@$#####$$;:!**~!-  ~*~;*;;=~ .-;#==*$$##@@@\n",
+            " ..  !@@###@##=@*~$$=;!- .-:*;!!*,..~ ;;!=**$##@@@\n",
+            "     :@##$@@###@=-#*;*;~ ~!~:**;---;*::::*=*==#@@@\n",
+            " ..,,!@@###@#$#@#~@$*$*:~*!;;*==$=;-=**!$;$!$$#@@@\n"
+        );
+
+            Utility.WriteColorScript(
+                "버러지 자식들 기어코 여기까지 올라왔군 하지만 헛된 망상은 여기까지다\n\n" +
+                "이곳은 내가 지배하는 회사 변화의 바람 따위는 1m/s 도 혀용되지 않는다.\n\n", ConsoleColor.Blue
+                );
+        }
+
+        // 던전 보상골드를 설정하는 함수
+        void SetDungeonRewardGold(int floar)
+        {
+            DungeonRewardGold = floar * 500;
+        }
 
         // 스킬데미지를 계산하는 함수
         float GetSkillDamage(float damage, float skillPercentage)
@@ -116,35 +185,53 @@
             if (dungeonId == 1)
             {
                 // 1층에서는 부당계약서, 연장근무
-                Monsters.Add(DataDefinition.GetInstance().Monsters[0].Copy()); // 부당계약서
-                Monsters.Add(DataDefinition.GetInstance().Monsters[1].Copy()); // 연장근무
+                for (int i = 0; i < 3; i++)
+                {
+                    Monsters.Add(DataDefinition.GetInstance().Monsters[0].Copy()); // 부당계약서
+                    Monsters.Add(DataDefinition.GetInstance().Monsters[1].Copy()); // 연장근무
+                }
+                DungeonRewardEquipItem.Add(DataDefinition.GetInstance().Equipments[0].Copy()); // 1층 보상 회사휴지
+                DungeonRewardEquipItem.Add(DataDefinition.GetInstance().Equipments[5].Copy()); // 노동자조끼
             }
             else if (dungeonId == 2)
             {
                 // 2층에서는 환영복지술사, 월급루팡, 인사고과망령 추가 등장
-                Monsters.Add(DataDefinition.GetInstance().Monsters[2].Copy()); // 환영복지술사
-                Monsters.Add(DataDefinition.GetInstance().Monsters[3].Copy()); // 월급루팡
-                Monsters.Add(DataDefinition.GetInstance().Monsters[4].Copy()); // 인사고과망령
+                for (int i = 0; i < 3; i++)
+                {
+                    Monsters.Add(DataDefinition.GetInstance().Monsters[2].Copy()); // 환영복지술사
+                    Monsters.Add(DataDefinition.GetInstance().Monsters[3].Copy()); // 월급루팡
+                    Monsters.Add(DataDefinition.GetInstance().Monsters[4].Copy()); // 인사고과망령
+                }
+                DungeonRewardEquipItem.Add(DataDefinition.GetInstance().Equipments[10].Copy()); // 2층 보상 낡은마스크
+                DungeonRewardEquipItem.Add(DataDefinition.GetInstance().Equipments[15].Copy()); // 공사장헬멧
             }
             else if (dungeonId == 3)
             {
                 // 3층에서는 노동착취자, 과로골렘 추가 등장
-                Monsters.Add(DataDefinition.GetInstance().Monsters[5].Copy()); // 노동착취자
-                Monsters.Add(DataDefinition.GetInstance().Monsters[6].Copy()); // 과로골렘
+                for (int i = 0; i < 3; i++)
+                {
+                    Monsters.Add(DataDefinition.GetInstance().Monsters[5].Copy()); // 노동착취자
+                    Monsters.Add(DataDefinition.GetInstance().Monsters[6].Copy()); // 과로골렘
+                }
+                DungeonRewardEquipItem.Add(DataDefinition.GetInstance().Equipments[1].Copy()); // 3층 보상 부러진 법인카드
+                DungeonRewardEquipItem.Add(DataDefinition.GetInstance().Equipments[11].Copy()); // 가족사진
             }
             else if (dungeonId == 4)
             {
                 // 4층에서는 해고의그림자 추가 등장
                 Monsters.Add(DataDefinition.GetInstance().Monsters[7].Copy()); // 해고의그림자
+                DungeonRewardEquipItem.Add(DataDefinition.GetInstance().Equipments[16].Copy()); // 4층 붉은 두건
             }
             else if (dungeonId == 5)
             {
                 // 5층에서는 사장드래곤 등장
                 Monsters.Add(DataDefinition.GetInstance().Monsters[8].Copy()); // 사장드래곤
+                DungeonRewardEquipItem.Add(DataDefinition.GetInstance().Equipments[4].Copy()); // 5층 사장님 법카
             }
             else
             {
                 // 6층 이상에서는 모든 몬스터들이 랜덤으로 등장
+                for (int i = 0; i < 10; i++)
                 Monsters.Add(DataDefinition.GetInstance().Monsters[rand.Next(1,9)].Copy());
             }
         }
@@ -161,7 +248,7 @@
         {
 
             Console.Clear();
-            Console.WriteLine("Battle!!\n");
+            Utility.WriteColorScript("Battle!!\n", ConsoleColor.Yellow);
             Console.WriteLine("LV.{0} {1} 의 공격!", selectedMonster.Level, selectedMonster.Name);
             if (!Dodge)
             {
@@ -226,8 +313,8 @@
         void ShowVictory()
         {
             Console.Clear();
-            Console.WriteLine("Battle!! - Result\n");
-            Console.WriteLine("Victory\n");
+            Utility.WriteColorScript("Battle!! - Result\n",ConsoleColor.Yellow);
+            Utility.WriteColorScript("Victory\n", ConsoleColor.Green);
             Console.WriteLine("던전에서 몬스터 {0}마리를 잡았습니다.\n", killcount);
             Console.WriteLine("[캐릭터 정보]");
 
@@ -236,7 +323,34 @@
 
             Console.WriteLine("LV.{0} {1} -> LV.{2} {1}", Defaultlevel, Player.Name, Player.Level);
             Console.WriteLine("HP {0} -> {1}", DefaultHp, Player.Health);
-            Console.WriteLine("exp {0} -> {1}\n", DefaultExp, _aquiredExp);
+
+            // Console.WriteLine("exp {0} -> {1}\n", DefaultExp, _aquiredExp);
+            Console.WriteLine("exp {0} -> {1}\n", DefaultExp, afterBattleExp);
+            Console.WriteLine("[획득 아이템]");
+            Console.WriteLine("{0} Gold 획득!",DungeonRewardGold);
+            foreach (var item in DungeonRewardEquipItem)
+            {
+                if(DungeonRewardEquipItem == null)
+                {
+                    return;
+                }
+                else
+                {
+                    Console.WriteLine("{0} 획득!", item.Name);
+                    Player.Inventory.Add(item);
+                }
+            }
+            Player.Gold += DungeonRewardGold;
+            Console.WriteLine();
+            if (Floar == 5)
+            {
+                Utility.WriteColorScript("Game Clear!\n", ConsoleColor.Yellow);
+                Utility.ShowScript("당신은 사장드래곤을 무찌르고 혁명에 성공하였습니다.\n",
+                    "사장은 고용노동부에 구속당하였으며 당신은 노조원들의 지지를 받아 사장의 자리를 이어받았습니다.\n",
+                    "당신은 직원복지에 온힘을 다하겠다 선언하였지만 회사는 수익을 내기위한곳, 회사가 없으면 노조또한 존재하지 못합니다.\n",
+                    "당신은 경영자와 노동자 모두를 만족시키는 유토피아를 만들수 있을까요, 아니면 또다른 사장 드래곤이 되어 도전을 받게될까요.\n\n");
+                Utility.ShowScript("게임을 게속 진행하실수 있으며 던전 6층 부터는 랜덤한 몬스터가 나오는 무한모드 입니다.\n");
+            }
             Console.WriteLine("0. 다음\n");
             Console.Write(">> ");
             Player.UpdateStageScore(Floar);
@@ -268,10 +382,10 @@
         void ShowLose()
         {
             Console.Clear();
-            Console.WriteLine("Battle!! - Result\n");
-            Console.WriteLine("You Lose\n");
+            Utility.WriteColorScript("Battle!! - Result\n", ConsoleColor.Yellow);
+            Utility.WriteColorScript("You Lose\n", ConsoleColor.Gray);
             Console.WriteLine("LV.{0} {1}", Player.Level, Player.Name);
-            Console.WriteLine("{0} -> {1}\n", Player.MaxHealth, Player.Health);
+            Console.WriteLine("{0} -> {1}\n", Player.MaxHealth + Player.EquipHealth, Player.Health);
             Console.WriteLine("0. 다음\n");
             Console.Write(">> ");
             while (true)
@@ -398,7 +512,7 @@
         public void ShowSkilllist()
         {
             Console.Clear();
-            Console.WriteLine("Battle!!\n");
+            Utility.WriteColorScript("Battle!!\n", ConsoleColor.Yellow);
             foreach (var monster in Monsters)
             {
                 if (!monster.isDead)
@@ -407,14 +521,15 @@
                 }
                 else
                 {
-                    DeadWriteLine($"Lv.{monster.Level} {monster.Name} Dead");
+                    Utility.WriteColorScript($"Lv.{monster.Level} {monster.Name} Dead", ConsoleColor.Gray);
                 }
             }
             Console.WriteLine();
             Console.WriteLine("[내정보]");
             Console.WriteLine("Lv.{0}  {1} ({2})", Player.Level, Player.Name, _className);
-            Console.WriteLine("HP {0}/{1}", Player.Health, Player.MaxHealth);
-            Console.WriteLine("MP {0}/{1}\n", Player.Mana, Player.MaxMana);
+            Console.WriteLine("HP {0}/{1}", Player.Health, Player.MaxHealth + Player.EquipHealth);
+            Console.WriteLine("MP {0}/{1}\n", Player.Mana, Player.MaxMana + Player.EquipMana);
+
             int skillCount = 0;
             int checkHaveSkill = 0;
             foreach (var skill in Player.Skills)
@@ -479,24 +594,25 @@
         {
             int n = 1;
             Console.Clear();
-            Console.WriteLine("Battle!!\n");
+            Utility.WriteColorScript("Battle!!\n", ConsoleColor.Yellow);
+            Console.WriteLine("[적정보]");
             foreach (var monster in Monsters)
             {
                 if (!monster.isDead)
                 {
-                    Console.WriteLine("{0} - Lv.{1} {2} HP {3}", n, monster.Level, monster.Name, monster.Health);
+                    Console.WriteLine("{0} - Lv.{1} {2} HP {3}\n", n, monster.Level, monster.Name, monster.Health);
                 }
                 else
                 {
-                    DeadWriteLine($"{n} - Lv.{monster.Level} {monster.Name} Dead");
+                    Utility.WriteColorScript($"{n} - Lv.{monster.Level} {monster.Name} Dead\n", ConsoleColor.Gray);
                 }
                 n++;
             }
             Console.WriteLine();
             Console.WriteLine("[내정보]");
             Console.WriteLine("Lv.{0}  {1} ({2})", Player.Level, Player.Name, _className);
-            Console.WriteLine("HP {0}/{1}", Player.Health, Player.MaxHealth);
-            Console.WriteLine("MP {0}/{1}\n", Player.Mana, Player.MaxMana);
+            Console.WriteLine("HP {0}/{1}", Player.Health, Player.MaxHealth + Player.EquipHealth);
+            Console.WriteLine("MP {0}/{1}\n", Player.Mana, Player.MaxMana + Player.EquipMana);
             Console.WriteLine("0. 취소\n");
             Console.WriteLine("대상을 선택해주세요.");
             Console.Write(">> ");
@@ -550,28 +666,36 @@
         // 플레이어가 던전진입시 처음 보여지는 화면.
         public void StartBattle(int dungeonid)
         {
-
             //Floar = Player.StageScore = dungeonid;
             Floar = dungeonid;
+            SetDungeonRewardGold(dungeonid);
 
             Console.Clear();
-            Console.WriteLine("Battle!!\n");
+            if (dungeonid == 5)
+            {
+                ShowBossBattle();
+                Thread.Sleep(2000);
+                Utility.WriteColorScript("BOSS", ConsoleColor.Red);
+            }
+            Utility.WriteColorScript("Battle!!\n", ConsoleColor.Yellow);
+
+            Console.WriteLine("[적정보]");
             foreach (var monster in Monsters)
             {
                 if (!monster.isDead)
                 {
-                    Console.WriteLine("Lv.{0} {1} HP {2}", monster.Level, monster.Name, monster.Health);
+                    Console.WriteLine("Lv.{0} {1} HP {2}\n", monster.Level, monster.Name, monster.Health);
                 }
                 else
                 {
-                    DeadWriteLine($"Lv.{monster.Level} {monster.Name} Dead");
+                    Utility.WriteColorScript($"Lv.{monster.Level} {monster.Name} Dead\n", ConsoleColor.Gray);
                 }
             }
             Console.WriteLine();
             Console.WriteLine("[내정보]");
             Console.WriteLine("Lv.{0}  {1} ({2})", Player.Level, Player.Name, _className);
-            Console.WriteLine("HP {0}/{1}", Player.Health, Player.MaxHealth);
-            Console.WriteLine("MP {0}/{1}\n", Player.Mana, Player.MaxMana);
+            Console.WriteLine("HP {0}/{1}", Player.Health, Player.MaxHealth + Player.EquipHealth);
+            Console.WriteLine("MP {0}/{1}\n", Player.Mana, Player.MaxMana + Player.EquipMana);
             Console.WriteLine("0. 도망");
             Console.WriteLine("1. 공격");
             Console.WriteLine("2. 스킬\n");
