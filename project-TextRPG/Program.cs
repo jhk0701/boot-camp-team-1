@@ -13,7 +13,7 @@ namespace project_TextRPG
             IScene startScene = new StartScene(COMMON_NAME, true);
             startScene.Start(player);
             player = startScene.End();
-            player.Gold += 500;
+            player.Gold += 50000;
 
             // 게임 시작
             IScene gameScene = new GameScene(COMMON_NAME);

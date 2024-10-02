@@ -140,9 +140,9 @@ namespace project_TextRPG
                 //Weapon List
                 new Equipment("회사 화장실 휴지", "[무기] [공격력 +10] 닦을 때 따가운 화장실 휴지, 엉덩이의 처우를 개선해달라.", 100, 0, ERank.Normal, 10f, 0, 0, 0),
                 new Equipment("부러진 법인카드", "[무기] [공격력 +30] 부도 직전 회사의 한도초과 카드, 가려운 곳 긁기에는 쓸만하다.", 500, 0, ERank.Rare, 30f, 0, 0, 0),
-                new Equipment("연대의 확성기", "[무기] [공격력 +70] 우리의 처절한 외침이 들리는가.", 2000, 0, ERank.Epic, 70f, 0, 0, 0),
-                new Equipment("평화의 죽창", "[무기] [공격력 +100] 회사 앞에 심어놓은 대나무를 뽑아서 만들었다.", 5000, 0, ERank.Legendary, 100f, 0, 0, 0),
-                new Equipment("사장님의 신용카드", "[무기] [공격력 +200] 사장님의 비자금이 숨겨진 카드. 돈쭐을 내줄 수 있다.", 10000, 0, ERank.Mythic, 200f, 0, 0, 0),
+                new Equipment("연대의 확성기", "[무기] [공격력 +70] 우리의 처절한 외침이 들리는가.", 2000, EEquipType.Weapon, ERank.Epic, 70f, 0, 0, 0),
+                new Equipment("평화의 죽창", "[무기] [공격력 +100] 회사 앞에 심어놓은 대나무를 뽑아서 만들었다.", 5000, EEquipType.Weapon, ERank.Legendary, 100f, 0, 0, 0),
+                new Equipment("사장님의 신용카드", "[무기] [공격력 +200] 사장님의 비자금이 숨겨진 카드. 돈쭐을 내줄 수 있다.", 10000, EEquipType.Weapon, ERank.Mythic, 200f, 0, 0, 0),
 
             };
 
