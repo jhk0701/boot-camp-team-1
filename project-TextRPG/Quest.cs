@@ -1,12 +1,13 @@
-﻿using System.Text;
+﻿using Newtonsoft.Json;
+using System.Text;
 
 namespace project_TextRPG
 {
     public abstract class Quest
     {
+        public int Id { get; protected set; }
         public string Title { get; protected set; }
         public string Description { get; protected set; }
-
         public bool IsRepeatable { get; protected set; }
 
         public int TargetCount { get; protected set; }
@@ -21,7 +22,7 @@ namespace project_TextRPG
         /// <typeparam name="T"></typeparam>
         /// <param name="target"></param>
         /// <param name="cnt"></param>
-        public abstract void Perform<T>(T target, int cnt);
+        public abstract int Perform<T>(T target, int cnt);
 
         /// <summary>
         /// 퀘스트 초기화 함수

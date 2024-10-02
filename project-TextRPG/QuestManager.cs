@@ -9,13 +9,12 @@ namespace project_TextRPG
     {
         static QuestManager _instance;
 
-        [JsonProperty]
-        public Quest[] Quests { get; protected set; }
-
+        //public Quest[] Quests { get; protected set; }
+        public Dictionary<int, int> Quests { get; protected set; }
 
         private QuestManager() 
         {
-            Quests = new Quest[0];
+            Quests = new Dictionary<int, int>();
         }
 
         public static QuestManager GetInstance()
@@ -26,6 +25,11 @@ namespace project_TextRPG
             return _instance;
         }
 
+        public void Load(Dictionary<int, int> data)
+        {
+            Quests = data;
+        }
+
         /// <summary>
         /// 퀘스트 수행
         /// </summary>
@@ -34,8 +38,15 @@ namespace project_TextRPG
         /// <param name="cnt"></param>
         public void PerformQuest<T>(T target, int cnt)
         {
-            foreach (Quest q in Quests)
-                q.Perform(target, cnt);
+            foreach (KeyValuePair<int, int> q in Quests)
+            {
+                Quest quest = DataDefinition.GetInstance().QuestList[q.Key];
+                quest.Count = q.Value;
+
+                int cur = quest.Perform(target, cnt);
+                if (cur >= 0)
+                    Quests[q.Key] = cur;
+            }
         }
 
         /// <summary>
@@ -44,9 +55,7 @@ namespace project_TextRPG
         /// <param name="q"></param>
         public void AcceptQuest(Quest q)
         {
-            List<Quest> t = Quests.ToList();
-            t.Add(q);
-            Quests = t.ToArray();
+            Quests.Add(q.Id, 0);
         }
 
         /// <summary>
@@ -57,9 +66,7 @@ namespace project_TextRPG
         {
             q.Clear();
 
-            List<Quest> t = Quests.ToList();
-            t.Remove(q);
-            Quests = t.ToArray();
+            Quests.Remove(q.Id);;
         }
 
         /// <summary>
@@ -69,7 +76,7 @@ namespace project_TextRPG
         /// <returns></returns>
         public bool IsProceedingQuest(Quest q)
         {
-            return Quests.Contains(q);
+            return Quests.ContainsKey(q.Id);
         }
 
     }

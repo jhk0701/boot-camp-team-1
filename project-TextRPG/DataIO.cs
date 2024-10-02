@@ -6,8 +6,11 @@ namespace project_TextRPG
     public struct GameData
     {
         public Character Player { get; set; }
-        public QuestManager Quest { get; set; }
-        public InstanceManager Instance { get; set; }
+        public Dictionary<int, int> Quests { get; set; }
+        //public QuestManager Quest { get; set; }
+
+        public long ItemId { get; set; }
+        //public InstanceManager Instance { get; set; }
     }
 
     public class DataIO
@@ -43,9 +46,9 @@ namespace project_TextRPG
             if(p != null)
                 _gameData.Player = p;
             if(qm != null)
-                _gameData.Quest = qm;
+                _gameData.Quests = qm.Quests;
 
-            _gameData.Instance = InstanceManager.GetInstance();
+            _gameData.ItemId = InstanceManager.GetInstance().CurId;
 
             Save();
         }
@@ -66,8 +69,9 @@ namespace project_TextRPG
             return _gameData;
         }
 
-        public void DebugData(Character t)
+        public void DebugData()
         {
+            Character t = _gameData.Player;
             Console.WriteLine(t.Name);
             Console.WriteLine(t.CharClass.ToString());
             Console.WriteLine($"Lv : {t.Level}");
@@ -88,7 +92,15 @@ namespace project_TextRPG
 
             Console.WriteLine($"Inventory.Items : {t.Inventory.Items.Length}");
             Console.WriteLine($"Inventory.Equipments : {t.Inventory.Equipments.Count}");
+            
+            Console.WriteLine($"Quests : {_gameData.Quests.Count}");
+            int[] keys = _gameData.Quests.Keys.ToArray();
+            for (int i = 0; i < keys.Length; i++)
+            {
+                Console.WriteLine($"{keys[i]} : {_gameData.Quests[keys[i]]}");
+            }
 
+            Console.WriteLine($"Item Id : {_gameData.ItemId}");
         }
     }
 }

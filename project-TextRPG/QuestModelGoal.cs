@@ -4,8 +4,9 @@
     {
         ERequestGoal _goal;
 
-        public QuestModelGoal(ERequestGoal target, int targetCount, string title, string desc, QuestReward reward, bool isRepeatable = true)
+        public QuestModelGoal(int questId, ERequestGoal target, int targetCount, string title, string desc, QuestReward reward, bool isRepeatable = true)
         {
+            Id = questId;
             _goal = target;
             Title = title;
             Description = desc;
@@ -14,7 +15,7 @@
             IsRepeatable = isRepeatable;
         }
 
-        public override void Perform<T>(T target, int cnt)
+        public override int Perform<T>(T target, int cnt)
         {
             switch (_goal)
             {
@@ -32,6 +33,7 @@
                     break;
             }
 
+            return Count;
             //if ((target as Monster).Id == _targetMonsterId)
             //    Count += cnt;
         }

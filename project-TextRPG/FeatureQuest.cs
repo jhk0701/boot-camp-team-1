@@ -17,12 +17,15 @@ namespace project_TextRPG
             Utility.WriteColorScript($"{Name}!!\n\n", ConsoleColor.Yellow);
             for (int i = 0; i < q.Length; i++)
             {
+                bool isProceed = QuestManager.GetInstance().IsProceedingQuest(q[i]);
+                if (isProceed)
+                    q[i].Count = QuestManager.GetInstance().Quests[q[i].Id];
+
                 Utility.ShowScript(
                     $"{i + 1}. ",
                     q[i].Title,
 
-                    QuestManager.GetInstance().IsProceedingQuest(q[i]) ? 
-                        (q[i].IsCompletable() ? " (완료 가능)" :" (진행중)") : ""
+                    isProceed ? (q[i].IsCompletable() ? " (완료 가능)" :" (진행중)") : ""
                 );
             }
 
@@ -90,6 +93,7 @@ namespace project_TextRPG
 
         void ShowQuest(Quest q, bool isProceed)
         {
+
             Console.Clear();
             Utility.WriteColorScript($"{Name}!!\n\n", ConsoleColor.Yellow);
             Utility.ShowScript(

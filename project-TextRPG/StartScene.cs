@@ -47,7 +47,11 @@ namespace project_TextRPG
                     if (isLoaded)
                     {
                         // 1. 데이터 있으면 로드
-                        Player = DataIO.GetInstance().GetLoadedData().Player;
+                        GameData gameData = DataIO.GetInstance().GetLoadedData();
+
+                        Player = gameData.Player;
+                        QuestManager.GetInstance().Load(gameData.Quests);
+                        InstanceManager.GetInstance().Load(gameData.ItemId);
                     }
                     else
                     {

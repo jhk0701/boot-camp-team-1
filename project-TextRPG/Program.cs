@@ -11,13 +11,14 @@ namespace project_TextRPG
         {
             //DataIO.GetInstance().Load();
             //Character t = DataIO.GetInstance().GetLoadedData().Player;
-            //DataIO.GetInstance().DebugData(t);
+            //DataIO.GetInstance().DebugData();
             //return;
 
             Character player = null;
             IScene startScene = new StartScene(COMMON_NAME/*, true*/);
             startScene.Start(player);
             player = startScene.End();
+
             player.Start();
 
             // 게임 시작

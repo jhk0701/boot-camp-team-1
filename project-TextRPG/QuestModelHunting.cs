@@ -6,8 +6,9 @@ namespace project_TextRPG
     {
         int _targetMonsterId;
 
-        public QuestModelHunting(int targetId, int targetCount,string title, string desc, QuestReward reward, bool isRepeatable = true)
+        public QuestModelHunting(int questId, int targetId, int targetCount,string title, string desc, QuestReward reward, bool isRepeatable = true)
         {
+            Id = questId;
             _targetMonsterId = targetId;
             Title = title;
             Description = desc;
@@ -16,13 +17,15 @@ namespace project_TextRPG
             IsRepeatable = isRepeatable;
         }
 
-        public override void Perform<T>(T target, int cnt)
+        public override int Perform<T>(T target, int cnt)
         {
             if (!(target is Monster)) 
-                return;
+                return -1;
 
             if ((target as Monster).Id == _targetMonsterId)
                 Count += cnt;
+
+            return Count;
         }
 
         public override void Clear()

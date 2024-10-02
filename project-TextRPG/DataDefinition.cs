@@ -207,17 +207,17 @@ namespace project_TextRPG
 
             QuestList = [
                 // 사냥 퀘스트
-                new QuestModelHunting(0, 3, "부당 계약 적발", "사내에 완연한 부당계약서들을 적발하고 기강을 바로 세워주세요!", 
+                new QuestModelHunting(0, 0, 3, "부당 계약 적발", "사내에 완연한 부당계약서들을 적발하고 기강을 바로 세워주세요!", 
                     new QuestReward(100, 30, [], new Dictionary<int, int>{ })),
-                new QuestModelHunting(1, 5, "과로의 원인", "비일비재한 연장근무에서 벗어나고 싶은 직장인들을 구해주세요.",
+                new QuestModelHunting(1, 1, 5, "과로의 원인", "비일비재한 연장근무에서 벗어나고 싶은 직장인들을 구해주세요.",
                     new QuestReward(500, 50, [2], new Dictionary<int, int>{ })),
-                new QuestModelHunting(3, 5, "월급루팡", "일하는 손 따로 노는 손 따로.\n양심없는 루팡들을 처지해주세요!",
+                new QuestModelHunting(2, 3, 5, "월급루팡", "일하는 손 따로 노는 손 따로.\n양심없는 루팡들을 처지해주세요!",
                     new QuestReward(2000, 70, [3], new Dictionary<int, int>{ })),
 
                 // 달성 퀘스트
-                new QuestModelGoal(ERequestGoal.WinBattle, 10, "근면성실", "사원의 미덕은 근면성실함이지!\n자네의 성실함을 보여주게나!",
+                new QuestModelGoal(3, ERequestGoal.WinBattle, 10, "근면성실", "사원의 미덕은 근면성실함이지!\n자네의 성실함을 보여주게나!",
                     new QuestReward(5000, 100, [5], new Dictionary<int, int>{ })),
-                new QuestModelGoal(ERequestGoal.EnhanceItem, 10, "장인도 도구를 가린다", "자네 이번달 실적이 너무 낮군.\n저기 가서 옷도 좀 수선하고 좋은 가방으로 리테일링이라도 하고 와.",
+                new QuestModelGoal(4, ERequestGoal.EnhanceItem, 10, "장인도 도구를 가린다", "자네 이번달 실적이 너무 낮군.\n저기 가서 옷도 좀 수선하고 좋은 가방으로 리테일링이라도 하고 와.",
                     new QuestReward(5000, 100, [5], new Dictionary<int, int>{ })),
             ];
         }
@@ -236,7 +236,7 @@ namespace project_TextRPG
         static InstanceManager _instance;
 
         [JsonProperty]
-        long _curId = 0;
+        public long CurId = 0;
 
         private InstanceManager() { }
 
@@ -248,9 +248,14 @@ namespace project_TextRPG
             return _instance;
         }
 
+        public void Load(long data)
+        {
+            CurId = data;
+        }
+
         public long GetId()
         {
-            return ++_curId;
+            return ++CurId;
         }
     }
 }
