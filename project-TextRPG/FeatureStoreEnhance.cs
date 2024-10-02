@@ -78,6 +78,8 @@
             }
 
             // 강화
+            _player.Gold -= cost;
+
             int p = GetRandom();
             if (p < probabilityOfSuccess[e[select].EnhanceLevel])
             {
@@ -101,6 +103,8 @@
                 ShowFailResult();
                 Utility.GetSelection(0, 0); // 돌아가기
             }
+
+            QuestManager.GetInstance().PerformQuest(this, 1);
 
             Console.Clear();
             ShowMenu();

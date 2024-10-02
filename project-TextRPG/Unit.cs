@@ -80,9 +80,11 @@
                     return;
 
                 _lv = value;
+                QuestManager.GetInstance().PerformQuest(this as Character, _lv);
 
                 //Console.WriteLine($"레벨이 상승했습니다.\nLv. {_lv - 1} -> {_lv}\n능력치가 소폭 상승합니다.");
-                Console.WriteLine("레벨이 상승했습니다.");
+                Utility.WriteColorScript("레벨이 상승했습니다.", ConsoleColor.Blue);
+                //Console.WriteLine("레벨이 상승했습니다.");
 
                 BasicAttack += 0.5f;
                 BasicDefense += 1f;
@@ -105,6 +107,7 @@
             }
         }
 
+
         /// <summary>
         /// 생성자
         /// </summary>
@@ -114,7 +117,6 @@
             Name = name;
             isDead = false;
         }
-
 
         public virtual float TakeDamage(float damage) 
         {

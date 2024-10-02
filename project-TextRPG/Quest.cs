@@ -7,6 +7,8 @@ namespace project_TextRPG
         public string Title { get; protected set; }
         public string Description { get; protected set; }
 
+        public bool IsRepeatable { get; protected set; }
+
         public int TargetCount { get; protected set; }
         public int Count { get; set; }
 

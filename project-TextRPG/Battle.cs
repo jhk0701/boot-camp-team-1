@@ -233,6 +233,7 @@ namespace project_TextRPG
                 {
                     if (choice == 0)
                     {
+                        QuestManager.GetInstance().PerformQuest(this, 1);
                         _scene.Return();
                         return;
                     }

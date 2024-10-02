@@ -18,7 +18,7 @@
                 new FeatureBattle("전투 시작", this),
                 new FeatureRest("휴식하기", this),
                 new FeatureQuest("사내 게시판", this),
-                new FeatureGatcha("가챠 뽑기", this)
+                //new FeatureGatcha("가챠 뽑기", this)
             ];
         }
 
