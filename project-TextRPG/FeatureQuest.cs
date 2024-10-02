@@ -21,7 +21,8 @@ namespace project_TextRPG
                     $"{i + 1}. ",
                     q[i].Title,
 
-                    QuestManager.GetInstance().IsProceedingQuest(q[i]) ? " (진행중)": ""
+                    QuestManager.GetInstance().IsProceedingQuest(q[i]) ? 
+                        (q[i].IsCompletable() ? " (완료 가능)" :" (진행중)") : ""
                 );
             }
 
