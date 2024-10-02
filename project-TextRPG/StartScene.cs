@@ -1,5 +1,6 @@
 ﻿using System.Numerics;
 using System.Text.Json;
+using System.Xml.Linq;
 
 namespace project_TextRPG
 {
@@ -9,6 +10,7 @@ namespace project_TextRPG
         public Character Player { get; set; }
 
         bool _isSkip;
+        string _inputName;
 
         public StartScene(string sceneName, bool isSkip = false)
         {
@@ -42,6 +44,7 @@ namespace project_TextRPG
                     CreateCharacter();
 
                     SaveGame();
+
                     break;
                 case "2": // 이어하기
                     if (isLoaded)
@@ -60,6 +63,7 @@ namespace project_TextRPG
 
                         SaveGame();
                     }
+
                     break;
                 case "3":
                     // 게임을 종료합니다.
@@ -67,6 +71,7 @@ namespace project_TextRPG
                     return;
             }
         }
+
         public Character End()
         {
             return Player;
@@ -137,7 +142,7 @@ namespace project_TextRPG
 
         void CreateCharacter()
         {
-            string name = "";
+            _inputName = "";
             int select = 0;
 
             // 이름 설정
@@ -148,10 +153,11 @@ namespace project_TextRPG
                     $"{SceneName}에 오신 여러분 환영합니다.\n",
                     "원하시는 이름을 설정해주세요.\n"
                 );
-                name = Console.ReadLine();
+
+                _inputName = Console.ReadLine();
 
                 Utility.ShowScript(
-                    $"\n입력하신 이름은 {name}입니다.\n",
+                    $"\n입력하신 이름은 {_inputName}입니다.\n",
                     "저장하시겠습니까?\n\n",
 
                     "1. 저장\n0. 취소\n"
@@ -163,39 +169,99 @@ namespace project_TextRPG
 
             // 직업 선택
             Console.Clear();
+            ShowClasses();
+
+        }
+
+        void ShowClasses()
+        {
+            ClassInitData[] classDatas = DataDefinition.GetInstance().ClassInitDatas;
+
             Utility.ShowScript(
                 $"{SceneName}에 오신 여러분 환영합니다.\n",
-                "원하시는 직업을 선택해주세요.\n\n",
-
-                "1. 노조 위원장\n",
-                "2. 사무총장\n",
-                "3. 조직 국장\n",
-                "\n"
+                "원하시는 직업을 선택해주세요.\n\n"
             );
 
-            select = Utility.GetSelection(1, 3);
-            switch ((EClass)(select - 1))
+            Utility.WriteColorScript("[직업 목록]\n", ConsoleColor.Yellow);
+
+            for (int i = 0; i < classDatas.Length; i++) 
             {
-                case EClass.ChairmanOfUnion:
-                    Player = new ChairmanOfUnion(name);
-                    break;
-                case EClass.SecretaryGeneral:
-                    Player = new SecretaryGeneral(name);
-                    break;
-                case EClass.DirectorOfUnion:
-                    Player = new DirectorOfUnion(name);
-                    break;
+                Utility.ShowScript($"{i + 1}. {classDatas[i].name}");
             }
 
+            Console.WriteLine();
+
+            int select = Utility.GetSelection(1, classDatas.Length);
+            ShowClass((EClass)(select - 1), classDatas[select - 1]);
+        }
+
+        void ShowClass(EClass selectedClass, ClassInitData classData)
+        {
+            Console.Clear();
+            Utility.WriteColorScript("직업 선택\n", ConsoleColor.Yellow);
+            Utility.ShowScript($"직업 : {classData.name}");
+            Utility.WriteColorScript($"{classData.description}", ConsoleColor.Gray);
+            Utility.ShowScript(
+                "\n[기본 스탯]\n",
+                $"공격력 : {classData.attack}\n",
+                $"방어력 : {classData.defense}\n",
+                $"체력 : {classData.maxHealth}\n",
+                $"마나 : {classData.maxMana}\n\n",
+
+                "[스킬 목록]"
+            );
+
+            for (int i = 0; i < classData.skills.Length; i++)
+            {
+                Utility.ShowScript(
+                    $"- {classData.skills[i].Name} (Lv. {classData.skills[i].RequiredLevel}) : ",
+                    $"{classData.skills[i].Description}"
+                );
+            }
+
+            Utility.ShowScript(
+                "\n\n",
+                "1. 선택하기\n0. 나가기\n\n"
+            );
+
+            int select = Utility.GetSelection(0, 1);
+            if (select == 0) 
+            {
+                Console.Clear();
+                ShowClasses();
+                return;
+            }
+
+            switch (selectedClass)
+            {
+                case EClass.ChairmanOfUnion:
+                    Player = new ChairmanOfUnion(_inputName);
+                    break;
+                case EClass.SecretaryGeneral:
+                    Player = new SecretaryGeneral(_inputName);
+                    break;
+                case EClass.DirectorOfUnion:
+                    Player = new DirectorOfUnion(_inputName);
+                    break;
+            }
             // 초기 자금 지급
             Player.Gold += 500;
         }
+
+        void ExitGame()
+        {
+            Console.Clear(); // 화면을 지우고 종료 메시지를 출력합니다.
+            Console.WriteLine("게임을 종료합니다. 안녕히 가세요!");
+            Environment.Exit(0); // 프로그램을 종료합니다.
+        }
+
 
         public static string saveFilePath = "./SaveData.json";
 
         public void SaveGame()
         {
             DataIO.GetInstance().Save(Player);
+
             return;
             string jsonString = JsonSerializer.Serialize(Player);
             File.WriteAllText(saveFilePath, jsonString);
@@ -223,13 +289,6 @@ namespace project_TextRPG
                 }
             }
             return false;
-        }
-        
-        void ExitGame()
-        {
-            Console.Clear(); // 화면을 지우고 종료 메시지를 출력합니다.
-            Console.WriteLine("게임을 종료합니다. 안녕히 가세요!");
-            Environment.Exit(0); // 프로그램을 종료합니다.
         }
 
     }
