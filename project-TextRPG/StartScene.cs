@@ -25,13 +25,15 @@ namespace project_TextRPG
             bool isLoaded = LoadCharacterFromSaveDate(); ; // 데이터 로드
             Console.Clear(); // 화면을 지우고 메뉴를 새로 출력합니다.
             // 메뉴 항목을 출력합니다.
-            Console.WriteLine("1. 새 게임");
-            Console.WriteLine("2. 이어하기");
-            Console.WriteLine("3. 종료");
-            Console.Write("옵션을 선택하세요: ");
-            string? choice = Console.ReadLine(); // 사용자 입력을 받습니다.
+            Utility.ShowScript(
+                "1. 새 게임\n",
+                "2. 이어하기\n",
+                "3. 종료\n\n"
+            );
+            //string? choice = Console.ReadLine(); // 사용자 입력을 받습니다.
+            int select = Utility.GetSelection(1,3, "옵션을 선택하세요.");
             //캐릭터 생성부분
-            switch (choice)
+            switch (select.ToString())
             {
                 case "1":
                     // 새 게임을 시작합니다.

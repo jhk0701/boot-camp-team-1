@@ -10,7 +10,7 @@ namespace project_TextRPG
         static void Main(string[] args)
         {
             Character player = null;
-            IScene startScene = new StartScene(COMMON_NAME, true);
+            IScene startScene = new StartScene(COMMON_NAME/*, true*/);
             startScene.Start(player);
             player = startScene.End();
             player.Gold += 500;
