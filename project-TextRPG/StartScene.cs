@@ -40,7 +40,6 @@ namespace project_TextRPG
                 case "1":
                     // 새 게임을 시작합니다.
                     CreateCharacter();
-                    Player.Gold += 500;
 
                     SaveGame();
                     break;
@@ -54,7 +53,6 @@ namespace project_TextRPG
                     {
                         // 2. 데이터 없으면 생성
                         CreateCharacter();
-                        Player.Gold += 500;
 
                         SaveGame();
                     }
@@ -184,6 +182,9 @@ namespace project_TextRPG
                     Player = new DirectorOfUnion(name);
                     break;
             }
+
+            // 초기 자금 지급
+            Player.Gold += 500;
         }
 
         public static string saveFilePath = "./SaveData.json";
