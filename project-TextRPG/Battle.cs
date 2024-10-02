@@ -227,10 +227,13 @@
             Console.WriteLine("Victory\n");
             Console.WriteLine("던전에서 몬스터 {0}마리를 잡았습니다.\n", killcount);
             Console.WriteLine("[캐릭터 정보]");
+
+            int afterBattleExp = Player.Exp;
             Player.LevelCalculator(Player);
+
             Console.WriteLine("LV.{0} {1} -> LV.{2} {1}", Defaultlevel, Player.Name, Player.Level);
             Console.WriteLine("HP {0} -> {1}", DefaultHp, Player.Health);
-            Console.WriteLine("exp {0} -> {1}\n", DefaultExp, Player.Exp);
+            Console.WriteLine("exp {0} -> {1}\n", DefaultExp, afterBattleExp);
             Console.WriteLine("0. 다음\n");
             Console.Write(">> ");
             Player.UpdateStageScore();

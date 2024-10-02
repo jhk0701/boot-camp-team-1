@@ -21,8 +21,8 @@
             Utility.ShowScript(
                 "캐릭터의 정보가 표시됩니다.\n\n",
 
-                $"Lv. {_player.Level:0#} ({_player.Exp / (float)_player.Level * 100f} %)\n",
-                $"{_player.Name} ( {clName} )\n",
+                $"Lv. {_player.Level:0#} (Exp. {_player.Exp})\n",
+                $"이름 : {_player.Name} ( {clName} )\n",
                 $"공격력(ATK) : {_player.Attack} ({(eAtk >= 0 ? $"+{eAtk}" : eAtk)})\n",
                 $"방어력(DEF) : {_player.Defense} ({(eDef >= 0 ? $"+{eDef}" : eDef)})\n",
                 $"체력(Hp) : {_player.Health} / {_player.MaxHealth + eHp} ({(eHp >= 0 ? $"+{eHp}" : eHp)})\n",
