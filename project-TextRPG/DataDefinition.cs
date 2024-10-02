@@ -168,7 +168,6 @@ namespace project_TextRPG
 
             };
 
-
             //string name, float[] power, int requiredLv, float requiredMp)
             Skills = new Skill[]
             {
@@ -182,8 +181,6 @@ namespace project_TextRPG
                 new Skill("권고사직", 30f, 30f, 0, 10f),
                 new Skill("최상위결정권", 35, 35f, 0, 10f),
             };
-            
-            
 
             QuestList = [
                 // 사냥 퀘스트

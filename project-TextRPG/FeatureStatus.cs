@@ -2,7 +2,6 @@
 {
     internal class FeatureStatus : Feature
     {
-
         public FeatureStatus(string featureName, IScene scene)
         {
             _scene = scene;

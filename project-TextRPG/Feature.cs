@@ -5,7 +5,7 @@
         protected IScene _scene;
         protected Character _player;
 
-        string _name;
+        protected string _name;
         public virtual string Name 
         {
             get { return _name; } 
