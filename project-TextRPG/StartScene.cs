@@ -22,20 +22,22 @@ namespace project_TextRPG
             if (!_isSkip)
                 ShowIntro();
 
-            bool isLoaded = LoadCharacterFromSaveDate(); ; // 데이터 로드
+            //bool isLoaded = LoadCharacterFromSaveDate(); ; // 데이터 로드
 
-            //캐릭터 생성부분
-            if (isLoaded)
-            {
-                // 1. 데이터 있으면 로드
-                LoadCharacter();
-            }
-            else
-            {
-                // 2. 데이터 없으면 생성
-                CreateCharacter();
-                SaveGame();
-            }
+            ////캐릭터 생성부분
+            //if (isLoaded)
+            //{
+            //    // 1. 데이터 있으면 로드
+            //    LoadCharacter();
+            //}
+            //else
+            //{
+            //    // 2. 데이터 없으면 생성
+            //    CreateCharacter();
+            //    SaveGame();
+            //}
+
+            CreateCharacter();
         }
         public Character End()
         {
