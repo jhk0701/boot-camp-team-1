@@ -59,8 +59,11 @@ namespace project_TextRPG
             StageScore = 1; 
         }
 
-        public void UpdateStageScore()
+        public void UpdateStageScore(int clearedDungeon)
         {
+            if (clearedDungeon < StageScore)
+                return;
+
             StageScore++;
         }
 

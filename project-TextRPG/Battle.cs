@@ -20,6 +20,7 @@
         float DefaultHp;     //플레이어의 던전진입당시의 체력 (승리화면에서 비교용)
         float DefaultExp;    //플레이어의 던전진입당시의 경험치 (승리화면에서 비교용)
         int _aquiredExp = 0;
+        string _className;
 
         Random rand;
         public Battle(Character player, int dungeonid, IScene scene)
@@ -39,6 +40,7 @@
 
             _scene = scene;
             _aquiredExp = 0;
+            _className = DataDefinition.GetInstance().ClassInitDatas[(int)player.CharClass].name;
         }
 
 
@@ -237,7 +239,7 @@
             Console.WriteLine("exp {0} -> {1}\n", DefaultExp, _aquiredExp);
             Console.WriteLine("0. 다음\n");
             Console.Write(">> ");
-            Player.UpdateStageScore();
+            Player.UpdateStageScore(Floar);
             Floar++;  // 층수 증가
             while (true)
             {
@@ -410,7 +412,7 @@
             }
             Console.WriteLine();
             Console.WriteLine("[내정보]");
-            Console.WriteLine("Lv.{0}  {1} ({2})", Player.Level, Player.Name, Player.CharClass);
+            Console.WriteLine("Lv.{0}  {1} ({2})", Player.Level, Player.Name, _className);
             Console.WriteLine("HP {0}/{1}", Player.Health, Player.MaxHealth);
             Console.WriteLine("MP {0}/{1}\n", Player.Mana, Player.MaxMana);
             int skillCount = 0;
@@ -492,7 +494,7 @@
             }
             Console.WriteLine();
             Console.WriteLine("[내정보]");
-            Console.WriteLine("Lv.{0}  {1} ({2})", Player.Level, Player.Name, Player.CharClass);
+            Console.WriteLine("Lv.{0}  {1} ({2})", Player.Level, Player.Name, _className);
             Console.WriteLine("HP {0}/{1}", Player.Health, Player.MaxHealth);
             Console.WriteLine("MP {0}/{1}\n", Player.Mana, Player.MaxMana);
             Console.WriteLine("0. 취소\n");
@@ -549,7 +551,8 @@
         public void StartBattle(int dungeonid)
         {
 
-            Floar = Player.StageScore = dungeonid;
+            //Floar = Player.StageScore = dungeonid;
+            Floar = dungeonid;
 
             Console.Clear();
             Console.WriteLine("Battle!!\n");
@@ -566,7 +569,7 @@
             }
             Console.WriteLine();
             Console.WriteLine("[내정보]");
-            Console.WriteLine("Lv.{0}  {1} ({2})", Player.Level, Player.Name, Player.CharClass);
+            Console.WriteLine("Lv.{0}  {1} ({2})", Player.Level, Player.Name, _className);
             Console.WriteLine("HP {0}/{1}", Player.Health, Player.MaxHealth);
             Console.WriteLine("MP {0}/{1}\n", Player.Mana, Player.MaxMana);
             Console.WriteLine("0. 도망");
