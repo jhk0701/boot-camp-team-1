@@ -63,6 +63,9 @@
             Console.WriteLine();
             int select = Utility.GetSelection(1, features.Length);
 
+            // 자동 저장
+            DataIO.GetInstance().Save(Player, QuestManager.GetInstance());
+
             Select(select);
         }
 

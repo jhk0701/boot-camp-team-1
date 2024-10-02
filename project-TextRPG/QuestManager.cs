@@ -1,4 +1,6 @@
-﻿namespace project_TextRPG
+﻿using Newtonsoft.Json;
+
+namespace project_TextRPG
 {
     /// <summary>
     /// 현재 수행 중인 퀘스트를 관리하기 위한 싱글턴
@@ -7,6 +9,7 @@
     {
         static QuestManager _instance;
 
+        [JsonProperty]
         public Quest[] Quests { get; protected set; }
 
 

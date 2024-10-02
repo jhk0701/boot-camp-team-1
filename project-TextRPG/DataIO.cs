@@ -7,6 +7,7 @@ namespace project_TextRPG
     {
         public Character Player { get; set; }
         public QuestManager Quest { get; set; }
+        public InstanceManager Instance { get; set; }
     }
 
     public class DataIO
@@ -31,7 +32,7 @@ namespace project_TextRPG
         }
 
 
-        public void Save()
+        void Save()
         {
             string data = JsonConvert.SerializeObject(_gameData, Formatting.Indented);
             File.WriteAllText(PATH, data);
@@ -44,13 +45,13 @@ namespace project_TextRPG
             if(qm != null)
                 _gameData.Quest = qm;
 
+            _gameData.Instance = InstanceManager.GetInstance();
+
             Save();
         }
 
         public bool Load()
         {
-            return false;
-
             if(!File.Exists(PATH))
                 return false;
 
@@ -63,6 +64,31 @@ namespace project_TextRPG
         public GameData GetLoadedData()
         {
             return _gameData;
+        }
+
+        public void DebugData(Character t)
+        {
+            Console.WriteLine(t.Name);
+            Console.WriteLine(t.CharClass.ToString());
+            Console.WriteLine($"Lv : {t.Level}");
+            Console.WriteLine($"Exp : {t.Exp}");
+
+            Console.WriteLine($"BasicAttack : {t.BasicAttack}");
+            Console.WriteLine($"BasicDefense : {t.BasicDefense}");
+            Console.WriteLine($"MaxHealth : {t.MaxHealth}");
+            Console.WriteLine($"Health : {t.Health}");
+            Console.WriteLine($"MaxMana : {t.MaxMana}");
+            Console.WriteLine($"Mana : {t.Mana}");
+
+            Console.WriteLine($"Skills : {t.Skills.Length}");
+            for (int i = 0; i < t.Skills.Length; i++)
+            {
+                Console.WriteLine(t.Skills[i].Name);
+            }
+
+            Console.WriteLine($"Inventory.Items : {t.Inventory.Items.Length}");
+            Console.WriteLine($"Inventory.Equipments : {t.Inventory.Equipments.Count}");
+
         }
     }
 }

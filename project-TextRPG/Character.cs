@@ -1,7 +1,10 @@
-﻿namespace project_TextRPG
+﻿using Newtonsoft.Json;
+
+namespace project_TextRPG
 {
     public class Character : Unit
     {
+        [JsonProperty]
         public EClass CharClass { get; protected set; }
         public int Gold { get; set; }
 
@@ -37,18 +40,22 @@
             } 
         }
 
+        [JsonProperty]
         public Skill[] Skills { get; protected set; }
+
+        [JsonProperty]
         public Inventory Inventory { get; protected set; }
 
         public int StageScore { get; set; }
 
         Action onLevelChanged { get; set; }
 
+
         public Character(string name) : base(name)
         {
             Level = 1;
             Exp = 0;
-            Inventory = new Inventory(this);
+            Inventory = new Inventory();
             StageScore = 1; 
         }
 
@@ -104,9 +111,13 @@
 
             Health = MaxHealth;
             Mana = MaxMana;
+        }
 
+        public void Start()
+        {
+            Inventory.Start(this);
 
-            onLevelChanged = () => 
+            onLevelChanged = () =>
             {
                 // 레벨업 시, 호출 이벤트
                 // 관련 퀘스트 수행

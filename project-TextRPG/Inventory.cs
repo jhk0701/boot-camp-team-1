@@ -1,24 +1,32 @@
-﻿namespace project_TextRPG
+﻿using Newtonsoft.Json;
+
+namespace project_TextRPG
 {
     public class Inventory
     {
         Character _player;
-        
+
         /// <summary>
         /// 인벤토리에 있는 아이템들
         /// </summary>
+        [JsonProperty]
         public Equipment[] Items { get; protected set; }
 
         /// <summary>
         /// 착용한 아이템들
         /// </summary>
+        [JsonProperty]
         public Dictionary<EEquipType, Equipment> Equipments { get; protected set; }
 
-        public Inventory(Character owner)
+        public Inventory()
         {
-            _player = owner;
             Items = new Equipment[0];
             Equipments = new Dictionary<EEquipType, Equipment>();
+        }
+
+        public void Start(Character owner)
+        {
+            _player = owner;
         }
 
         public void Add(Equipment item)
@@ -98,7 +106,9 @@
 
         public bool IsEquipped(Equipment item)
         {
-            return Equipments.ContainsKey(item.type) && Equipments[item.type] == item;
+            return Equipments.ContainsKey(item.type) &&
+                Equipments[item.type] != null && 
+                Equipments[item.type].ItemId == item.ItemId;
         }
 
         public bool HasItem(Equipment item)

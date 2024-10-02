@@ -1,13 +1,15 @@
-﻿namespace project_TextRPG
+﻿using Newtonsoft.Json;
+
+namespace project_TextRPG
 {
     public class Unit
     {
-        public String Name { get; protected set; }
+        [JsonProperty]
+        public string Name { get; protected set; }
 
+        [JsonProperty]
         public float BasicAttack { get; protected set; }
-        public virtual float EquipAttack { get; set; }
-    
-
+        public virtual float EquipAttack { get; set; }    
         public float Attack 
         { 
             get 
@@ -16,6 +18,8 @@
             } 
         }
 
+
+        [JsonProperty]
         public float BasicDefense { get; protected set; }
         public virtual float EquipDefense { get; set; }
         public float Defense 
@@ -26,10 +30,13 @@
             } 
         }
 
+        [JsonProperty]
         public float MaxHealth { get; protected set; }
         public float EquipHealth { get; set; }
 
         float _health;
+
+        [JsonProperty]
         public float Health 
         { 
             get { return _health; }
@@ -49,10 +56,13 @@
             }
         }
 
+        [JsonProperty]
         public float MaxMana { get; protected set; }
         public float EquipMana { get; set; }
 
         float _mana;
+
+        [JsonProperty]
         public float Mana 
         {
             get { return _mana; }

@@ -1,12 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.Text;
 
 namespace project_TextRPG
 {
     public class Item
     {
+        [JsonProperty]
         public string Name { get; protected set; }
+        [JsonProperty]
         public string Description { get; protected set; } //아이템 설명
+        [JsonProperty]
         public int Price { get; protected set; } // 아이템 가격
 
         // 아이템 소지여부
@@ -27,6 +31,9 @@ namespace project_TextRPG
 
     public class Equipment : Item, ICopyable<Equipment>, IEnhanceable
     {
+        [JsonProperty]
+        public long ItemId { get; protected set; }
+
         // 장착 여부
         // 소지 여부 때와 마찬가지로
         // 플레이어(주체)가 이 아이템을 착용하고 있는지 등의 방식으로 확인할 것 같습니다.
@@ -139,6 +146,7 @@ namespace project_TextRPG
             return sb.ToString();
         }
 
+
         #region ### 프로토타입 적용 ###
 
         public Equipment Copy() // 프로토타입
@@ -150,10 +158,13 @@ namespace project_TextRPG
                 Bonus[EEquipBonus.HP],
                 Bonus[EEquipBonus.MP]
             );
+            copy.ItemId = InstanceManager.GetInstance().GetId();
+
             return copy;
         }
 
         #endregion
+
 
         #region ### 아이템 강화 ###
 
@@ -202,7 +213,7 @@ namespace project_TextRPG
 
     public class HealItem : ConsumableItem
     {
-
+        [JsonProperty]
         private float healAmount;
 
         public HealItem(string itemName, string description, int itemPrice, int itemCount, float healAmount) : base(itemName, description, itemPrice, itemCount)
@@ -220,7 +231,7 @@ namespace project_TextRPG
 
     public class BattleItem : ConsumableItem
     {
-
+        [JsonProperty]
         private float itemDamage;
 
         public BattleItem(string itemName, string description, int itemPrice, int itemCount, float itemDamage) : base(itemName, description, itemPrice, itemCount)

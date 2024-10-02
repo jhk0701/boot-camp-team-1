@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Numerics;
+using System.Text.Json;
 
 namespace project_TextRPG
 {
@@ -21,7 +22,7 @@ namespace project_TextRPG
             if (!_isSkip)
                 ShowIntro();
 
-            bool isLoaded = DataIO.GetInstance().Load();//LoadCharacterFromSaveDate(); ; // 데이터 로드
+            bool isLoaded = DataIO.GetInstance().Load();
             Console.Clear(); // 화면을 지우고 메뉴를 새로 출력합니다.
             // 메뉴 항목을 출력합니다.
             Utility.ShowScript(
@@ -39,6 +40,8 @@ namespace project_TextRPG
                 case "1":
                     // 새 게임을 시작합니다.
                     CreateCharacter();
+                    Player.Gold += 500;
+
                     SaveGame();
                     break;
                 case "2": // 이어하기
@@ -51,6 +54,8 @@ namespace project_TextRPG
                     {
                         // 2. 데이터 없으면 생성
                         CreateCharacter();
+                        Player.Gold += 500;
+
                         SaveGame();
                     }
                     break;
@@ -185,7 +190,7 @@ namespace project_TextRPG
 
         public void SaveGame()
         {
-            //DataIO.GetInstance().Save(Player);
+            DataIO.GetInstance().Save(Player);
             return;
             string jsonString = JsonSerializer.Serialize(Player);
             File.WriteAllText(saveFilePath, jsonString);

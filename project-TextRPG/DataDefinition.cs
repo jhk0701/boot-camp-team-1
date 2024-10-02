@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography;
+﻿using Newtonsoft.Json;
+using System.Security.Cryptography;
 
 namespace project_TextRPG
 {
@@ -104,19 +105,23 @@ namespace project_TextRPG
         static DataDefinition _instance;
 
         public Monster[] Monsters { get; set; }
+
         public Skill[] Skills { get; set; }
 
         public Skill[] UnionSkills { get; set; }  // 유니온 스킬테스트용 변수
 
         public Equipment[] Equipments { get; set; }
+
         public HealItem[] HealItems { get; set; }
+
         public BattleItem[] BattleItems { get; set; }
-        public ClassInitData[] ClassInitDatas { get; private set; }
+
+        public ClassInitData[] ClassInitDatas { get; set; }
 
         /// <summary>
         /// 퀘스트 정의 리스트. 레벨별 퀘스트
         /// </summary>
-        public Quest[] QuestList { get; private set; }
+        public Quest[] QuestList { get; set; }
 
 
         private DataDefinition()
@@ -226,4 +231,26 @@ namespace project_TextRPG
         }
     }
 
+    public class InstanceManager
+    {
+        static InstanceManager _instance;
+
+        [JsonProperty]
+        long _curId = 0;
+
+        private InstanceManager() { }
+
+        public static InstanceManager GetInstance()
+        {
+            if(_instance == null)
+                _instance = new InstanceManager();
+
+            return _instance;
+        }
+
+        public long GetId()
+        {
+            return ++_curId;
+        }
+    }
 }
