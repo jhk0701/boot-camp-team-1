@@ -150,8 +150,8 @@
                     Monsters.Add(DataDefinition.GetInstance().Monsters[5].Copy()); // 노동착취자
                     Monsters.Add(DataDefinition.GetInstance().Monsters[6].Copy()); // 과로골렘
                 }
-                DungeonRewardEquipItem.Add(DataDefinition.GetInstance().Equipments[1].Copy()); // 3층 보상 가족사진
-                DungeonRewardEquipItem.Add(DataDefinition.GetInstance().Equipments[13].Copy()); // 부러진 법인카드
+                DungeonRewardEquipItem.Add(DataDefinition.GetInstance().Equipments[1].Copy()); // 3층 보상 부러진 법인카드
+                DungeonRewardEquipItem.Add(DataDefinition.GetInstance().Equipments[11].Copy()); // 가족사진
             }
             else if (dungeonId == 4)
             {
@@ -311,7 +311,7 @@
             Utility.WriteColorScript("Battle!! - Result\n", ConsoleColor.Yellow);
             Utility.WriteColorScript("You Lose\n", ConsoleColor.Gray);
             Console.WriteLine("LV.{0} {1}", Player.Level, Player.Name);
-            Console.WriteLine("{0} -> {1}\n", Player.MaxHealth, Player.Health);
+            Console.WriteLine("{0} -> {1}\n", Player.MaxHealth + Player.EquipHealth, Player.Health);
             Console.WriteLine("0. 다음\n");
             Console.Write(">> ");
             while (true)
@@ -453,8 +453,8 @@
             Console.WriteLine();
             Console.WriteLine("[내정보]");
             Console.WriteLine("Lv.{0}  {1} ({2})", Player.Level, Player.Name, Player.CharClass);
-            Console.WriteLine("HP {0}/{1}", Player.Health, Player.MaxHealth);
-            Console.WriteLine("MP {0}/{1}\n", Player.Mana, Player.MaxMana);
+            Console.WriteLine("HP {0}/{1}", Player.Health, Player.MaxHealth + Player.EquipHealth);
+            Console.WriteLine("MP {0}/{1}\n", Player.Mana, Player.MaxMana + Player.EquipMana);
             int skillCount = 0;
             int checkHaveSkill = 0;
             foreach (var skill in Player.Skills)
@@ -536,8 +536,8 @@
             Console.WriteLine();
             Console.WriteLine("[내정보]");
             Console.WriteLine("Lv.{0}  {1} ({2})", Player.Level, Player.Name, Player.CharClass);
-            Console.WriteLine("HP {0}/{1}", Player.Health, Player.MaxHealth);
-            Console.WriteLine("MP {0}/{1}\n", Player.Mana, Player.MaxMana);
+            Console.WriteLine("HP {0}/{1}", Player.Health, Player.MaxHealth + Player.EquipHealth);
+            Console.WriteLine("MP {0}/{1}\n", Player.Mana, Player.MaxMana + Player.EquipMana);
             Console.WriteLine("0. 취소\n");
             Console.WriteLine("대상을 선택해주세요.");
             Console.Write(">> ");
@@ -613,8 +613,8 @@
             Console.WriteLine();
             Console.WriteLine("[내정보]");
             Console.WriteLine("Lv.{0}  {1} ({2})", Player.Level, Player.Name, Player.CharClass);
-            Console.WriteLine("HP {0}/{1}", Player.Health, Player.MaxHealth);
-            Console.WriteLine("MP {0}/{1}\n", Player.Mana, Player.MaxMana);
+            Console.WriteLine("HP {0}/{1}", Player.Health, Player.MaxHealth + Player.EquipHealth);
+            Console.WriteLine("MP {0}/{1}\n", Player.Mana, Player.MaxMana + Player.EquipMana);
             Console.WriteLine("0. 도망");
             Console.WriteLine("1. 공격");
             Console.WriteLine("2. 스킬\n");
