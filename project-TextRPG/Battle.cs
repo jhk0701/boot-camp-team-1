@@ -326,7 +326,7 @@
             Console.WriteLine("HP {0} -> {1}", DefaultHp, Player.Health);
 
             // Console.WriteLine("exp {0} -> {1}\n", DefaultExp, _aquiredExp);
-            Console.WriteLine("exp {0} -> {1}\n", DefaultExp, afterBattleExp);
+            Console.WriteLine("exp {0} -> {1}\n", DefaultExp, _aquiredExp + DefaultExp);
             Console.WriteLine("[획득 아이템]");
             Console.WriteLine("{0} Gold 획득!",DungeonRewardGold);
             foreach (var item in DungeonRewardEquipItem)

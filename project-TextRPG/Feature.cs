@@ -38,6 +38,7 @@
             // 기능 실행
             // 1. 표시
             ShowMenu();
+            Thread.Sleep(100);
             // 2. 행위 선택
             Act();
         }

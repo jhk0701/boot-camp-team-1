@@ -63,6 +63,7 @@
 
             Console.Clear();
             ShowMenu();
+
             Utility.WriteColorScript("구매가 완료되었습니다.", ConsoleColor.Green);
 
             Act();
