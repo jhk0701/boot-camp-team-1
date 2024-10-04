@@ -134,7 +134,7 @@ namespace project_TextRPG
         private DataDefinition()
         {
             ClassInitDatas = [
-                new ClassInitData("노조 위원장", 10f, 1f, 50f, 50f,
+                new ClassInitData("노조 위원장", 10f, 1f, 70f, 30f,
                     "\"투쟁의 길은 언제나 피투성이지.\"", 
                     [
                         new Skill("파업","공격력의 120 ~ 150%의 데미지를 준다", 120f, 150f, 5, 10f),
@@ -142,7 +142,7 @@ namespace project_TextRPG
                         new Skill("트럭 시위","가챠에 사용한 횟수만큼 데미지를 준다.", 300f, 500f, 20, 50f),
                         new Skill("투쟁의 불꽃","고통을 에너지로 바꿔 승리를 향해 나아가게 한다", 9999f, 9999f, 50, 60f)
                     ]),
-                new ClassInitData("사무총장", 6f, 5f, 50f, 50f, 
+                new ClassInitData("사무총장", 6f, 5f, 40f, 60f, 
                     "\"법대로 해봅시다.\"",
                     [
                         new Skill("언론 고발","공격력의 120 ~ 150%의 데미지를 준다", 120f, 150f, 5, 10f),
@@ -150,7 +150,7 @@ namespace project_TextRPG
                         new Skill("가스라이팅","공격력의 300~500%의 데미지를 준다.", 300f, 500f, 20, 50f),
                         new Skill("국민 청원","연대의 힘으로 역사를 바꾸는 외침이다.", 9999f, 9999f, 50, 60f),
                     ]),
-                new ClassInitData("조직 국장", 8f, 3f, 50f, 50f,
+                new ClassInitData("조직 국장", 8f, 3f, 60f, 40f,
                     "\"사람은 모두 평등하다.\"",
                     [
                         new Skill("죽창","120% 데미지를 준다.",120f, 120f, 5, 10f),
